@@ -1,0 +1,56 @@
+@import "styles/index";
+
+.root {
+  margin: 20px 0;
+}
+
+.top {
+  display: flex;
+}
+
+.number {
+  background-color: #171717;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 44px;
+  color: #fff;
+}
+
+.demonstrate {
+  background-color: #050505;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    fill: #838383;
+  }
+}
+
+.noDemonstrate{
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    fill: #838383;
+  }
+}
+
+.active{
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 17.71%, rgba(255, 255, 255, 0.4) 100%);
+}

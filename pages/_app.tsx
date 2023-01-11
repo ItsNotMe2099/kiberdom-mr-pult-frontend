@@ -1,6 +1,22 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import 'normalize.css'
+import 'styles/globals.scss'
+import type {AppProps as NextAppProps } from 'next/app'
+import { AppWrapper } from 'context/state'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export interface AppProps extends NextAppProps {
+  pageProps: {
+    
+  }
 }
+
+function MyApp({ Component, pageProps }: AppProps) {
+
+
+  return (
+    <AppWrapper>
+      <Component {...pageProps} />
+    </AppWrapper>
+  )
+}
+
+export default MyApp
