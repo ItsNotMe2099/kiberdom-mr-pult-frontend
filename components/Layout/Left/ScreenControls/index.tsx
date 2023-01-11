@@ -17,14 +17,25 @@ interface Props {
 
 export default function ScreenControls({color, options, number}: Props) {
 
-  const getColor = (color: 'blue' | 'green' | 'gray') => {
+  const getColor = (color: 'blue' | 'green' | 'gray', last?: boolean, number?: boolean, bottom?: boolean) => {
     switch (color) {
       case 'blue':
         return `linear-gradient(90deg, rgba(255, 255, 255, 0) 17.71%, rgba(255, 255, 255, 0.4) 100%)`
       case 'green':
         return `linear-gradient(90deg, rgba(255, 255, 255, 0) 17.71%, rgba(255, 255, 255, 0.4) 100%)`
       case 'gray':
-        return `linear-gradient(90deg, rgba(255, 255, 255, 0) 17.71%, rgba(255, 255, 255, 0.4) 100%)`
+        if(last){
+          return `linear-gradient(90deg, rgba(255, 255, 255, 0) 17.71%, rgba(255, 255, 255, 0.4) 100%`
+        }
+        else if(number){
+          return `linear-gradient(90deg, rgba(140,140,140,1) 0%, rgba(87,87,87,1) 83%, rgba(83,83,83,1) 100%)`
+        }
+        else if(bottom){
+          return `linear-gradient(90deg, rgba(50,50,50,1) 0%, rgba(27,27,27,1) 30%, rgba(0,0,0,1) 100%)`
+        }
+        else{
+          return `linear-gradient(90deg, rgba(81,81,81,1) 0%, rgba(97,97,97,1) 35%, rgba(134,134,134,1) 100%)`
+        }
     }
   }
 
@@ -33,15 +44,18 @@ export default function ScreenControls({color, options, number}: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.top}>
-        <div className={styles.number} style={isDemonstrate ? {background: getColor(color)} : {}}>
+        <div className={styles.number} style={isDemonstrate ? {background: getColor(color, false, true)} : {}}>
           {number}
         </div>
-        <div className={styles.demonstrate} style={isDemonstrate ? {background: getColor(color)} : {}} onClick={() => SetIsDemonstrate(true)}>
+        <div className={classNames(styles.demonstrate, {[styles.active]: isDemonstrate})} style={isDemonstrate ? {background: getColor(color)} : {}} onClick={() => SetIsDemonstrate(true)}>
           <ScreenDemonstrateSvg/>
         </div>
-        <div className={styles.noDemonstrate} style={!isDemonstrate ? {background: getColor(color)} : {}} onClick={() => SetIsDemonstrate(false)}>
+        <div className={classNames(styles.noDemonstrate, {[styles.active]: !isDemonstrate})} style={!isDemonstrate ? {background: getColor(color, true)} : {}} onClick={() => SetIsDemonstrate(false)}>
           <NoScreenDemonstrateSvg/>
         </div>
+      </div>
+      <div className={styles.bottom} style={isDemonstrate ? {background: getColor(color, false, false, true)} : {}}>
+
       </div>
     </div>
   )

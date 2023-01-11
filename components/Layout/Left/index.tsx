@@ -13,6 +13,9 @@ export default function Left({}: Props) {
         ЭКРАНЫ
       </div>
       <ScreenControls color='gray' number={1}/>
+      <ScreenControls color='gray' number={2}/>
+      <ScreenControls color='gray' number={3}/>
+      <ScreenControls color='gray' number={4}/>
     </div>
   )
 }

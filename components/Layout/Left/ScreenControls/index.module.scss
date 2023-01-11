@@ -52,5 +52,12 @@
 }
 
 .active{
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 17.71%, rgba(255, 255, 255, 0.4) 100%);
+  svg{
+    fill: #fff;
+  }
+}
+
+.bottom{
+  padding: 20px;
+  background: linear-gradient(90deg, rgba(15,15,15,1) 0%, rgba(15,15,15,1) 50%, rgba(0,0,0,1) 100%);
 }
