@@ -1,18 +1,19 @@
 import { createContext, useContext } from 'react'
 
 interface IState {
-  
+  isZoom: boolean
+  isTrueConf: boolean
 }
 
 const defaultValue: IState = {
-  
+  isZoom: false,
+  isTrueConf: false
 }
 
 const AppContext = createContext<IState>(defaultValue)
 
 interface Props {
   children: React.ReactNode
-  isMobile?: boolean
 }
 
 export function AppWrapper(props: Props) {
@@ -20,6 +21,8 @@ export function AppWrapper(props: Props) {
 
   const value: IState = {
     ...defaultValue,
+    isZoom: false,
+    isTrueConf: false
   }
 
 
