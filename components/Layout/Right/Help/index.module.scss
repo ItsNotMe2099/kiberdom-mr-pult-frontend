@@ -1,0 +1,50 @@
+@import "styles/index";
+
+.root {}
+
+.title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.help {
+  position: relative;
+  min-height: 250px;
+
+  img {
+    position: relative !important;
+    width: 50% !important;
+    transform: translate(50%, 130%);
+  }
+
+  .text {
+    position: relative;
+    width: 65%;
+    transform: translate(25%, 100%);
+    font-weight: 600;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+.gradient {
+  background: radial-gradient(50.51% 50.51% at 50.51% 50%, rgba(106, 18, 18, 1) 0%, rgba(106, 18, 18, 1) 44.79%, rgba(0, 0, 0, 1) 100%);
+  position: absolute;
+  min-width: 100%;
+  min-height: 250px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
