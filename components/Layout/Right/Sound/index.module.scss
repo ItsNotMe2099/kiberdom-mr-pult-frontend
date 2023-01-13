@@ -1,0 +1,51 @@
+@import "styles/index";
+
+.root {}
+
+.title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sound {
+  position: relative;
+  max-height: 250px;
+
+  img {
+    position: relative !important;
+    width: 50% !important;
+    transform: translate(50%, -200%);
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.item {
+  height: 22px;
+  background: linear-gradient(90deg, rgba(12, 12, 12, 1) 0%, rgba(73, 73, 73, 1) 50%, rgba(12, 12, 12, 1) 100%);
+  min-width: 100%;
+  margin-bottom: 4px;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.item.opened{
+  height: 49px;
+}
+
+.active {
+  background: linear-gradient(90deg, rgba(4, 0, 45, 1) 0%, rgba(19, 0, 245, 1) 50%, rgba(4, 0, 46, 1) 100%);
+}

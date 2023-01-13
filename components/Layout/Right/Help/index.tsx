@@ -19,13 +19,13 @@ export default function Help({ }: Props) {
 
   return (
     <div className={styles.root}>
-      <div className={styles.title}>
+      {!isActive ? <><div className={styles.title}>
         помощь
       </div>
-      {!isActive ? <div className={styles.help}>
+      <div className={styles.help}>
         <div className={styles.gradient} onClick={handleClick}></div>
-        <Image src='/img/right-menu/hearth.svg' fill alt='' />
-      </div> :
+        <Image src='/img/right-menu/help.svg' fill alt='' />
+      </div></> :
         <div>
           <div className={styles.help}>
             <div className={styles.gradient}></div>
