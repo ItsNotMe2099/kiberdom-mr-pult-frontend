@@ -12,9 +12,10 @@ interface Props {
   children?: React.ReactNode
   className?: string
   active?: boolean
+  onClick?: () => void
 }
 
-export default function Square({ degree, color, loading, img, controls, children, className, active }: Props) {
+export default function Square({ degree, color, loading, img, controls, children, className, active, onClick }: Props) {
 
   const getColor = (color: 'blue' | 'green' | 'purple', degree: number) => {
     switch (color) {
@@ -30,7 +31,7 @@ export default function Square({ degree, color, loading, img, controls, children
   const [isActive, setIsActive] = useState<boolean>(false)
 
   return (
-    <div className={classNames(styles.root, className, {[styles.active]: (active || isActive)})}>
+    <div onClick={onClick} className={classNames(styles.root, className, {[styles.active]: (active || isActive)})}>
       {(active || isActive) ? <div className={styles.gradient} style={{ background: getColor(color, degree) }}>
       </div> : null}
       {!loading ?

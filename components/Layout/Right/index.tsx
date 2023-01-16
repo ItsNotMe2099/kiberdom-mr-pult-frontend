@@ -1,3 +1,4 @@
+import Climate from './Climate'
 import Help from './Help'
 import styles from './index.module.scss'
 import Sound from './Sound'
@@ -11,6 +12,7 @@ export default function Right({ }: Props) {
   return (
     <div className={styles.root}>
       <Sound/>
+      <Climate/>
       <Help/>
     </div>
   )

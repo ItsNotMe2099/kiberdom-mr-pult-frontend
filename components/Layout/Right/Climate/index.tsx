@@ -1,0 +1,67 @@
+import { useAppContext } from 'context/state'
+import Image from 'next/image'
+import { useState } from 'react'
+import styles from './index.module.scss'
+import classNames from 'classnames'
+
+interface Props {
+
+}
+
+interface ItemProps {
+  level?: number
+  index?: number
+}
+
+export default function Climate({ }: Props) {
+
+  const [isActive, setIsActive] = useState<boolean>(false)
+
+  const handleClick = () => {
+    setIsActive(true)
+    setTimeout(() => {
+      setIsActive(false)
+    }, 5000)
+  }
+
+  const handleItemClick = (index?: number) => {
+    if (index !== undefined) {
+      appContext.updateClimateLevel(index + 18)
+    }
+  }
+
+  const Item = ({ level, index }: ItemProps) => {
+    return (
+      <div onClick={() => isActive ? handleItemClick(index) : null}
+        className={classNames(styles.item, {
+          [styles.active]: level && level <= appContext.climateLevel,
+          [styles.opened]: isActive 
+        })}>
+        <div className={styles.gradient}></div>
+        <div className={styles.gradient2}></div>
+        {isActive ? level : null}
+      </div>
+    )
+  }
+
+  const array = Array(8)
+
+  const items = array.fill(<Item />)
+
+  const appContext = useAppContext()
+
+  return (
+    <div className={styles.root}>
+      {!isActive ? <div className={styles.title}>
+        климат
+      </div> : null}
+      <div className={styles.climate} onClick={handleClick}>
+        <div className={styles.items}>
+          {items.map((i, index) =>
+            <Item index={index} key={index} level={index + 18} />)}
+        </div>
+        {!isActive ? <Image src='/img/right-menu/climate.svg' fill alt='' /> : null}
+      </div>
+    </div>
+  )
+}
