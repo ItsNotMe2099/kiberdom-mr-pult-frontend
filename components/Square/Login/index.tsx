@@ -42,14 +42,23 @@ export default function Login({ icon, onSubmit, color, degree, onCancel }: Props
     }
   }
 
+  const getBorderColor = (color: 'blue' | 'green') => {
+    switch(color){
+      case 'blue':
+        return `#0B5BFC`
+      case 'green':
+        return `#0197A7`
+    }
+  }
+
   return (
     <div className={styles.root}>
       <div className={styles.gradient} style={{ background: getColor(color, degree) }}></div>
       <Image className={styles.img} src={icon} alt='' fill />
       <FormikProvider value={formik}>
         <Form className={styles.form}>
-          <TextField name='id' label='ID' />
-          <TextField className={styles.key} name='key' type={'password'} label='ключ' />
+          <TextField name='id' label='ID' brdrColor={getBorderColor(color)}/>
+          <TextField className={styles.key} name='key' type={'password'} label='ключ' brdrColor={getBorderColor(color)}/>
           <div className={styles.btns}>
             <Button onClick={handleCancel} color={'red'} fluid>
               отмена

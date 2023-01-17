@@ -9,6 +9,7 @@ interface Props extends IField<string> {
   className?: string
   onChange?: (val: string) => void
   label: string
+  brdrColor?: string
 }
 
 export default function TextField(props: Props) {
@@ -24,7 +25,7 @@ export default function TextField(props: Props) {
   }
 
   return (
-    <div className={classNames(styles.root, props.className)}>
+    <div className={classNames(styles.root, props.className)} style={{borderColor: props.brdrColor}}>
       <div className={styles.wrapper}>
         <div className={styles.inputWrapper}>
         {!focused ? <div className={styles.label}>
