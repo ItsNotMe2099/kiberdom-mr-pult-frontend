@@ -1,8 +1,9 @@
 import Layout from 'components/Layout'
+import SoundSquare from 'components/SoundSquare'
 import Square from 'components/Square'
 import Login from 'components/Square/Login'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './index.module.scss'
 
 export default function IndexPage() {
@@ -26,6 +27,11 @@ export default function IndexPage() {
   const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)
   const [isActiveConf, setIsActiveConf] = useState<boolean>(false)
 
+  const [isOff, setIsOff] = useState<boolean>(true)
+  const nodeRef = useRef(null)
+
+  console.log('isOFF', isOff)
+
   return (
     <Layout loading={loading}>
       <div className={styles.root}>
@@ -45,18 +51,19 @@ export default function IndexPage() {
             <Login onCancel={() => setIsActiveConf(false)} degree={45} color='green' icon='/img/logos/trueconf.svg'
               onSubmit={handleSubmitTrueConf} />}
         </Square>
-        <Square className={styles.screen} degree={225} controls color='purple' loading={loading} img='/img/logos/screen.svg'>
+        <Square className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
           <div className={styles.label}>
             демонстрация
             экрана
           </div>
         </Square>
-        <Square active={loading ? true : false} className={styles.sound} degree={-225} color='purple' loading={loading} img='/img/logos/zoom.png'>
-          <div className={styles.label}>
-            фоновая
-            музыка
-          </div>
-        </Square>
+        {loading ? <Square
+        img=''
+        className={styles.sound} degree={-225} 
+        color='purple' 
+        loading={loading}>
+        </Square> :
+        <SoundSquare onClick={() => setIsOff(isOff ? false : true)}  isOn={!isOff ? true : false} img='/img/logos/sound-off.svg'/>}
       </div>
     </Layout>
   )

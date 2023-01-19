@@ -1,0 +1,59 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+.img {
+  width: 230px !important;
+  height: auto !important;
+  position: relative !important;
+  z-index: 1;
+}
+
+.label{
+  top: 20px;
+  left: 20px;
+  max-width: 60%;
+  text-align: left;
+  color: #fff;
+  font-weight: 600;
+  font-size: 44px;
+  display: flex;
+  position: absolute;
+  display: flex;
+  z-index: 11;
+}
+
+.rootEnter {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+.rootEnterActive {
+  background-image: linear-gradient(-225deg, #6300B8 20%, #140026 30%, #000 45%);
+  transition: background-image 200ms;
+}
+.rootEnterDone{
+  background-image: linear-gradient(-225deg, #6300B8 20%, #140026 30%, #000 45%);
+}
+.rootExit {
+  background-image: linear-gradient(-225deg, #6300B8 20%, #140026 30%, #000 45%);
+}
+.rootExitActive {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  transition: background-image 200ms;
+}
+.rootExitDone{
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+}
