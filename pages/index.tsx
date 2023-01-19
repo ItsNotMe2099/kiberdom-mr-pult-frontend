@@ -1,9 +1,10 @@
-import Layout from 'components/Layout'
-import SoundSquare from 'components/SoundSquare'
-import Square from 'components/Square'
-import Login from 'components/Square/Login'
+import Layout from 'components/for_pages/Layout'
+import SoundSquare from 'components/for_pages/main/SoundSquare'
+import Square from 'components/for_pages/main/Square'
+import Login from 'components/for_pages/main/Square/Login'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
 export default function IndexPage() {
@@ -16,21 +17,20 @@ export default function IndexPage() {
     }, 5000)
   }, [])
 
-  const handleSubmitZoom = () => {
+  const router = useRouter()
 
+  const handleSubmitZoom = () => {
+    router.push('/logged')
   }
 
   const handleSubmitTrueConf = () => {
-
+    router.push('/logged')
   }
 
   const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)
   const [isActiveConf, setIsActiveConf] = useState<boolean>(false)
 
   const [isOff, setIsOff] = useState<boolean>(true)
-  const nodeRef = useRef(null)
-
-  console.log('isOFF', isOff)
 
   return (
     <Layout loading={loading}>
@@ -58,12 +58,12 @@ export default function IndexPage() {
           </div>
         </Square>
         {loading ? <Square
-        img=''
-        className={styles.sound} degree={-225} 
-        color='purple' 
-        loading={loading}>
+          img=''
+          className={styles.sound} degree={-225}
+          color='purple'
+          loading={loading}>
         </Square> :
-        <SoundSquare onClick={() => setIsOff(isOff ? false : true)}  isOn={!isOff ? true : false} img='/img/logos/sound-off.svg'/>}
+          <SoundSquare onClick={() => setIsOff(isOff ? false : true)} isOn={!isOff ? true : false} img='/img/logos/sound-off.svg' />}
       </div>
     </Layout>
   )

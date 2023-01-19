@@ -2,19 +2,17 @@ import BackSvg from 'components/svg/BackSvg'
 import DemonstrateSvg from 'components/svg/DemonstrateSvg'
 import MembersSvg from 'components/svg/MembersSvg'
 import SpeakerSvg from 'components/svg/SpeakerSvg'
-import { useAppContext } from 'context/state'
 import styles from './index.module.scss'
 import ScreenControls from './ScreenControls'
 
 interface Props {
-
+  isZoom: boolean
+  isTrueConf: boolean
 }
 
-export default function Left({ }: Props) {
+export default function Left({ isZoom, isTrueConf }: Props) {
 
-  const appContext = useAppContext()
-
-  const getOptions = (isZoom: boolean = false, isTrueConf: boolean = false) => {
+  const getOptions = (isZoom: boolean, isTrueConf: boolean) => {
     if (isZoom) {
       return [{ img: <MembersSvg />, label: 'заставка' },
       { img: <SpeakerSvg />, label: 'спикер' }, { img: <DemonstrateSvg />, label: 'демонстрация' }]
@@ -33,10 +31,10 @@ export default function Left({ }: Props) {
       <div className={styles.title}>
         ЭКРАНЫ
       </div>
-      <ScreenControls options={getOptions(appContext.isZoom, appContext.isTrueConf)} color={appContext.isZoom ? 'blue' : appContext.isTrueConf ? 'green' : 'gray'} number={1} />
-      <ScreenControls options={getOptions(appContext.isZoom, appContext.isTrueConf)} color={appContext.isZoom ? 'blue' : appContext.isTrueConf ? 'green' : 'gray'} number={2} />
-      <ScreenControls options={getOptions(appContext.isZoom, appContext.isTrueConf)} color={appContext.isZoom ? 'blue' : appContext.isTrueConf ? 'green' : 'gray'} number={3} />
-      <ScreenControls options={getOptions(appContext.isZoom, appContext.isTrueConf)} color={appContext.isZoom ? 'blue' : appContext.isTrueConf ? 'green' : 'gray'} number={4} />
+      <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={1} />
+      <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={2} />
+      <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={3} />
+      <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={4} />
     </div>
   )
 }
