@@ -10,8 +10,8 @@ interface IState {
 }
 
 const defaultValue: IState = {
-  isZoom: false,
-  isTrueConf: true,
+  isZoom: true,
+  isTrueConf: false,
   soundLevel: 0,
   climateLevel: 0,
   updateSoundLevel: (level) => null,
@@ -32,8 +32,8 @@ export function AppWrapper(props: Props) {
 
   const value: IState = {
     ...defaultValue,
-    isZoom: false,
-    isTrueConf: true,
+    isZoom: true,
+    isTrueConf: false,
     soundLevel,
     climateLevel,
     updateSoundLevel: (level) => {

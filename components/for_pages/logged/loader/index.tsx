@@ -8,12 +8,13 @@ interface Props {
 
 export default function Loader({ icon, color }: Props) {
 
+
   const getColor = (color: 'blue' | 'green' | 'purple') => {
     switch (color) {
       case 'blue':
-        return `radial-gradient(80.68% 121.56% at 50% 100%, #0B5BFC 0%, rgba(255, 255, 255, 0) 46.14%)`
+        return `conic-gradient(#000 0deg 110deg, #0B5BFC, #000 250deg)`
       case 'green':
-        return `radial-gradient(80.68% 121.56% at 50% 100%, #0197A7 0%, rgba(255, 255, 255, 0) 46.14%)`
+        return `conic-gradient(#000 0deg 110deg, #0197A7, #000 250deg)`
     }
   }
 
