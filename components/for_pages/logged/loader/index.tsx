@@ -9,7 +9,7 @@ interface Props {
 export default function Loader({ icon, color }: Props) {
 
 
-  const getColor = (color: 'blue' | 'green' | 'purple') => {
+  const getColor = (color: 'blue' | 'green') => {
     switch (color) {
       case 'blue':
         return `conic-gradient(#000 0deg 110deg, #0B5BFC, #000 250deg)`
