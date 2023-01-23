@@ -1,0 +1,31 @@
+@import "styles/index";
+
+.root {
+  background: linear-gradient(180deg, rgba(22, 22, 22, 1) 0%, rgba(22, 22, 22, 1) 35%, rgba(1, 1, 1, 1) 100%);
+  display: flex;
+  justify-content: center;
+  padding: 133px 0;
+  padding-bottom: 18px;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  svg {
+    fill: #707070;
+    width: 148px;
+    height: 148px;
+  }
+}
+
+.title {
+  font-weight: 600;
+  font-size: 44px;
+  color: #fff;
+  margin-top: 70px;
+}
+
+.img{
+  width: 165px !important;
+  height: 165px !important;
+  position: relative !important;
+}

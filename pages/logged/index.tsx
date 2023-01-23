@@ -5,6 +5,8 @@ import { useAppContext } from 'context/state'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import ScreenDemonstration from 'components/for_pages/logged/ScreenDemonstration'
+import BottomControl from 'components/for_pages/logged/BottomControl'
 
 export default function LoggedPage() {
 
@@ -18,9 +20,6 @@ export default function LoggedPage() {
     }, 5000)
   }, [])
 
-  console.log(appContext.isZoom)
-
-
   return (
     <Layout loading={false}>
       <div className={classNames(styles.root, {[styles.loaded]: !loading})}>
@@ -30,7 +29,11 @@ export default function LoggedPage() {
             icon={appContext.isTrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
           :
           <LayoutAuthorized>
-            
+            <ScreenDemonstration/>
+            <div className={styles.bottom}>
+              <BottomControl img={'/img/logos/microphone-off.svg'} title='микрофон'/>
+              <BottomControl img={'/img/logos/camera-off.svg'} title='камера'/>
+            </div>
           </LayoutAuthorized>}
       </div>
     </Layout>
