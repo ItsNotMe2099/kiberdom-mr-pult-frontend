@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
@@ -12,9 +13,9 @@ export default function Loader({ icon, color }: Props) {
   const getColor = (color: 'blue' | 'green') => {
     switch (color) {
       case 'blue':
-        return `conic-gradient(#000 0deg 110deg, #0B5BFC, #000 250deg)`
+        return `conic-gradient(#000 0deg 110deg, ${colors.zoom}, #000 250deg)`
       case 'green':
-        return `conic-gradient(#000 0deg 110deg, #0197A7, #000 250deg)`
+        return `conic-gradient(#000 0deg 110deg, ${colors.trueconf}, #000 250deg)`
     }
   }
 

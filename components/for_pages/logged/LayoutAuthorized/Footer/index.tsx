@@ -3,9 +3,11 @@ import ExitSvg from 'components/svg/ExitSvg'
 import InviteSvg from 'components/svg/InviteSvg'
 import Members2Svg from 'components/svg/Members2Svg'
 import RecordSvg from 'components/svg/RecordSvg'
+import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import styles from './index.module.scss'
 import Item from './Item'
+import classNames from 'classnames'
 
 interface Props {
 
@@ -13,15 +15,28 @@ interface Props {
 
 export default function Footer({ }: Props) {
 
+  const confContext = useConfContext()
   const appContext = useAppContext()
+
+  const getSvgColor = (type: boolean) => {
+    return classNames(
+      {
+        [styles.blue]: appContext.isZoom && type,
+        [styles.green]: appContext.isTrueConf && type
+      }
+    )
+  }
 
   return (
     <div className={styles.root}>
-      <Item icon={<Members2Svg />} />
-      <Item icon={<InviteSvg />} />
-      <Item icon={<CameraSvg />} />
-      <Item icon={<RecordSvg />} />
-      <Item style='exit' icon={<ExitSvg />} />
+      <Item color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveMembers}
+        onClick={confContext.handleMembers} icon={<Members2Svg className={getSvgColor(confContext.isActiveMembers)}/>} />
+      <Item color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
+        onClick={confContext.handleInvite} icon={<InviteSvg className={getSvgColor(confContext.isActiveInvite)}/>} />
+      <Item color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
+        onClick={confContext.handleCameraMenu} icon={<CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)}/>} />
+      <Item color={appContext.isZoom ? 'blue' : 'green'} active={false} style='record' icon={<RecordSvg />} />
+      <Item color={appContext.isZoom ? 'blue' : 'green'} active={false}  style='exit' icon={<ExitSvg />} />
     </div>
   )
 }

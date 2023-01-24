@@ -2,6 +2,7 @@ import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
 import { useFormik, Form, FormikProvider } from 'formik'
 import Image from 'next/image'
+import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
@@ -45,9 +46,9 @@ export default function Login({ icon, onSubmit, color, degree, onCancel }: Props
   const getBorderColor = (color: 'blue' | 'green') => {
     switch(color){
       case 'blue':
-        return `#0B5BFC`
+        return colors.zoom
       case 'green':
-        return `#0197A7`
+        return colors.trueconf
     }
   }
 

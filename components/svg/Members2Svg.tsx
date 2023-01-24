@@ -1,10 +1,10 @@
 interface Props {
-
+  className?: string
 }
 
 export default function Members2Svg(props: Props) {
   return (
-    <svg width="104" height="92" viewBox="0 0 104 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={props.className} width="104" height="92" viewBox="0 0 104 92" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M66.7996 18.4002C66.7996 26.7949 59.9943 33.6002 51.5996 33.6002C43.2049 33.6002 36.3996 26.7949 36.3996 18.4002C36.3996 10.0055 43.2049 3.2002 51.5996 3.2002C59.9943 3.2002 66.7996 10.0055 66.7996 18.4002ZM58.7996 18.4002C58.7996 22.3766 55.5761 25.6002 51.5996 25.6002C47.6232 25.6002 44.3996 22.3766 44.3996 18.4002C44.3996 14.4237 47.6232 11.2002 51.5996 11.2002C55.5761 11.2002 58.7996 14.4237 58.7996 18.4002Z"  />
       <path fill-rule="evenodd" clip-rule="evenodd" d="M25.5996 37.4002H77.5996V86.2002H25.5996V37.4002ZM33.5996 78.2002V45.4002H69.5996V78.2002H33.5996Z"  />
       <path d="M83.6012 75.8002V67.8002H95.2012V45.8002H83.6012V37.8002H103.201V75.8002H83.6012Z"  />

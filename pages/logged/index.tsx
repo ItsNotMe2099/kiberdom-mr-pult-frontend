@@ -7,12 +7,15 @@ import styles from './index.module.scss'
 import classNames from 'classnames'
 import ScreenDemonstration from 'components/for_pages/logged/ScreenDemonstration'
 import BottomControl from 'components/for_pages/logged/BottomControl'
+import { useConfContext } from 'context/conference_state'
+import CameraControls from 'components/for_pages/logged/CameraControls'
 
 export default function LoggedPage() {
 
   const [loading, setIsLoading] = useState<boolean>(true)
 
   const appContext = useAppContext()
+  const confContext = useConfContext()
 
   useEffect(() => {
     setTimeout(() => {
@@ -32,6 +35,7 @@ export default function LoggedPage() {
             <ScreenDemonstration/>
             <div className={styles.bottom}>
               <BottomControl img={'/img/logos/microphone-off.svg'} title='микрофон'/>
+              {confContext.isActiveCameraMenu ? <CameraControls/> : null}
               <BottomControl img={'/img/logos/camera-off.svg'} title='камера'/>
             </div>
           </LayoutAuthorized>}

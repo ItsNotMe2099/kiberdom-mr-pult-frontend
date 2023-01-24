@@ -17,3 +17,10 @@
 .exit{
   background: linear-gradient(180deg, rgba(22,4,4,1) 0%, rgba(21,3,3,1) 35%, rgba(1,0,0,1) 100%);
 }
+
+.record{
+  background: linear-gradient(180deg, rgba(22, 22, 22, 1) 0%, rgba(22, 22, 22, 1) 35%, rgba(1, 1, 1, 1) 100%);
+  svg {
+    fill: #707070;
+  }
+}

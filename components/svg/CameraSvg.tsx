@@ -1,10 +1,10 @@
 interface Props {
-
+  className?: string
 }
 
 export default function CameraSvg(props: Props) {
   return (
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={props.className} width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M79.2824 27.3195L60 8.03711L40.7176 27.3195L46.7913 33.3932L60 20.1845L73.2087 33.3932L79.2824 27.3195Z"  />
       <path d="M92.6802 40.7173L86.6066 46.791L99.8153 59.9998L86.6066 73.2085L92.6802 79.2822L111.963 59.9998L92.6802 40.7173Z"  />
       <path d="M46.7913 86.6063L60 99.8151L73.2087 86.6063L79.2824 92.68L60 111.962L40.7176 92.68L46.7913 86.6063Z"  />

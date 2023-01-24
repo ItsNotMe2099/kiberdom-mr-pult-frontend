@@ -1,5 +1,6 @@
 import { useAppContext } from 'context/state'
 import Image from 'next/image'
+import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
@@ -14,9 +15,9 @@ export default function Header({ color, icon }: Props) {
   const getColor = (color: 'blue' | 'green') => {
     switch (color) {
       case 'blue':
-        return `radial-gradient(94.35% 142.17% at 50% -0.4%, #0B5BFC 0%, rgba(255, 255, 255, 0) 40.48%)`
+        return `radial-gradient(94.35% 142.17% at 50% -0.4%, ${colors.zoom} 0%, rgba(255, 255, 255, 0) 40.48%)`
       case 'green':
-        return `radial-gradient(94.35% 142.17% at 50% -0.4%, #0197A7 0%, rgba(255, 255, 255, 0) 40.48%)`
+        return `radial-gradient(94.35% 142.17% at 50% -0.4%, ${colors.trueconf} 0%, rgba(255, 255, 255, 0) 40.48%)`
     }
   }
 

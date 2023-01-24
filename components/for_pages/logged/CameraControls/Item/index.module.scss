@@ -1,0 +1,26 @@
+@import "styles/index";
+
+.root {
+    padding: 0 50px;
+    padding-top: 50px;
+    padding-bottom: 5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.img {
+    width: 32px !important;
+    height: 32px !important;
+    position: relative !important;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+    margin-top: 27px;
+}
