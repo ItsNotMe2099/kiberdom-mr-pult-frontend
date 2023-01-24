@@ -14,7 +14,7 @@
   margin-bottom: 10px;
 }
 
-.help {
+.help, .call {
   position: relative;
   min-height: 250px;
 
@@ -49,4 +49,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.minimized{
+  min-height: 180px;
+  max-height: 180px;
+  .gradient{
+    padding: 90px 0;
+  }
+  img{
+    transform: translate(50%, 100%);
+  }
 }

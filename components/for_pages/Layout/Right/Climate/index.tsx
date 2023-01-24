@@ -1,6 +1,5 @@
 import { useAppContext } from 'context/state'
 import Image from 'next/image'
-import { useState } from 'react'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 
@@ -15,14 +14,7 @@ interface ItemProps {
 
 export default function Climate({ }: Props) {
 
-  const [isActive, setIsActive] = useState<boolean>(false)
-
-  const handleClick = () => {
-    setIsActive(true)
-    setTimeout(() => {
-      setIsActive(false)
-    }, 5000)
-  }
+  const appContext = useAppContext()
 
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
@@ -30,16 +22,23 @@ export default function Climate({ }: Props) {
     }
   }
 
+  const isOthersControlsActive = () => {
+    if(appContext.isSoundActive || appContext.isHelpActive || appContext.isLightActive){
+      return true
+    }
+    return false
+  }
+
   const Item = ({ level, index }: ItemProps) => {
     return (
-      <div onClick={() => isActive ? handleItemClick(index) : null}
+      <div onClick={() => appContext.isClimateActive ? handleItemClick(index) : null}
         className={classNames(styles.item, {
           [styles.active]: level && level <= appContext.climateLevel,
-          [styles.opened]: isActive 
+          [styles.opened]: appContext.isClimateActive,
+          [styles.minimized]: isOthersControlsActive() === true
         })}>
+        {appContext.isClimateActive ? level : null}
         <div className={styles.gradient}></div>
-        <div className={styles.gradient2}></div>
-        {isActive ? level : null}
       </div>
     )
   }
@@ -48,19 +47,18 @@ export default function Climate({ }: Props) {
 
   const items = array.fill(<Item />)
 
-  const appContext = useAppContext()
-
   return (
-    <div className={styles.root}>
-      {!isActive ? <div className={styles.title}>
+    <div className=
+    {classNames(styles.root, {[styles.rootActive]: appContext.isClimateActive, [styles.mini]: isOthersControlsActive() === true})}>
+      {!appContext.isClimateActive ? <div className={styles.title}>
         климат
       </div> : null}
-      <div className={styles.climate} onClick={handleClick}>
+      <div className={styles.climate} onClick={appContext.handleClimateActive}>
         <div className={styles.items}>
           {items.map((i, index) =>
             <Item index={index} key={index} level={index + 18} />)}
         </div>
-        {!isActive ? <Image src='/img/right-menu/climate.svg' fill alt='' /> : null}
+        {!appContext.isClimateActive ? <Image src='/img/right-menu/climate.svg' fill alt='' /> : null}
       </div>
     </div>
   )

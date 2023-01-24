@@ -1,6 +1,5 @@
 import { useAppContext } from 'context/state'
 import Image from 'next/image'
-import { useState } from 'react'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 
@@ -15,14 +14,7 @@ interface ItemProps {
 
 export default function Sound({ }: Props) {
 
-  const [isActive, setIsActive] = useState<boolean>(false)
-
-  const handleClick = () => {
-    setIsActive(true)
-    setTimeout(() => {
-      setIsActive(false)
-    }, 5000)
-  }
+  const appContext = useAppContext()
 
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
@@ -30,14 +22,22 @@ export default function Sound({ }: Props) {
     }
   }
 
+  const isOthersControlsActive = () => {
+    if(appContext.isClimateActive || appContext.isHelpActive || appContext.isLightActive){
+      return true
+    }
+    return false
+  }
+
   const Item = ({ level, index }: ItemProps) => {
     return (
-      <div onClick={() => isActive ? handleItemClick(index) : null}
+      <div onClick={() => appContext.isSoundActive ? handleItemClick(index) : null}
         className={classNames(styles.item, {
           [styles.active]: level && level <= appContext.soundLevel,
-          [styles.opened]: isActive 
+          [styles.opened]: appContext.isSoundActive,
+          [styles.minimized]: isOthersControlsActive() === true
         })}>
-        {isActive ? level : null}
+        {appContext.isSoundActive ? level : null}
       </div>
     )
   }
@@ -46,19 +46,18 @@ export default function Sound({ }: Props) {
 
   const items = array.fill(<Item />)
 
-  const appContext = useAppContext()
-
   return (
-    <div className={styles.root}>
-      {!isActive ? <div className={styles.title}>
+    <div className=
+    {classNames(styles.root, {[styles.rootActive]: appContext.isSoundActive, [styles.mini]: isOthersControlsActive() === true})}>
+      {!appContext.isSoundActive ? <div className={styles.title}>
         звук
       </div> : null}
-      <div className={styles.sound} onClick={handleClick}>
+      <div className={styles.sound} onClick={appContext.handleSoundActive}>
         <div className={styles.items}>
           {items.map((i, index) =>
             <Item index={index} key={index} level={(index + 1) * 10} />)}
         </div>
-        {!isActive ? <Image src='/img/right-menu/sound.svg' fill alt='' /> : null}
+        {!appContext.isSoundActive ? <Image src='/img/right-menu/sound.svg' fill alt='' /> : null}
       </div>
     </div>
   )

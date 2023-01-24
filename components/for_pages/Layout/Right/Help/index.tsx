@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import { useState } from 'react'
 import styles from './index.module.scss'
+import classNames from 'classnames'
+import { useAppContext } from 'context/state'
 
 interface Props {
 
@@ -8,32 +9,32 @@ interface Props {
 
 export default function Help({ }: Props) {
 
-  const [isActive, setIsActive] = useState<boolean>(false)
+  const appContext = useAppContext()
 
-  const handleClick = () => {
-    setIsActive(true)
-    setTimeout(() => {
-      setIsActive(false)
-    }, 5000)
+  const isOthersControlsActive = () => {
+    if(appContext.isClimateActive || appContext.isSoundActive || appContext.isLightActive){
+      return true
+    }
+    return false
   }
 
   return (
     <div className={styles.root}>
-      {!isActive ? <><div className={styles.title}>
+      {!appContext.isHelpActive ? <><div className={styles.title}>
         помощь
       </div>
-      <div className={styles.help}>
-        <div className={styles.gradient} onClick={handleClick}></div>
+      <div className={classNames(styles.help, {[styles.minimized]: isOthersControlsActive() === true})}>
+        <div className={styles.gradient} onClick={appContext.handleHelpActive}></div>
         <Image src='/img/right-menu/help.svg' fill alt='' />
       </div></> :
         <div>
-          <div className={styles.help}>
+          <div className={styles.call}>
             <div className={styles.gradient}></div>
             <div className={styles.text}>перейти
               в меню
               бара</div>
           </div>
-          <div className={styles.help}>
+          <div className={styles.call}>
             <div className={styles.gradient}></div>
             <div className={styles.text}>
             позвать админи-стратора
