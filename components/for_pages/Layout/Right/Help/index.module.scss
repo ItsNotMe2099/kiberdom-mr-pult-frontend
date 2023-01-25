@@ -1,7 +1,7 @@
 @import "styles/index";
 
 .root {
-  margin-top: 20px;
+  
 }
 
 .title {
@@ -14,14 +14,20 @@
   margin-bottom: 10px;
 }
 
+.call{
+  .gradient{
+    padding: 125px 0;
+  }
+}
+
 .help, .call {
   position: relative;
-  min-height: 250px;
+  min-height: 180px;
 
   img {
     position: relative !important;
     width: 50% !important;
-    transform: translate(50%, 130%);
+    transform: translate(50%, 90%);
   }
 
   .text {
@@ -36,11 +42,15 @@
   }
 }
 
+.call{
+  min-height: 230px;
+}
+
 .gradient {
   background: radial-gradient(50.51% 50.51% at 50.51% 50%, rgba(106, 18, 18, 1) 0%, rgba(106, 18, 18, 1) 44.79%, rgba(0, 0, 0, 1) 100%);
   position: absolute;
   min-width: 100%;
-  padding: 125px 0;
+  padding: 90px 0;
   border-radius: 100%;
   cursor: pointer;
 }
@@ -60,4 +70,9 @@
   img{
     transform: translate(50%, 100%);
   }
+}
+
+.minimizedAlt{
+  min-height: 110px;
+  max-height: 110px;
 }

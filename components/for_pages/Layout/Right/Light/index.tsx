@@ -29,7 +29,7 @@ export default function Light({ }: Props) {
   }
 
   const isOthersControlsActive = () => {
-    if (appContext.isSoundActive || appContext.isHelpActive || appContext.isLightActive) {
+    if (appContext.isSoundActive || appContext.isHelpActive || appContext.isClimateActive) {
       return true
     }
     return false
@@ -37,7 +37,7 @@ export default function Light({ }: Props) {
 
   const ItemUp = ({ level, index }: ItemProps) => {
     return (
-      <div onClick={() => appContext.isSoundActive ? handleItemUpZoneClick(index) : null}
+      <div onClick={() => appContext.isLightActive ? handleItemUpZoneClick(index) : null}
         className={classNames(styles.item, {
           [styles.active]: level && level <= appContext.lightLevelUp,
           [styles.opened]: appContext.isLightActive,
@@ -50,8 +50,8 @@ export default function Light({ }: Props) {
 
   const ItemDown = ({ level, index }: ItemProps) => {
     return (
-      <div onClick={() => appContext.isSoundActive ? handleItemDownZoneClick(index) : null}
-        className={classNames(styles.item, {
+      <div onClick={() => appContext.isLightActive ? handleItemDownZoneClick(index) : null}
+        className={classNames(styles.item, styles.itemDown, {
           [styles.active]: level && level <= appContext.lightLevelDown,
           [styles.opened]: appContext.isLightActive,
           [styles.minimized]: isOthersControlsActive() === true
@@ -61,8 +61,8 @@ export default function Light({ }: Props) {
     )
   }
 
-  const array = Array(3)
-  const arrayDown = Array(3)
+  const array = Array(4)
+  const arrayDown = Array(4)
 
   const itemsUp = array.fill(<ItemUp />)
   const itemsDown = arrayDown.fill(<ItemDown />)
@@ -73,10 +73,21 @@ export default function Light({ }: Props) {
       {!appContext.isLightActive ? <div className={styles.title}>
         свет
       </div> : null}
-      <div className={styles.sound} onClick={appContext.handleLightActive}>
+      <div className={styles.light} onClick={appContext.handleLightActive}>
         <div className={styles.items}>
           {itemsUp.map((i, index) =>
             <ItemUp index={index} key={index} level={index + 1} />)}
+        </div>
+        {!appContext.isLightActive ?
+        <div className={styles.decorative}>
+          <div className={classNames(styles.item, styles.active, {[styles.minimized]: isOthersControlsActive() === true})}></div>
+          <div className={classNames(styles.item, styles.itemDown, styles.active, {[styles.minimized]: isOthersControlsActive() === true})}></div>
+        </div> :
+        <div className={styles.zones}>
+          две зоны
+        </div>
+        }
+        <div className={styles.itemsDown}>
           {itemsDown.map((i, index) =>
             <ItemDown index={index} key={index} level={index + 1} />)}
         </div>
