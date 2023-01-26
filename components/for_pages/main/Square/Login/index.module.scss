@@ -2,7 +2,7 @@
 
 .root {
     position: absolute;
-    z-index: 11;
+    z-index: 12;
     width: 100%;
     height: 100%;
     display: flex;
@@ -12,6 +12,7 @@
     padding: 0 30px;
     justify-content: flex-end;
     cursor: auto;
+    opacity: 0;
 }
 
 .gradient {
@@ -21,7 +22,7 @@
     z-index: 11;
 }
 
-.img{
+.img {
     width: 180px !important;
     height: 40px !important;
     z-index: 12;
@@ -29,22 +30,41 @@
     position: relative !important;
 }
 
-.form{
+.form {
     width: 100%;
 }
 
-.key{
+.key {
     margin-top: 20px;
 }
 
-.btns{
+.btns {
     position: relative;
     z-index: 13;
     height: 80px;
     display: flex;
     margin: 0 -30px;
     margin-top: 20px;
-    button{
+
+    button {
         height: 100%;
     }
+}
+
+.loginEnter {
+    opacity: 0;
+}
+
+.loginEnterActive {
+    opacity: 1;
+    transition: opacity 2000ms;
+}
+
+.loginExit {
+    opacity: 1;
+}
+
+.loginExitActive {
+    opacity: 0;
+    transition: opacity 2000ms;
 }

@@ -2,6 +2,8 @@ import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
 import { useFormik, Form, FormikProvider } from 'formik'
 import Image from 'next/image'
+import { useRef } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
@@ -11,9 +13,10 @@ interface Props {
   degree: number
   color: 'blue' | 'green'
   onCancel: () => void
+  isActive: boolean
 }
 
-export default function Login({ icon, onSubmit, color, degree, onCancel }: Props) {
+export default function Login({ icon, onSubmit, color, degree, onCancel, isActive }: Props) {
 
   const initialValues = {
     id: '',
@@ -44,7 +47,7 @@ export default function Login({ icon, onSubmit, color, degree, onCancel }: Props
   }
 
   const getBorderColor = (color: 'blue' | 'green') => {
-    switch(color){
+    switch (color) {
       case 'blue':
         return colors.zoom
       case 'green':
@@ -52,24 +55,43 @@ export default function Login({ icon, onSubmit, color, degree, onCancel }: Props
     }
   }
 
+  const nodeRef = useRef(null)
+
+  console.log('inProp', isActive)
+  console.log('nodeRef', nodeRef)
+
   return (
-    <div className={styles.root}>
-      <div className={styles.gradient} style={{ background: getColor(color, degree) }}></div>
-      <Image className={styles.img} src={icon} alt='' fill />
-      <FormikProvider value={formik}>
-        <Form className={styles.form}>
-          <TextField name='id' label='ID' brdrColor={getBorderColor(color)}/>
-          <TextField className={styles.key} name='key' type={'password'} label='ключ' brdrColor={getBorderColor(color)}/>
-          <div className={styles.btns}>
-            <Button onClick={handleCancel} color={'red'} fluid>
-              отмена
-            </Button>
-            <Button type='submit' color={color} fluid>
-              подключить
-            </Button>
-          </div>
-        </Form>
-      </FormikProvider>
-    </div>
+    <CSSTransition
+      timeout={2000}
+      in={isActive}
+      nodeRef={nodeRef}
+      mountOnEnter
+      unmountOnExit
+      classNames={{
+        enter: styles.loginEnter,
+        enterActive: styles.loginEnterActive,
+        exit: styles.loginExit,
+        exitActive: styles.loginExitActive,
+      }}
+    >
+      <div className={styles.root} ref={nodeRef}>
+        <div className={styles.gradient} style={{ background: getColor(color, degree) }}></div>
+        <Image className={styles.img} src={icon} alt='' fill />
+        <FormikProvider value={formik}>
+          <Form className={styles.form}>
+            <TextField name='id' label='ID' brdrColor={getBorderColor(color)} />
+            <TextField className={styles.key} name='key' type={'password'} label='ключ' brdrColor={getBorderColor(color)} />
+            <div className={styles.btns}>
+              <Button onClick={handleCancel} color={'red'} fluid>
+                отмена
+              </Button>
+              <Button type='submit' color={color} fluid>
+                подключить
+              </Button>
+            </div>
+          </Form>
+        </FormikProvider>
+      </div>
+    </CSSTransition>
   )
 }

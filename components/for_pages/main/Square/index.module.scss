@@ -30,3 +30,12 @@
 .sound{
   width: 230px !important;
 }
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 2000ms;
+}

@@ -4,7 +4,8 @@ import Square from 'components/for_pages/main/Square'
 import Login from 'components/for_pages/main/Square/Login'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
 
 export default function IndexPage() {
@@ -32,30 +33,85 @@ export default function IndexPage() {
 
   const [isOff, setIsOff] = useState<boolean>(true)
 
+  console.log('isActiveZoom', isActiveZoom)
+
+  const logoRef = useRef(null)
+
+  const zoomLabelRef = useRef(null)
+  const trueLabelRef = useRef(null)
+  const demLabelRef = useRef(null)
+
   return (
     <Layout loading={loading}>
       <div className={styles.root}>
-        {loading ? <Image className={styles.img} src='/img/logo.svg' fill alt='' /> : null}
+        <CSSTransition
+          timeout={2000}
+          in={loading}
+          nodeRef={logoRef}
+          mountOnEnter
+          unmountOnExit
+          classNames={{
+            enter: styles.itemEnter,
+            enterActive: styles.itemEnterActive,
+            exit: styles.itemExit,
+            exitActive: styles.itemExitActive,
+          }}
+        >
+          <Image ref={logoRef} className={styles.img} src='/img/logo.svg' fill alt='' />
+        </CSSTransition>
         <Square onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null} className={styles.zoom} degree={-45} color='blue' loading={loading} img='/img/logos/zoom.png'>
-          {!isActiveZoom ? <div className={styles.label}>
-            старт zoom
-          </div>
-            :
-            <Login onCancel={() => setIsActiveZoom(false)} degree={-45} color='blue' icon='/img/logos/zoom.png' onSubmit={handleSubmitZoom} />}
+          <CSSTransition
+            timeout={2000}
+            in={!loading}
+            nodeRef={zoomLabelRef}
+            mountOnEnter
+            classNames={{
+              enter: styles.itemEnter,
+              enterActive: styles.itemEnterActive,
+            }}
+          >
+            <div className={styles.label} ref={zoomLabelRef}>
+              старт zoom
+            </div></CSSTransition>
+          <Login
+            onCancel={() => setIsActiveZoom(false)}
+            isActive={isActiveZoom}
+            degree={-45}
+            color='blue'
+            icon='/img/logos/zoom.png'
+            onSubmit={handleSubmitZoom} />
         </Square>
         <Square onClick={() => !isActiveConf ? setIsActiveConf(true) : null} className={styles.trueconf} degree={45} color='green' loading={loading} img='/img/logos/trueconf.svg'>
-          {!isActiveConf ? <div className={styles.label}>
-            cтарт trueconf
-          </div>
-            :
-            <Login onCancel={() => setIsActiveConf(false)} degree={45} color='green' icon='/img/logos/trueconf.svg'
-              onSubmit={handleSubmitTrueConf} />}
+          <CSSTransition
+            timeout={2000}
+            in={!loading}
+            nodeRef={trueLabelRef}
+            mountOnEnter
+            classNames={{
+              enter: styles.itemEnter,
+              enterActive: styles.itemEnterActive,
+            }}
+          >
+            <div className={styles.label} ref={trueLabelRef}>
+              cтарт trueconf
+            </div></CSSTransition>
+          <Login isActive={isActiveConf} onCancel={() => setIsActiveConf(false)} degree={45} color='green' icon='/img/logos/trueconf.svg'
+            onSubmit={handleSubmitTrueConf} />
         </Square>
         <Square className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
-          <div className={styles.label}>
-            демонстрация
-            экрана
-          </div>
+          <CSSTransition
+            timeout={2000}
+            in={!loading}
+            nodeRef={demLabelRef}
+            mountOnEnter
+            classNames={{
+              enter: styles.itemEnter,
+              enterActive: styles.itemEnterActive,
+            }}
+          >
+            <div className={styles.label} ref={demLabelRef}>
+              демонстрация экрана
+            </div></CSSTransition>
         </Square>
         {loading ? <Square
           img=''

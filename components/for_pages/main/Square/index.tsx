@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import { CSSTransition } from 'react-transition-group'
+import { useRef } from 'react'
 
 interface Props {
   degree: number
@@ -32,15 +34,26 @@ export default function Square({ degree, color, loading, img, imgWidth, children
     })
   }
 
+  const nodeRef = useRef(null)
+
   return (
     <div onClick={onClick} className={classNames(styles.root, className)}>
       <div className={styles.gradient} style={{ background: getColor(color, degree) }}>
       </div>
-      {!loading ?
-        <>{children}</>
-        : null}
-      {!loading ? <Image className=
-        {classNames(styles.img, getImgWidth())} src={img} alt='' fill /> : null}
-    </div>
+      <>{children}</>
+      <CSSTransition
+        timeout={2000}
+        in={!loading}
+        nodeRef={nodeRef}
+        mountOnEnter
+        classNames={{
+          enter: styles.itemEnter,
+          enterActive: styles.itemEnterActive,
+        }}
+      >
+        <Image className=
+          {classNames(styles.img, getImgWidth())} src={img} alt='' fill ref={nodeRef} />
+      </CSSTransition>
+    </div >
   )
 }

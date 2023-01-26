@@ -12,7 +12,7 @@
 .img {
   width: 10% !important;
   left: 45% !important;
-  z-index: 1;
+  z-index: 13;
 }
 
 .label {
@@ -23,7 +23,7 @@
   display: flex;
   position: absolute;
   display: flex;
-  z-index: 11;
+  z-index: 12;
 }
 
 .zoom{
@@ -61,4 +61,22 @@
     max-width: 60%;
     text-align: left;
   }
+}
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+
+.itemExit{
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 2000ms;
 }
