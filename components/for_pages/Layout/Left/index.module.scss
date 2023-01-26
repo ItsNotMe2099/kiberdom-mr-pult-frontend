@@ -16,3 +16,14 @@
   text-align: center;
   text-transform: uppercase;
 }
+
+.wrapper {}
+
+.menuEnter {
+  opacity: 0;
+}
+
+.menuEnterActive {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
