@@ -14,9 +14,9 @@ export default function Layout({ children, loading }: Props) {
 
   return (
     <div className={styles.root}>
-      {!loading ? <Left isZoom={appContext.isZoom} isTrueConf={appContext.isTrueConf}/> : null}
+      <Left loading={loading} isZoom={appContext.isZoom} isTrueConf={appContext.isTrueConf}/>
         {children}
-      {!loading ? <Right /> : null}
+      <Right loading={loading} />
     </div>
   )
 }

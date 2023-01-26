@@ -42,7 +42,7 @@ export function ConfWrapper(props: Props) {
   const [isActiveMembers, setIsActiveMembers] = useState<boolean>(false)
   const [isActiveInvite, setIsActiveInvite] = useState<boolean>(false)
 
-  const [isManualCamera, setIsManualCamera] = useState<boolean>(false)
+  const [isManualCamera, setIsManualCamera] = useState<boolean>(true)
   const [isAutoCamera, setIsAutoCamera] = useState<boolean>(false)
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
 
