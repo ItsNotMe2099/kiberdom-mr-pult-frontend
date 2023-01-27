@@ -1,12 +1,17 @@
+import { IUser } from 'data/interfaces/IUser'
 import { createContext, useContext, useState } from 'react'
 
 interface IState {
   isActiveCameraMenu: boolean
+  isActiveUsersList: boolean
   isActiveMembers: boolean
   isActiveInvite: boolean
   isManualCamera: boolean
   isAutoCamera: boolean
   isStreamsCamera: boolean
+  users: IUser[]
+  newUsers: IUser[]
+  handleActiveUsersListMenu: () => void
   handleCameraMenu: () => void
   handleMembers: () => void
   handleInvite: () => void
@@ -17,11 +22,15 @@ interface IState {
 
 const defaultValue: IState = {
   isActiveCameraMenu: false,
+  isActiveUsersList: false,
   isActiveMembers: false,
   isActiveInvite: false,
   isManualCamera: false,
   isAutoCamera: false,
   isStreamsCamera: false,
+  users: [],
+  newUsers: [],
+  handleActiveUsersListMenu: () => null,
   handleCameraMenu: () => null,
   handleMembers: () => null,
   handleInvite: () => null,
@@ -42,22 +51,48 @@ export function ConfWrapper(props: Props) {
   const [isActiveMembers, setIsActiveMembers] = useState<boolean>(false)
   const [isActiveInvite, setIsActiveInvite] = useState<boolean>(false)
 
+  const [isActiveUsersList, setIsActiveUsersList] = useState<boolean>(false)
+
   const [isManualCamera, setIsManualCamera] = useState<boolean>(true)
   const [isAutoCamera, setIsAutoCamera] = useState<boolean>(false)
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
 
+  //temp
+
+  const tempNewUsers = [
+    {id: '1', avatar: '', name: 'Генри Форд'},
+    {id: '2', avatar: '/img/dev/avatar.png', name: 'Генри Форд'},
+  ]
+
+  const tempUsers = [
+    {id: '3', avatar: '/img/dev/avatar.png', name: 'Генри Форд'},
+  ]
+
+  //temp
+
+  const [newUsers, setNewUsers] = useState<IUser[]>(tempNewUsers)
+
+  const [users, setUsers] = useState<IUser[]>(tempUsers)
+
   const value: IState = {
     ...defaultValue,
     isActiveCameraMenu,
+    isActiveUsersList,
     isActiveMembers,
     isActiveInvite,
     isManualCamera,
     isAutoCamera,
     isStreamsCamera,
+    users,
+    newUsers,
+    handleActiveUsersListMenu: () => {
+      setIsActiveUsersList(true)
+    },
     handleCameraMenu: () => {
       setIsActiveCameraMenu(isActiveCameraMenu ? false : true)
       setIsActiveInvite(false)
       setIsActiveMembers(false)
+      setIsActiveUsersList(false)
     },
     handleInvite: () => {
       setIsActiveInvite(isActiveInvite ? false : true)

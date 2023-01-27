@@ -10,7 +10,7 @@ interface Props extends IButton{
   className?: string
   fluid?: boolean
   target?: string
-  color: 'red' | 'blue' | 'green'
+  color: 'red' | 'blue' | 'green' | 'gray'
 }
 
 export default function Button(props: Props) {
@@ -23,6 +23,7 @@ export default function Button(props: Props) {
         [styles.blue]: props.color === 'blue',
         [styles.disabled]: props.disabled,
         [styles.green]: props.color === 'green',
+        [styles.gray]: props.color === 'gray',
       }, props.className
     )
 

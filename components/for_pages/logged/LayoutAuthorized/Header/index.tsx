@@ -1,6 +1,8 @@
+import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import { colors } from 'styles/variables'
+import User from '../../UsersList/User'
 import styles from './index.module.scss'
 
 interface Props {
@@ -11,6 +13,7 @@ interface Props {
 export default function Header({ color, icon }: Props) {
 
   const appContext = useAppContext()
+  const confContext = useConfContext()
 
   const getColor = (color: 'blue' | 'green') => {
     switch (color) {
@@ -23,10 +26,18 @@ export default function Header({ color, icon }: Props) {
 
   return (
     <div className={styles.root} style={{ background: getColor(color) }}>
+      {confContext.newUsers.length === 1 && !confContext.isActiveUsersList ? <User onClick={confContext.handleActiveUsersListMenu}
+        user={confContext.newUsers[0]}
+        style='header' /> : null}
+      {confContext.newUsers.length > 1 && !confContext.isActiveUsersList ?
+        <div className={styles.allow} onClick={confContext.handleActiveUsersListMenu}
+          style={{ backgroundColor: appContext.isZoom ? `${colors.zoom}` : `${colors.trueconf}` }}>
+          {`впустить новых участников (+${confContext.newUsers.length})`}
+        </div> : null}
       <Image className={styles.img} src={icon} alt='' fill />
       <div className={styles.bottom}>
         <div className={styles.id}>
-          ID {appContext.user?.id} 
+          ID {appContext.user?.id}
         </div>
         <div className={styles.separator}>
           •

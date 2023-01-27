@@ -70,11 +70,13 @@ export function AppWrapper(props: Props) {
   const [isLightActive, setIsLightActive] = useState<boolean>(false)
   //temp
   const zoomUser = {
-    id: '303-334-43-45'
+    id: '303-334-43-45',
+    avatar: '', name: ''
   }
 
   const trueConfUser = {
-    id: '303-334-43-45'
+    id: '303-334-43-45',
+    avatar: '', name: ''
   }
   //temp
 

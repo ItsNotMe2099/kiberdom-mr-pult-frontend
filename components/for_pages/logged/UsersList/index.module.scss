@@ -1,0 +1,42 @@
+@import "styles/index";
+
+.root {
+  background: #000000;
+  display: flex;
+  min-height: 100%;
+  position: relative;
+  flex-direction: column;
+  min-width: 50%;
+  justify-content: flex-end;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.micControl {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  padding: 28px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.img {
+  width: 36px !important;
+  height: 45px !important;
+  position: relative !important;
+  margin-right: 10px;
+  path{
+    fill: $gray;
+  }
+}
+
+.text {
+  font-weight: 600;
+  font-size: 24px;
+  color: #fff;
+}

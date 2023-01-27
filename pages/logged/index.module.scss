@@ -16,3 +16,19 @@
   gap: 0 5px;
   margin-top: 10px;
 }
+
+.main{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wrapper{
+  display: flex;
+}
+
+.svg{
+  path{
+    fill: $gray;
+  }
+}
