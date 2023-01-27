@@ -1,12 +1,23 @@
 @import "styles/index";
 
 .root {
-  padding: 50px 40px 70px 40px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  height: 100%;
+  z-index: 22;
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 40px 70px 40px;
 }
 
 .wait {
@@ -22,4 +33,22 @@
   height: 27px !important;
   z-index: 12;
   position: relative !important;
+}
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+
+.itemExit{
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 2000ms;
 }

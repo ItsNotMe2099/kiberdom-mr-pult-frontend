@@ -1,4 +1,5 @@
 import Layout from 'components/for_pages/Layout'
+import Demonstration from 'components/for_pages/main/Demonstration'
 import SoundSquare from 'components/for_pages/main/SoundSquare'
 import Square from 'components/for_pages/main/Square'
 import Login from 'components/for_pages/main/Square/Login'
@@ -33,6 +34,8 @@ export default function IndexPage() {
 
   const [isOff, setIsOff] = useState<boolean>(true)
 
+  const [isDemonstration, setIsDemonstration] = useState<boolean>(false)
+
   console.log('isActiveZoom', isActiveZoom)
 
   const logoRef = useRef(null)
@@ -44,6 +47,7 @@ export default function IndexPage() {
   return (
     <Layout loading={loading}>
       <div className={styles.root}>
+        <Demonstration isActive={isDemonstration} onCancel={() => setIsDemonstration(false)} />
         <CSSTransition
           timeout={2000}
           in={loading}
@@ -68,6 +72,8 @@ export default function IndexPage() {
             classNames={{
               enter: styles.itemEnter,
               enterActive: styles.itemEnterActive,
+              exit: styles.itemExit,
+              exitActive: styles.itemExitActive,
             }}
           >
             <div className={styles.label} ref={zoomLabelRef}>
@@ -90,6 +96,8 @@ export default function IndexPage() {
             classNames={{
               enter: styles.itemEnter,
               enterActive: styles.itemEnterActive,
+              exit: styles.itemExit,
+              exitActive: styles.itemExitActive,
             }}
           >
             <div className={styles.label} ref={trueLabelRef}>
@@ -98,7 +106,7 @@ export default function IndexPage() {
           <Login isActive={isActiveConf} onCancel={() => setIsActiveConf(false)} degree={45} color='green' icon='/img/logos/trueconf.svg'
             onSubmit={handleSubmitTrueConf} />
         </Square>
-        <Square className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
+        <Square onClick={() => setIsDemonstration(true)} className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
           <CSSTransition
             timeout={2000}
             in={!loading}
@@ -107,6 +115,8 @@ export default function IndexPage() {
             classNames={{
               enter: styles.itemEnter,
               enterActive: styles.itemEnterActive,
+              exit: styles.itemExit,
+              exitActive: styles.itemExitActive,
             }}
           >
             <div className={styles.label} ref={demLabelRef}>

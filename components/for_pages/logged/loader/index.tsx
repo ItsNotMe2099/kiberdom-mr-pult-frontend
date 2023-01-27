@@ -1,13 +1,16 @@
 import Image from 'next/image'
+import { useRef } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
   icon: string
   color: 'blue' | 'green'
+  isActive: boolean
 }
 
-export default function Loader({ icon, color }: Props) {
+export default function Loader({ icon, color, isActive }: Props) {
 
 
   const getColor = (color: 'blue' | 'green') => {
@@ -19,12 +22,30 @@ export default function Loader({ icon, color }: Props) {
     }
   }
 
+  const nodeRef = useRef(null)
+
   return (
-    <div className={styles.root} style={{background: getColor(color) }}>
-      <Image className={styles.img} src={icon} alt='' fill />
-      <div className={styles.wait}>
-        запускаю, подождите...
+    <CSSTransition
+      timeout={2000}
+      in={isActive}
+      nodeRef={nodeRef}
+      mountOnEnter
+      unmountOnExit
+      classNames={{
+        enter: styles.itemEnter,
+        enterActive: styles.itemEnterActive,
+        exit: styles.itemExit,
+        exitActive: styles.itemExitActive,
+      }}
+    >
+      <div className={styles.root} ref={nodeRef}>
+        <div className={styles.container} style={{ background: getColor(color) }}>
+          <Image className={styles.img} src={icon} alt='' fill />
+          <div className={styles.wait}>
+            запускаю, подождите...
+          </div>
+        </div>
       </div>
-    </div>
+    </CSSTransition >
   )
 }
