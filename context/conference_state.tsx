@@ -9,6 +9,8 @@ interface IState {
   isManualCamera: boolean
   isAutoCamera: boolean
   isStreamsCamera: boolean
+  isMicOn: boolean
+  isCamOn: boolean
   users: IUser[]
   newUsers: IUser[]
   handleActiveUsersListMenu: () => void
@@ -18,6 +20,8 @@ interface IState {
   handleManualCamera: () => void
   handleAutoCamera: () => void
   handleStreamsCamera: () => void
+  handleMicrophone: () => void
+  handleCamera: () => void
 }
 
 const defaultValue: IState = {
@@ -28,6 +32,8 @@ const defaultValue: IState = {
   isManualCamera: false,
   isAutoCamera: false,
   isStreamsCamera: false,
+  isMicOn: false,
+  isCamOn: false,
   users: [],
   newUsers: [],
   handleActiveUsersListMenu: () => null,
@@ -36,7 +42,9 @@ const defaultValue: IState = {
   handleInvite: () => null,
   handleManualCamera: () => null,
   handleAutoCamera: () => null,
-  handleStreamsCamera: () => null
+  handleStreamsCamera: () => null,
+  handleMicrophone: () => null,
+  handleCamera: () => null
 }
 
 const ConfContext = createContext<IState>(defaultValue)
@@ -56,6 +64,9 @@ export function ConfWrapper(props: Props) {
   const [isManualCamera, setIsManualCamera] = useState<boolean>(true)
   const [isAutoCamera, setIsAutoCamera] = useState<boolean>(false)
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
+
+  const [isMicOn, setIsMicOn] = useState<boolean>(false)
+  const [isCamOn, setIsCamOn] = useState<boolean>(false)
 
   //temp
 
@@ -83,8 +94,16 @@ export function ConfWrapper(props: Props) {
     isManualCamera,
     isAutoCamera,
     isStreamsCamera,
+    isMicOn,
+    isCamOn,
     users,
     newUsers,
+    handleMicrophone: () => {
+      setIsMicOn(isMicOn ? false : true)
+    },
+    handleCamera: () => {
+      setIsCamOn(isCamOn ? false : true)
+    },
     handleActiveUsersListMenu: () => {
       setIsActiveUsersList(true)
     },
@@ -101,6 +120,7 @@ export function ConfWrapper(props: Props) {
     },
     handleMembers: () => {
       setIsActiveMembers(isActiveMembers ? false : true)
+      setIsActiveUsersList(isActiveUsersList ? false : true)
       setIsActiveInvite(false)
       setIsActiveCameraMenu(false)
     },
@@ -118,7 +138,7 @@ export function ConfWrapper(props: Props) {
       setIsStreamsCamera(isStreamsCamera ? false : true)
       setIsManualCamera(false)
       setIsAutoCamera(false)
-    }
+    },
   }
 
 

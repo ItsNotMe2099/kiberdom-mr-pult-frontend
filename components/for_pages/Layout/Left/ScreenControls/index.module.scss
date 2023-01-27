@@ -75,10 +75,13 @@
 .text {
   font-weight: 600;
   font-size: 24px;
+  color: #000;
 }
 
 .active {
-  color: #fff;
+  .text{
+    color: #fff;
+  }
 
   svg {
     fill: #fff;

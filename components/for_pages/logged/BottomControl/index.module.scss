@@ -9,6 +9,8 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
+  position: relative;
+  cursor: pointer;
 
   svg {
     fill: #707070;
@@ -28,4 +30,22 @@
   width: 165px !important;
   height: 165px !important;
   position: relative !important;
+}
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.itemExit{
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
 }

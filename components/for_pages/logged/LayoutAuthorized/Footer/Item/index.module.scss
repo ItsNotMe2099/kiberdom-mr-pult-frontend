@@ -4,23 +4,38 @@
   display: flex;
   background: linear-gradient(180deg, rgba(22, 22, 22, 1) 0%, rgba(22, 22, 22, 1) 35%, rgba(1, 1, 1, 1) 100%);
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 45px 0;
+  padding-bottom: 25px;
   width: 20%;
   cursor: pointer;
+  flex-direction: column;
+  position: relative;
 
   svg {
     fill: #707070;
   }
 }
 
-.exit{
-  background: linear-gradient(180deg, rgba(22,4,4,1) 0%, rgba(21,3,3,1) 35%, rgba(1,0,0,1) 100%);
+.exit {
+  background: linear-gradient(180deg, rgba(22, 4, 4, 1) 0%, rgba(21, 3, 3, 1) 35%, rgba(1, 0, 0, 1) 100%);
+  padding-top: 65px;
 }
 
-.record{
+.record {
   background: linear-gradient(180deg, rgba(22, 22, 22, 1) 0%, rgba(22, 22, 22, 1) 35%, rgba(1, 1, 1, 1) 100%);
+
   svg {
     fill: #707070;
   }
+}
+
+.title, .number {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.number{
+  position: absolute;
+  top: 42%;
 }

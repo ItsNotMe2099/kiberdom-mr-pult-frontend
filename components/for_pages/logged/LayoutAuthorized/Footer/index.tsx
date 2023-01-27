@@ -29,14 +29,16 @@ export default function Footer({ }: Props) {
 
   return (
     <div className={styles.root}>
-      <Item color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveMembers}
-        onClick={confContext.handleMembers} icon={<Members2Svg className={getSvgColor(confContext.isActiveMembers)}/>} />
-      <Item color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
-        onClick={confContext.handleInvite} icon={<InviteSvg className={getSvgColor(confContext.isActiveInvite)}/>} />
-      <Item color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
-        onClick={confContext.handleCameraMenu} icon={<CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)}/>} />
-      <Item color={appContext.isZoom ? 'blue' : 'green'} active={false} style='record' icon={<RecordSvg />} />
-      <Item color={appContext.isZoom ? 'blue' : 'green'} active={false}  style='exit' icon={<ExitSvg />} />
+      <Item style='members' title='участники' numberOfUsers={confContext.newUsers.length + confContext.users.length}
+        color={appContext.isZoom ? 'blue' : 'green'}
+        active={confContext.isActiveMembers}
+        onClick={confContext.handleMembers} icon={<Members2Svg className={getSvgColor(confContext.isActiveMembers)} />} />
+      <Item title='пригласить' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
+        onClick={confContext.handleInvite} icon={<InviteSvg className={getSvgColor(confContext.isActiveInvite)} />} />
+      <Item title='упр. камерой' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
+        onClick={confContext.handleCameraMenu} icon={<CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)} />} />
+      <Item title='начать запись' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='record' icon={<RecordSvg />} />
+      <Item title='завершить' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='exit' icon={<ExitSvg />} />
     </div>
   )
 }

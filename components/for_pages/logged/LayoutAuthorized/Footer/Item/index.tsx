@@ -4,12 +4,14 @@ import styles from './index.module.scss'
 interface Props {
   style?: 'members' | 'record' | 'exit'
   icon: React.ReactNode
+  title: string
   active: boolean
   onClick?: () => void
   color: 'blue' | 'green'
+  numberOfUsers?: number
 }
 
-export default function Item({ style, icon, active, onClick, color }: Props) {
+export default function Item({ style, icon, active, onClick, color, title, numberOfUsers }: Props) {
 
   const getStyle = () => {
     return classNames(
@@ -36,6 +38,8 @@ export default function Item({ style, icon, active, onClick, color }: Props) {
   return (
     <div className={classNames(styles.root, getStyle())} onClick={handleClick} style={{ background: getColor(color) }}>
       {icon}
+      {style === 'members' ? <div className={styles.number}>{numberOfUsers}</div> : null}
+      <div className={styles.title}>{title}</div>
     </div>
   )
 }

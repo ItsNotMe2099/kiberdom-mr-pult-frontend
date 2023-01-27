@@ -33,3 +33,33 @@
     fill: $gray;
   }
 }
+
+.onZoom{
+  path{
+    fill: $zoom;
+  }
+}
+
+.onTrue{
+  path{
+    fill: $trueconf;
+  }
+}
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.itemExit{
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
+}
