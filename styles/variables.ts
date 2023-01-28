@@ -5,5 +5,6 @@ export const colors = {
   zoom: '#0B5BFC',
   trueconf: '#0197A7',
   gray: '#707070',
-  purple: '#8200F1'
+  purple: '#8200F1',
+  red: '#E81B18'
 }
