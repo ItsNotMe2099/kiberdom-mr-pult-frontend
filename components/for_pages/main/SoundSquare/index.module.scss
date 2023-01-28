@@ -37,23 +37,20 @@
   z-index: 11;
 }
 
-.rootEnter {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+.itemEnter {
+  opacity: 0;
 }
-.rootEnterActive {
-  background-image: linear-gradient(-225deg, #6300B8 20%, #140026 30%, #000 45%);
-  transition: background-image 200ms;
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 500ms;
 }
-.rootEnterDone{
-  background-image: linear-gradient(-225deg, #6300B8 20%, #140026 30%, #000 45%);
+
+.itemExit{
+  opacity: 1;
 }
-.rootExit {
-  background-image: linear-gradient(-225deg, #6300B8 20%, #140026 30%, #000 45%);
-}
-.rootExitActive {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-  transition: background-image 200ms;
-}
-.rootExitDone{
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
 }
