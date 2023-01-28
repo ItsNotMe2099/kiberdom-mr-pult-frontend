@@ -14,6 +14,8 @@ import CameraOffSvg from 'components/svg/CameraOffSvg'
 import UsersList from 'components/for_pages/logged/UsersList'
 import { colors } from 'styles/variables'
 import EmailForm from 'components/for_pages/logged/EmailForm'
+import MicSvg from 'components/svg/MicSvg'
+import CamSvg from 'components/svg/CamSvg'
 
 export default function LoggedPage() {
 
@@ -48,7 +50,7 @@ export default function LoggedPage() {
                     `linear-gradient(43.73deg, rgba(1, 151, 167, 0) 44.44%, rgba(1, 151, 167, 0.3) 70.44%, ${colors.trueconf} 99.75%)`
                   }
                   isActive={confContext.isMicOn} onClick={confContext.handleMicrophone}
-                  img={<MicrophoneOffSvg className={styles.svg} />} title='микрофон' />
+                  img={<MicSvg isOn={confContext.isMicOn} />} title='микрофон' />
                 <CameraControls isActive={confContext.isActiveCameraMenu} />
                 <BottomControl
                   style=
@@ -56,7 +58,7 @@ export default function LoggedPage() {
                     `linear-gradient(316.27deg, rgba(1, 151, 167, 0) 39.75%, rgba(1, 151, 167, 0.3) 67.43%, ${colors.trueconf} 100%)`
                   }
                   isActive={confContext.isCamOn} onClick={confContext.handleCamera}
-                  img={<CameraOffSvg className={styles.svg} />} title='камера' />
+                  img={<CamSvg isOn={confContext.isCamOn} />} title='камера' />
               </div>
             </div>
           </div>

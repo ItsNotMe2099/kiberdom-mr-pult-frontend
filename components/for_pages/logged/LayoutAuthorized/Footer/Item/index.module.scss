@@ -8,6 +8,7 @@
   padding: 45px 0;
   padding-bottom: 25px;
   width: 20%;
+  max-height: 180px;
   cursor: pointer;
   flex-direction: column;
   position: relative;
@@ -19,7 +20,6 @@
 
 .exit {
   background: linear-gradient(180deg, rgba(22, 4, 4, 1) 0%, rgba(21, 3, 3, 1) 35%, rgba(1, 0, 0, 1) 100%);
-  padding-top: 65px;
 }
 
 .record {
@@ -38,7 +38,7 @@
 
 .number {
   position: absolute;
-  top: 42%;
+  top: 48%;
 }
 
 .itemEnter {

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { useRef } from 'react'
 import Gradient from 'components/for_pages/common/gradient'
 import { colors } from 'styles/variables'
+import MusicSvg from 'components/svg/MusicSvg'
 
 interface Props {
   img: string
@@ -28,8 +29,7 @@ export default function SoundSquare({ img, className, onClick, isOn }: Props) {
         фоновая
         музыка
       </div>
-      <Image className=
-        {styles.img} src={img} alt='' fill />
+      <MusicSvg isOn={isOn}/>
     </div>
   )
 }

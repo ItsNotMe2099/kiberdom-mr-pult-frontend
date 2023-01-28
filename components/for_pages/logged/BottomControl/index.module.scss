@@ -11,11 +11,8 @@
   width: 100%;
   position: relative;
   cursor: pointer;
-
-  svg {
-    fill: #707070;
-    width: 148px;
-    height: 148px;
+  svg{
+    margin-bottom: 130px;
   }
 }
 
@@ -23,10 +20,11 @@
   font-weight: 600;
   font-size: 44px;
   color: #fff;
-  margin-top: 70px;
+  position: absolute;
+  bottom: 18px;
 }
 
-.img{
+.img {
   width: 165px !important;
   height: 165px !important;
   position: relative !important;
@@ -41,11 +39,29 @@
   transition: opacity 500ms;
 }
 
-.itemExit{
+.itemExit {
   opacity: 1;
 }
 
 .itemExitActive {
   opacity: 0;
   transition: opacity 500ms;
+}
+
+.transEnter {
+  width: 100%;
+}
+
+.transEnterActive {
+  width: 33%;
+  transition: width 500ms;
+}
+
+.transExit {
+  width: 33%;
+}
+
+.transExitActive {
+  width: 100%;
+  transition: width 500ms;
 }
