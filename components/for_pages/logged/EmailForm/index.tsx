@@ -62,7 +62,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
                 disabled={!Validator.emailRe.test(formik.values.email)}
                 color={'blue'}
                 fluid>
-                {style === 'invite' ? 'отправить фото' : 'подключить'}
+                {style === 'send' ? 'отправить файл mp4' : 'подключить'}
               </Button>
             </div>
           </Form>

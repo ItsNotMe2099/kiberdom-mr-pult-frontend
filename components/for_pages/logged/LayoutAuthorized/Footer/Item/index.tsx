@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import Gradient from 'components/for_pages/common/gradient'
-import { useRef } from 'react'
+import { useConfContext } from 'context/conference_state'
+import { use, useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
@@ -18,6 +19,8 @@ interface Props {
 }
 
 export default function Item({ style, icon, active, onClick, color, title, numberOfUsers, exit, onExit }: Props) {
+
+  const confContext = useConfContext()
 
   const getStyle = () => {
     return classNames(
@@ -42,6 +45,19 @@ export default function Item({ style, icon, active, onClick, color, title, numbe
   }
 
   const exitRef = useRef(null)
+  const titleRef = useRef(null)
+  const recRef = useRef(null)
+  const recControlsRef = useRef(null)
+  const pauseRef = useRef(null)
+  const resumeRef = useRef(null)
+
+  useEffect(() => {
+    if (confContext.isRecording) {
+      setTimeout(() => {
+        confContext.handleVisibleRecControls()
+      }, 10000)
+    }
+  }, [confContext.isRecording])
 
   return (
     <div className={classNames(styles.root, getStyle())} onClick={handleClick}>
@@ -68,16 +84,102 @@ export default function Item({ style, icon, active, onClick, color, title, numbe
       >
         <div className={styles.exitMenu} ref={exitRef}>
           <div className={styles.end} onClick={onExit}>
-            <span>завершить<br/> для всех</span>
+            <span>завершить<br /> для всех</span>
           </div>
           <div className={styles.leave} onClick={onExit}>
-            <span>покинуть<br/>  встречу</span>
+            <span>покинуть<br />  встречу</span>
           </div>
         </div>
       </CSSTransition>
       {icon}
       {style === 'members' ? <div className={styles.number}>{numberOfUsers}</div> : null}
-      <div className={styles.title}>{title}</div>
-    </div>
+      <CSSTransition
+        timeout={500}
+        in={!confContext.isRecording && style === 'record'}
+        nodeRef={titleRef}
+        mountOnEnter
+        unmountOnExit
+        classNames={{
+          enter: styles.itemEnter,
+          enterActive: styles.itemEnterActive,
+          exit: styles.itemExit,
+          exitActive: styles.itemExitActive,
+        }}
+      >
+        <div className={styles.title} ref={titleRef}>{title}</div>
+      </CSSTransition>
+      <CSSTransition
+        timeout={500}
+        in={confContext.isRecording && style === 'record'}
+        nodeRef={recRef}
+        mountOnEnter
+        unmountOnExit
+        classNames={{
+          enter: styles.warnEnter,
+          enterActive: styles.warnEnterActive,
+          exit: styles.warnExit,
+          exitActive: styles.warnExitActive,
+        }}
+      >
+        <div className={styles.warn} ref={recRef}>
+          <div className={styles.title}>запись начата</div>
+          <div className={styles.text}>после остановки укажите почту, на которую нужно отправить файл mp4</div>
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        timeout={500}
+        in={confContext.isRecControls && style === 'record'}
+        nodeRef={recControlsRef}
+        mountOnEnter
+        unmountOnExit
+        classNames={{
+          enter: styles.itemEnter,
+          enterActive: styles.itemEnterActive,
+          exit: styles.itemExit,
+          exitActive: styles.itemExitActive,
+        }}
+      >
+        <div className={styles.recControls} ref={recControlsRef}>
+          <CSSTransition
+            timeout={500}
+            in={!confContext.isRecPaused && style === 'record'}
+            nodeRef={pauseRef}
+            mountOnEnter
+            unmountOnExit
+            classNames={{
+              enter: styles.itemEnter,
+              enterActive: styles.itemEnterActive,
+              exit: styles.itemExit,
+              exitActive: styles.itemExitActive,
+            }}
+          >
+            <div className={styles.pause} onClick={confContext.handleRecIsPaused} ref={pauseRef}>
+              пауза
+            </div>
+          </CSSTransition>
+          <CSSTransition
+            timeout={500}
+            in={confContext.isRecPaused && style === 'record'}
+            nodeRef={resumeRef}
+            mountOnEnter
+            unmountOnExit
+            classNames={{
+              enter: styles.itemEnter,
+              enterActive: styles.itemEnterActive,
+              exit: styles.itemExit,
+              exitActive: styles.itemExitActive,
+            }}
+          >
+            <div className={styles.resume} onClick={confContext.handleRecIsPaused} ref={resumeRef}>
+              продолжить
+            </div>
+          </CSSTransition>
+          <div className={styles.stop} onClick={confContext.handleStopRec} ref={pauseRef}>
+            остановить запись
+          </div>
+        </div>
+      </CSSTransition>
+      {style !== 'record' ? <div className={styles.title}>{title}</div> : null}
+    </div >
   )
 }

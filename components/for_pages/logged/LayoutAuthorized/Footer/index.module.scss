@@ -1,14 +1,55 @@
 @import "styles/index";
 
-.root{
+.root {
     display: flex;
     gap: 0 10px;
+    position: relative;
 }
 
-.blue{
+.blue {
     fill: $zoom !important;
 }
 
-.green{
+.green {
     fill: $trueconf !important;
+}
+
+.itemEnter {
+    opacity: 0;
+}
+
+.itemEnterActive {
+    opacity: 1;
+    transition: opacity 500ms;
+}
+
+.itemExit {
+    opacity: 1;
+}
+
+.itemExitActive {
+    opacity: 0;
+    transition: opacity 500ms;
+}
+
+.newEnter {
+    transform: translateY(100%);
+    position: absolute;
+}
+
+.newEnterActive {
+    transform: translateY(0%);
+    transition: transform 500ms;
+    position: absolute;
+}
+
+.newExit {
+    transform: translateY(0%);
+    position: absolute;
+}
+
+.newExitActive {
+    transform: translateY(100%);
+    transition: transform 500ms;
+    position: absolute;
 }

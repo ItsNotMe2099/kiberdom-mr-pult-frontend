@@ -43,20 +43,56 @@
 
 .itemEnter {
   opacity: 0;
+  position: absolute;
 }
 
 .itemEnterActive {
   opacity: 1;
   transition: opacity 500ms;
+  position: absolute;
 }
 
 .itemExit {
   opacity: 1;
+  position: absolute;
 }
 
 .itemExitActive {
   opacity: 0;
   transition: opacity 500ms;
+  position: absolute;
+}
+
+.warnEnter {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.warnEnterActive {
+  opacity: 1;
+  transition: opacity 500ms;
+  position: absolute;
+  bottom: 0;
+}
+
+.warnExit {
+  opacity: 1;
+  position: absolute;
+  bottom: 0;
+}
+
+.warnExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
+  position: absolute;
+  bottom: 0;
+}
+
+.text {
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
 }
 
 .exitMenu {
@@ -93,6 +129,55 @@
 
 .leave {
   padding-bottom: 20px;
-  background: linear-gradient(-45deg, $red 20%, rgba(232, 27, 24, 0.3) 30%, rgba(232, 27, 24, 0) 45%);
+  background: linear-gradient(136.27deg, rgba(232, 27, 24, 0) 41.98%, rgba(232, 27, 24, 0.3) 69.36%, $red 100.25%);
   justify-content: flex-end;
+}
+
+.title {
+  text-align: center;
+}
+
+.warn {
+  margin-top: 9px;
+}
+
+.recControls {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.pause, .resume, .stop {
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+  line-height: 100%;
+}
+
+.stop{
+  padding-bottom: 30px;
+  background: radial-gradient(80.68% 121.56% at 50% 100%, $red 0%, rgba(232, 27, 24, 0) 46.14%);
+  position: absolute;
+  bottom: 0;
+}
+
+.pause{
+  padding-top: 30px;
+  background: radial-gradient(94.35% 142.17% at 50% -0.4%, $red 0%, rgba(232, 27, 24, 0) 40.48%);
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.resume{
+  padding-top: 30px;
+  background: radial-gradient(94.35% 142.17% at 50% -0.4%, $zoom 0%, rgba(11, 91, 253, 0) 40.48%);
+  position: absolute;
+  top: 0;
+  width: 100%;
 }

@@ -31,7 +31,7 @@ export default function LoggedPage() {
   return (
     <Layout loading={false}>
       <div className={classNames(styles.root, { [styles.loaded]: !loading })}>
-        <EmailForm isActive={confContext.isEmailFormActive}/>
+        <EmailForm style={confContext.isStopRec ? 'send' : 'invite'} isActive={confContext.isEmailFormActive} />
         <Loader
           isActive={loading}
           color={appContext.isTrueConf ? 'green' : 'blue'}
@@ -44,13 +44,17 @@ export default function LoggedPage() {
               <div className={styles.bottom}>
                 <BottomControl
                   style=
-                  {`linear-gradient(43.73deg, rgba(11, 91, 252, 0) 44.44%, rgba(11, 91, 252, 0.3) 70.44%, ${appContext.isZoom ? colors.zoom : colors.trueconf} 99.75%)`}
+                  {appContext.isZoom ? `linear-gradient(43.73deg, rgba(11, 91, 252, 0) 44.44%, rgba(11, 91, 252, 0.3) 70.44%, ${colors.zoom} 99.75%)` :
+                    `linear-gradient(43.73deg, rgba(1, 151, 167, 0) 44.44%, rgba(1, 151, 167, 0.3) 70.44%, ${colors.trueconf} 99.75%)`
+                  }
                   isActive={confContext.isMicOn} onClick={confContext.handleMicrophone}
                   img={<MicrophoneOffSvg className={styles.svg} />} title='микрофон' />
                 <CameraControls isActive={confContext.isActiveCameraMenu} />
                 <BottomControl
                   style=
-                  {`linear-gradient(316.27deg, rgba(11, 91, 252, 0) 39.75%, rgba(11, 91, 252, 0.3) 67.43%, ${appContext.isZoom ? colors.zoom : colors.trueconf} 100%)`}
+                  {appContext.isZoom ? `linear-gradient(316.27deg, rgba(11, 91, 252, 0) 39.75%, rgba(11, 91, 252, 0.3) 67.43%, ${colors.zoom} 100%)` :
+                    `linear-gradient(316.27deg, rgba(1, 151, 167, 0) 39.75%, rgba(1, 151, 167, 0.3) 67.43%, ${colors.trueconf} 100%)`
+                  }
                   isActive={confContext.isCamOn} onClick={confContext.handleCamera}
                   img={<CameraOffSvg className={styles.svg} />} title='камера' />
               </div>

@@ -23,6 +23,14 @@ interface IState {
   handleCamera: () => void
   isEmailFormActive: boolean
   handleCancelEmailForm: () => void
+  handleRecording: () => void
+  isRecording: boolean
+  handleVisibleRecControls: () => void
+  isRecControls: boolean
+  isRecPaused: boolean
+  handleRecIsPaused: () => void
+  isStopRec: boolean
+  handleStopRec: () => void
 }
 
 const defaultValue: IState = {
@@ -46,7 +54,15 @@ const defaultValue: IState = {
   handleMicrophone: () => null,
   handleCamera: () => null,
   isEmailFormActive: false,
-  handleCancelEmailForm: () => null
+  handleCancelEmailForm: () => null,
+  handleRecording: () => null,
+  isRecording: false,
+  handleVisibleRecControls: () => null,
+  isRecControls: false,
+  isRecPaused: false,
+  handleRecIsPaused: () => null,
+  isStopRec: false,
+  handleStopRec: () => null
 }
 
 const ConfContext = createContext<IState>(defaultValue)
@@ -70,6 +86,11 @@ export function ConfWrapper(props: Props) {
   const [isCamOn, setIsCamOn] = useState<boolean>(false)
 
   const [isEmailFormActive, setIsEmailFormActive] = useState<boolean>(false)
+  const [isRecording, setIsRecording] = useState<boolean>(false)
+
+  const [isRecControls, setIsRecControls] = useState<boolean>(false)
+  const [isRecPaused, setIsRecPaused] = useState<boolean>(false)
+  const [isStopRec, setIsStopRec] = useState<boolean>(false)
 
   //temp
 
@@ -91,6 +112,7 @@ export function ConfWrapper(props: Props) {
   const value: IState = {
     ...defaultValue,
     isActiveCameraMenu,
+    isStopRec,
     isActiveUsersList,
     isActiveInvite,
     isManualCamera,
@@ -100,6 +122,22 @@ export function ConfWrapper(props: Props) {
     isCamOn,
     users,
     newUsers,
+    isRecording,
+    isRecControls,
+    isRecPaused,
+    handleStopRec: () => {
+      setIsStopRec(true)
+      setIsEmailFormActive(true)
+    },
+    handleRecIsPaused: () => {
+      setIsRecPaused(isRecPaused ? false : true)
+    },
+    handleVisibleRecControls: () => {
+      setIsRecControls(true)
+    },
+    handleRecording: () => {
+      setIsRecording(true)
+    },
     handleMicrophone: () => {
       setIsMicOn(isMicOn ? false : true)
     },
