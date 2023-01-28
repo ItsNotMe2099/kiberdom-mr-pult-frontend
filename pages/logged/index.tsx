@@ -38,7 +38,7 @@ export default function LoggedPage() {
           icon={appContext.isTrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
         <LayoutAuthorized>
           <div className={styles.wrapper}>
-            {confContext.isActiveUsersList ? <UsersList /> : null}
+            <UsersList isActive={confContext.isActiveUsersList} />
             <div className={styles.main}>
               <ScreenDemonstration />
               <div className={styles.bottom}>

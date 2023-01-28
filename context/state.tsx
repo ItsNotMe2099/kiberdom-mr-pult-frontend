@@ -21,6 +21,9 @@ interface IState {
   handleClimateActive: () => void
   handleHelpActive: () => void
   handleLightActive: () => void
+  loginZoom: () => void
+  loginTrueConf: () => void
+  logout: () => void
 }
 
 const defaultValue: IState = {
@@ -42,7 +45,10 @@ const defaultValue: IState = {
   handleSoundActive: () => null,
   handleClimateActive: () => null,
   handleHelpActive: () => null,
-  handleLightActive: () => null
+  handleLightActive: () => null,
+  loginZoom: () => null,
+  loginTrueConf: () => null,
+  logout: () => null
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -61,7 +67,7 @@ export function AppWrapper(props: Props) {
 
   const [user, setUser] = useState<IUser | undefined>(props.user)
 
-  const [isZoom, setIsZoom] = useState<boolean>(true)
+  const [isZoom, setIsZoom] = useState<boolean>(false)
   const [isTrueConf, setIsTrueConf] = useState<boolean>(false)
 
   const [isSoundActive, setIsSoundActive] = useState<boolean>(false)
@@ -138,6 +144,16 @@ export function AppWrapper(props: Props) {
       setIsHelpActive(false)
       setIsClimateActive(false)
       setIsSoundActive(false)
+    },
+    loginZoom: () => {
+      setIsZoom(true)
+    },
+    loginTrueConf: () => {
+      setIsTrueConf(true)
+    },
+    logout: () => {
+      setIsTrueConf(false)
+      setIsZoom(false)
     }
   }
 

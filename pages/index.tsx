@@ -3,6 +3,7 @@ import Demonstration from 'components/for_pages/main/Demonstration'
 import SoundSquare from 'components/for_pages/main/SoundSquare'
 import Square from 'components/for_pages/main/Square'
 import LoginForm from 'components/for_pages/main/Square/Login/Form'
+import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -21,11 +22,15 @@ export default function IndexPage() {
 
   const router = useRouter()
 
+  const appContext = useAppContext()
+
   const handleSubmitZoom = () => {
+    appContext.loginZoom()
     router.push('/logged')
   }
 
   const handleSubmitTrueConf = () => {
+    appContext.loginTrueConf()
     router.push('/logged')
   }
 
@@ -92,7 +97,7 @@ export default function IndexPage() {
             </div></CSSTransition>
           <CSSTransition
             timeout={2000}
-            in={isActiveZoom}
+            in={!loading? isActiveZoom : !loading}
             nodeRef={zoomLogin}
             mountOnEnter
             unmountOnExit
@@ -128,7 +133,7 @@ export default function IndexPage() {
             </div></CSSTransition>
           <CSSTransition
             timeout={2000}
-            in={isActiveConf}
+            in={!loading ? isActiveConf : !loading}
             nodeRef={trueConfLogin}
             mountOnEnter
             unmountOnExit
@@ -146,7 +151,7 @@ export default function IndexPage() {
             </div>
           </CSSTransition>
         </Square>
-        <Square onClick={() => setIsDemonstration(true)} className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
+        <Square onClick={() => !loading ? setIsDemonstration(true) : null} className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
           <CSSTransition
             timeout={2000}
             in={!loading}

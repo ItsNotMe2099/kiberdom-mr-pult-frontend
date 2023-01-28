@@ -41,6 +41,11 @@ export default function Footer({ }: Props) {
 
   const router = useRouter()
 
+  const handleExit = () => {
+    appContext.logout()
+    router.push('/')
+  }
+
   return (
     <div className={styles.root}>
       <Item style='members' title='участники' numberOfUsers={confContext.newUsers.length + confContext.users.length}
@@ -52,7 +57,7 @@ export default function Footer({ }: Props) {
       <Item title='упр. камерой' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
         onClick={confContext.handleCameraMenu} icon={<CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)} />} />
       <Item title='начать запись' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='record' icon={<RecordSvg />} />
-      <Item onExit={() => router.push('/')} exit={isExit} onClick={() => setIsExit(true)} title='завершить' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='exit' icon={<ExitSvg />} />
+      <Item onExit={handleExit} exit={isExit} onClick={() => setIsExit(true)} title='завершить' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='exit' icon={<ExitSvg />} />
     </div>
   )
 }
