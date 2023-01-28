@@ -2,7 +2,7 @@ import Layout from 'components/for_pages/Layout'
 import Demonstration from 'components/for_pages/main/Demonstration'
 import SoundSquare from 'components/for_pages/main/SoundSquare'
 import Square from 'components/for_pages/main/Square'
-import Login from 'components/for_pages/main/Square/Login'
+import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -38,11 +38,22 @@ export default function IndexPage() {
 
   console.log('isActiveZoom', isActiveZoom)
 
+  const getColor = (color: 'blue' | 'green', degree: number) => {
+    switch (color) {
+      case 'blue':
+        return `linear-gradient(${degree}deg, #073CA7 20%, #020C24 30%, #000 45%)`
+      case 'green':
+        return `linear-gradient(${degree}deg, #016E7A 20%, #00191C 30%, #000 45%)`
+    }
+  }
+
   const logoRef = useRef(null)
 
   const zoomLabelRef = useRef(null)
   const trueLabelRef = useRef(null)
   const demLabelRef = useRef(null)
+  const zoomLogin = useRef(null)
+  const trueConfLogin = useRef(null)
 
   return (
     <Layout loading={loading}>
@@ -79,13 +90,25 @@ export default function IndexPage() {
             <div className={styles.label} ref={zoomLabelRef}>
               старт zoom
             </div></CSSTransition>
-          <Login
-            onCancel={() => setIsActiveZoom(false)}
-            isActive={isActiveZoom}
-            degree={-45}
-            color='blue'
-            icon='/img/logos/zoom.png'
-            onSubmit={handleSubmitZoom} />
+          <CSSTransition
+            timeout={2000}
+            in={isActiveZoom}
+            nodeRef={zoomLogin}
+            mountOnEnter
+            unmountOnExit
+            classNames={{
+              enter: styles.loginEnter,
+              enterActive: styles.loginEnterActive,
+              exit: styles.loginExit,
+              exitActive: styles.loginExitActive,
+            }}
+          >
+            <div className={styles.login} ref={zoomLogin}>
+              <div className={styles.gradient} style={{ background: getColor('blue', -45) }}></div>
+              <Image className={styles.imgLogin} src={'/img/logos/zoom.png'} alt='' fill />
+              <LoginForm onSubmit={handleSubmitZoom} onCancel={() => setIsActiveZoom(false)} color={'blue'} />
+            </div>
+          </CSSTransition>
         </Square>
         <Square onClick={() => !isActiveConf ? setIsActiveConf(true) : null} className={styles.trueconf} degree={45} color='green' loading={loading} img='/img/logos/trueconf.svg'>
           <CSSTransition
@@ -103,8 +126,25 @@ export default function IndexPage() {
             <div className={styles.label} ref={trueLabelRef}>
               cтарт trueconf
             </div></CSSTransition>
-          <Login isActive={isActiveConf} onCancel={() => setIsActiveConf(false)} degree={45} color='green' icon='/img/logos/trueconf.svg'
-            onSubmit={handleSubmitTrueConf} />
+          <CSSTransition
+            timeout={2000}
+            in={isActiveConf}
+            nodeRef={trueConfLogin}
+            mountOnEnter
+            unmountOnExit
+            classNames={{
+              enter: styles.loginEnter,
+              enterActive: styles.loginEnterActive,
+              exit: styles.loginExit,
+              exitActive: styles.loginExitActive,
+            }}
+          >
+            <div className={styles.login} ref={trueConfLogin}>
+              <div className={styles.gradient} style={{ background: getColor('green', 45) }}></div>
+              <Image className={styles.imgLogin} src={'/img/logos/trueconf.svg'} alt='' fill />
+              <LoginForm onSubmit={handleSubmitTrueConf} onCancel={() => setIsActiveConf(false)} color={'green'} />
+            </div>
+          </CSSTransition>
         </Square>
         <Square onClick={() => setIsDemonstration(true)} className={styles.screen} degree={225} color='purple' loading={loading} img='/img/logos/screen.svg'>
           <CSSTransition

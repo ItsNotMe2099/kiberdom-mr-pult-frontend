@@ -1,23 +1,5 @@
 @import "styles/index";
 
-.itemEnter {
-  opacity: 0;
-}
-
-.itemEnterActive {
-  opacity: 1;
-  transition: opacity 200ms;
-}
-
-.itemExit{
-  opacity: 1;
-}
-
-.itemExitActive {
-  opacity: 0;
-  transition: opacity 200ms;
-}
-
 .gradient{
   position: absolute;
   width: 100%;

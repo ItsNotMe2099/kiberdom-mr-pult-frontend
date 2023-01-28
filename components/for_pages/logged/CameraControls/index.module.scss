@@ -5,3 +5,21 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.itemExit{
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
+}

@@ -31,8 +31,8 @@ export default function Footer({ }: Props) {
     <div className={styles.root}>
       <Item style='members' title='участники' numberOfUsers={confContext.newUsers.length + confContext.users.length}
         color={appContext.isZoom ? 'blue' : 'green'}
-        active={confContext.isActiveMembers}
-        onClick={confContext.handleMembers} icon={<Members2Svg className={getSvgColor(confContext.isActiveMembers)} />} />
+        active={confContext.isActiveUsersList}
+        onClick={confContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(confContext.isActiveUsersList)} />} />
       <Item title='пригласить' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
         onClick={confContext.handleInvite} icon={<InviteSvg className={getSvgColor(confContext.isActiveInvite)} />} />
       <Item title='упр. камерой' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}

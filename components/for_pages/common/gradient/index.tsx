@@ -1,4 +1,4 @@
-import { Ref, useRef } from 'react'
+import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
 import classNames from 'classnames'

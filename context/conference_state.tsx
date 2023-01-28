@@ -15,7 +15,6 @@ interface IState {
   newUsers: IUser[]
   handleActiveUsersListMenu: () => void
   handleCameraMenu: () => void
-  handleMembers: () => void
   handleInvite: () => void
   handleManualCamera: () => void
   handleAutoCamera: () => void
@@ -38,7 +37,6 @@ const defaultValue: IState = {
   newUsers: [],
   handleActiveUsersListMenu: () => null,
   handleCameraMenu: () => null,
-  handleMembers: () => null,
   handleInvite: () => null,
   handleManualCamera: () => null,
   handleAutoCamera: () => null,
@@ -56,7 +54,6 @@ interface Props {
 export function ConfWrapper(props: Props) {
 
   const [isActiveCameraMenu, setIsActiveCameraMenu] = useState<boolean>(false)
-  const [isActiveMembers, setIsActiveMembers] = useState<boolean>(false)
   const [isActiveInvite, setIsActiveInvite] = useState<boolean>(false)
 
   const [isActiveUsersList, setIsActiveUsersList] = useState<boolean>(false)
@@ -89,7 +86,6 @@ export function ConfWrapper(props: Props) {
     ...defaultValue,
     isActiveCameraMenu,
     isActiveUsersList,
-    isActiveMembers,
     isActiveInvite,
     isManualCamera,
     isAutoCamera,
@@ -105,23 +101,17 @@ export function ConfWrapper(props: Props) {
       setIsCamOn(isCamOn ? false : true)
     },
     handleActiveUsersListMenu: () => {
-      setIsActiveUsersList(true)
+      setIsActiveUsersList(isActiveUsersList ? false : true)
     },
     handleCameraMenu: () => {
       setIsActiveCameraMenu(isActiveCameraMenu ? false : true)
       setIsActiveInvite(false)
-      setIsActiveMembers(false)
+      setIsActiveUsersList(false)
       setIsActiveUsersList(false)
     },
     handleInvite: () => {
       setIsActiveInvite(isActiveInvite ? false : true)
-      setIsActiveMembers(false)
-      setIsActiveCameraMenu(false)
-    },
-    handleMembers: () => {
-      setIsActiveMembers(isActiveMembers ? false : true)
-      setIsActiveUsersList(isActiveUsersList ? false : true)
-      setIsActiveInvite(false)
+      setIsActiveUsersList(false)
       setIsActiveCameraMenu(false)
     },
     handleManualCamera: () => {

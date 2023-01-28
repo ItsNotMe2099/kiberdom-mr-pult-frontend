@@ -8,58 +8,40 @@
   position: relative;
 }
 
-.loaded{
+.loaded {
   margin: 0;
 }
 
-.bottom{
+.bottom {
   display: flex;
   gap: 0 5px;
   margin-top: 10px;
 }
 
-.main{
+.main {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.wrapper{
+.wrapper {
   display: flex;
 }
 
-.svg{
-  path{
+.svg {
+  path {
     fill: $gray;
   }
 }
 
-.onZoom{
-  path{
+.onZoom {
+  path {
     fill: $zoom;
   }
 }
 
-.onTrue{
-  path{
+.onTrue {
+  path {
     fill: $trueconf;
   }
-}
-
-.itemEnter {
-  opacity: 0;
-}
-
-.itemEnterActive {
-  opacity: 1;
-  transition: opacity 500ms;
-}
-
-.itemExit{
-  opacity: 1;
-}
-
-.itemExitActive {
-  opacity: 0;
-  transition: opacity 500ms;
 }

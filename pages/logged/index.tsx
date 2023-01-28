@@ -40,16 +40,16 @@ export default function LoggedPage() {
             <div className={styles.main}>
               <ScreenDemonstration />
               <div className={styles.bottom}>
-                <BottomControl 
-                style=
-                {`linear-gradient(43.73deg, rgba(11, 91, 252, 0) 44.44%, rgba(11, 91, 252, 0.3) 70.44%, ${appContext.isZoom ? colors.zoom : colors.trueconf} 99.75%)`}
-                 isActive={confContext.isMicOn} onClick={confContext.handleMicrophone}
+                <BottomControl
+                  style=
+                  {`linear-gradient(43.73deg, rgba(11, 91, 252, 0) 44.44%, rgba(11, 91, 252, 0.3) 70.44%, ${appContext.isZoom ? colors.zoom : colors.trueconf} 99.75%)`}
+                  isActive={confContext.isMicOn} onClick={confContext.handleMicrophone}
                   img={<MicrophoneOffSvg className={styles.svg} />} title='микрофон' />
-                {confContext.isActiveCameraMenu ? <CameraControls /> : null}
-                <BottomControl 
-                style=
-                {`linear-gradient(316.27deg, rgba(11, 91, 252, 0) 39.75%, rgba(11, 91, 252, 0.3) 67.43%, ${appContext.isZoom ? colors.zoom : colors.trueconf} 100%)`}
-                isActive={confContext.isCamOn} onClick={confContext.handleCamera}
+                <CameraControls isActive={confContext.isActiveCameraMenu} />
+                <BottomControl
+                  style=
+                  {`linear-gradient(316.27deg, rgba(11, 91, 252, 0) 39.75%, rgba(11, 91, 252, 0.3) 67.43%, ${appContext.isZoom ? colors.zoom : colors.trueconf} 100%)`}
+                  isActive={confContext.isCamOn} onClick={confContext.handleCamera}
                   img={<CameraOffSvg className={styles.svg} />} title='камера' />
               </div>
             </div>
