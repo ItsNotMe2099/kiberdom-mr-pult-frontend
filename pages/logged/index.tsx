@@ -13,6 +13,7 @@ import MicrophoneOffSvg from 'components/svg/MicrophoneOffSvg'
 import CameraOffSvg from 'components/svg/CameraOffSvg'
 import UsersList from 'components/for_pages/logged/UsersList'
 import { colors } from 'styles/variables'
+import EmailForm from 'components/for_pages/logged/EmailForm'
 
 export default function LoggedPage() {
 
@@ -30,6 +31,7 @@ export default function LoggedPage() {
   return (
     <Layout loading={false}>
       <div className={classNames(styles.root, { [styles.loaded]: !loading })}>
+        <EmailForm isActive={confContext.isEmailFormActive}/>
         <Loader
           isActive={loading}
           color={appContext.isTrueConf ? 'green' : 'blue'}

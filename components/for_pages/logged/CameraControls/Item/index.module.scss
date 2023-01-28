@@ -10,12 +10,14 @@
     align-items: center;
     flex-direction: column;
     cursor: pointer;
+    position: relative;
 }
 
 .img {
     width: 32px !important;
     height: 32px !important;
     position: relative !important;
+    z-index: 2;
 }
 
 .title {
@@ -23,4 +25,24 @@
     font-size: 18px;
     color: #fff;
     margin-top: 27px;
+    position: relative;
+    z-index: 2;
 }
+
+.itemEnter {
+    opacity: 0;
+  }
+  
+  .itemEnterActive {
+    opacity: 1;
+    transition: opacity 500ms;
+  }
+  
+  .itemExit {
+    opacity: 1;
+  }
+  
+  .itemExitActive {
+    opacity: 0;
+    transition: opacity 500ms;
+  }

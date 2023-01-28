@@ -21,6 +21,8 @@ interface IState {
   handleStreamsCamera: () => void
   handleMicrophone: () => void
   handleCamera: () => void
+  isEmailFormActive: boolean
+  handleCancelEmailForm: () => void
 }
 
 const defaultValue: IState = {
@@ -42,7 +44,9 @@ const defaultValue: IState = {
   handleAutoCamera: () => null,
   handleStreamsCamera: () => null,
   handleMicrophone: () => null,
-  handleCamera: () => null
+  handleCamera: () => null,
+  isEmailFormActive: false,
+  handleCancelEmailForm: () => null
 }
 
 const ConfContext = createContext<IState>(defaultValue)
@@ -64,6 +68,8 @@ export function ConfWrapper(props: Props) {
 
   const [isMicOn, setIsMicOn] = useState<boolean>(false)
   const [isCamOn, setIsCamOn] = useState<boolean>(false)
+
+  const [isEmailFormActive, setIsEmailFormActive] = useState<boolean>(false)
 
   //temp
 
@@ -102,17 +108,19 @@ export function ConfWrapper(props: Props) {
     },
     handleActiveUsersListMenu: () => {
       setIsActiveUsersList(isActiveUsersList ? false : true)
+      setIsActiveInvite(false)
+      setIsActiveCameraMenu(false)
     },
     handleCameraMenu: () => {
       setIsActiveCameraMenu(isActiveCameraMenu ? false : true)
       setIsActiveInvite(false)
-      setIsActiveUsersList(false)
       setIsActiveUsersList(false)
     },
     handleInvite: () => {
       setIsActiveInvite(isActiveInvite ? false : true)
       setIsActiveUsersList(false)
       setIsActiveCameraMenu(false)
+      setIsEmailFormActive(true)
     },
     handleManualCamera: () => {
       setIsManualCamera(isManualCamera ? false : true)
@@ -129,6 +137,11 @@ export function ConfWrapper(props: Props) {
       setIsManualCamera(false)
       setIsAutoCamera(false)
     },
+    isEmailFormActive,
+    handleCancelEmailForm: () => {
+      setIsEmailFormActive(false)
+      setIsActiveInvite(false)
+    }
   }
 
 

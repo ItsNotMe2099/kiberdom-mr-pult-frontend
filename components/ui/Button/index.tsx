@@ -10,7 +10,7 @@ interface Props extends IButton{
   className?: string
   fluid?: boolean
   target?: string
-  color: 'red' | 'blue' | 'green' | 'gray'
+  color?: 'red' | 'blue' | 'green' | 'gray'
 }
 
 export default function Button(props: Props) {

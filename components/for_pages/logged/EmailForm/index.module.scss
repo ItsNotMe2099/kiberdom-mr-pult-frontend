@@ -1,0 +1,80 @@
+@import "styles/index";
+
+.root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    z-index: 22;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.form {
+    width: 70%;
+    background: radial-gradient(80.68% 121.56% at 50% 100%, $zoom 0%, rgba(11, 91, 253, 0) 46.14%);
+}
+
+.key {
+    margin-top: 20px;
+}
+
+.btns {
+    position: relative;
+    z-index: 13;
+    height: 80px;
+    display: flex;
+    margin: 0 -30px;
+    margin-top: 40px;
+
+    button {
+        height: 100%;
+    }
+}
+
+.itemEnter {
+    transform: translateY(1000%);
+}
+
+.itemEnterActive {
+    transform: translateY(0%);
+    transition: transform 500ms;
+}
+
+.itemExit {
+    transform: translateY(0%);
+}
+
+.itemExitActive {
+    transform: translateY(1000%);
+    transition: transform 500ms;
+}
+
+.fadeEnter {
+    opacity: 0;
+}
+
+.fadeEnterActive {
+    opacity: 1;
+    transition: opacity 700ms;
+}
+
+.fadeExit {
+    opacity: 1;
+}
+
+.fadeExitActive {
+    opacity: 0;
+    transition: opacity 700ms;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 44px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
