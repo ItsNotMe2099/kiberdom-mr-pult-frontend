@@ -13,10 +13,9 @@ interface Props {
   className?: string
   onClick?: () => void
   imgWidth?: 'controls'
-  loader?: boolean
 }
 
-export default function Square({ loader, color, active, img, imgWidth, children, className, onClick }: Props) {
+export default function Square({ color, active, img, imgWidth, children, className, onClick }: Props) {
 
   const getColor = (color: 'blue' | 'green' | 'purple-left' | 'purple-right') => {
     switch (color) {
@@ -40,28 +39,26 @@ export default function Square({ loader, color, active, img, imgWidth, children,
   const nodeRef = useRef(null)
 
   return (
-    <div onClick={onClick} className={classNames(styles.root, className, {[styles.cursor]: loader})}>
+    <div onClick={onClick} className={classNames(styles.root, className, {[styles.cursor]: !active})}>
       <div className={styles.gradient} style={{ background: getColor(color) }}>
       </div>
-      {!loader ?
-        <>
-          <>{children}</>
-          <CSSTransition
-            timeout={2000}
-            in={active}
-            nodeRef={nodeRef}
-            mountOnEnter
-            unmountOnExit
-            classNames={{
-              enter: styles.itemEnter,
-              enterActive: styles.itemEnterActive,
-              exit: styles.itemExit,
-              exitActive: styles.itemExitActive,
-            }}
-          >
-            <Image className=
-              {classNames(styles.img, getImgWidth())} src={img} alt='' fill ref={nodeRef} />
-          </CSSTransition></> : null}
+      <>{children}</>
+      <CSSTransition
+        timeout={2000}
+        in={active}
+        nodeRef={nodeRef}
+        mountOnEnter
+        unmountOnExit
+        classNames={{
+          enter: styles.itemEnter,
+          enterActive: styles.itemEnterActive,
+          exit: styles.itemExit,
+          exitActive: styles.itemExitActive,
+        }}
+      >
+        <Image className=
+          {classNames(styles.img, getImgWidth())} src={img} alt='' fill ref={nodeRef} />
+      </CSSTransition>
     </div >
   )
 }
