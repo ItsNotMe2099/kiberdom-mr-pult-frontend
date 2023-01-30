@@ -1,0 +1,53 @@
+version: '3'
+
+networks:
+  app:
+    driver: bridge
+  nginx-proxy:
+    external: true
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+      args:
+        - ENV_FILE=.env.prod
+    image: ${APP_IMAGE}
+    container_name: kiberdom-mr-pult-front-app
+    restart: ${DK_RESTART}
+    volumes:
+      - /srv/kiberdom-mr-pult-frontend/cache:/usr/src/app/.next/cache
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '100m'
+    networks:
+      - app
+  nginx:
+      build:
+        context: .
+        dockerfile: docker/nginx_prod/Dockerfile
+        args:
+          - APP_IMAGE=${APP_IMAGE}
+      image: ${NGINX_IMAGE}
+      container_name: kiberdom-mr-pult-front-nginx
+      logging:
+        driver: 'json-file'
+        options:
+          max-file: '5'
+          max-size: '100m'
+      restart: ${DK_RESTART}
+      networks:
+        - app
+        - nginx-proxy
+      depends_on:
+        - app
+      environment:
+        API_HOST: http://kiberdom-mr-pult-api-nginx
+        ADMIN_HOST: http://kiberdom-mr-pult-admin
+        VIRTUAL_HOST: kiberdom-mr-pultshop.com
+        LETSENCRYPT_HOST: kiberdom-mr-pultshop.com
+        LETSENCRYPT_EMAIL: sites.globcom@yandex.ru
+        VIRTUAL_PORT: 80
+
