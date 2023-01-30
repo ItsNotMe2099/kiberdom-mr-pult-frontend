@@ -97,7 +97,7 @@ export default function Footer({ }: Props) {
               exitActive: styles.newExitActive,
             }}
           >
-            <svg ref={recRef} width="102" height="102" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg ref={recRef} width="102" height="72" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M0 51C0 22.8335 22.8335 0 51 0C79.1665 0 102 22.8335 102 51C102 79.1665 79.1665 102 51 102C22.8335 102 0 79.1665 0 51ZM51 10.3729C28.5623 10.3729 10.3729 28.5623 10.3729 51C10.3729 73.4377 28.5623 91.6271 51 91.6271C73.4377 91.6271 91.6271 73.4377 91.6271 51C91.6271 28.5623 73.4377 10.3729 51 10.3729ZM56 45V73H46V45H56ZM56 39V29H46V39H56Z" fill="#707070" />
             </svg>
 

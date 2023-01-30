@@ -2,6 +2,7 @@ import { useConfContext } from 'context/conference_state'
 import { useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
+import classNames from 'classnames'
 
 interface Props {
   icon: React.ReactNode
@@ -32,7 +33,7 @@ export default function Record({ icon, onClick, title }: Props) {
   }, [confContext.isRecording])
 
   return (
-    <div className={styles.root} onClick={handleClick}>
+    <div className={classNames(styles.root, {[styles.recording]: confContext.isRecording})} onClick={handleClick}>
       {icon}
       <CSSTransition
         timeout={500}
