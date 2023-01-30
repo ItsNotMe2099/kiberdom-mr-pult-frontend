@@ -166,7 +166,7 @@ export default function IndexPage() {
             }}
           >
             <div className={styles.label} ref={demLabelRef}>
-              демонстрация экрана
+              демонстрация<br/> экрана
             </div></CSSTransition>
         </Square>
         {loading ? <Square

@@ -117,7 +117,7 @@ export default function Record({ icon, onClick, title }: Props) {
             </div>
           </CSSTransition>
           <div className={styles.stop} onClick={confContext.handleStopRec} ref={pauseRef}>
-            остановить запись
+            остановить<br/> запись
           </div>
         </div>
       </CSSTransition>
