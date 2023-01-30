@@ -37,7 +37,7 @@ export default function Climate({ }: Props) {
           [styles.opened]: appContext.isClimateActive,
           [styles.minimized]: isOthersControlsActive() === true
         })}>
-        {appContext.isClimateActive ? level : null}
+        {appContext.isClimateActive ? `+${level}°` : null}
         <div className={styles.gradient}></div>
       </div>
     )
