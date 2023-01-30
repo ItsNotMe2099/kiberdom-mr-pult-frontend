@@ -3,7 +3,9 @@
 .root {
     display: flex;
     gap: 0 10px;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .blue {

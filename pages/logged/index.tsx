@@ -9,8 +9,6 @@ import ScreenDemonstration from 'components/for_pages/logged/ScreenDemonstration
 import BottomControl from 'components/for_pages/logged/BottomControl'
 import { useConfContext } from 'context/conference_state'
 import CameraControls from 'components/for_pages/logged/CameraControls'
-import MicrophoneOffSvg from 'components/svg/MicrophoneOffSvg'
-import CameraOffSvg from 'components/svg/CameraOffSvg'
 import UsersList from 'components/for_pages/logged/UsersList'
 import { colors } from 'styles/variables'
 import EmailForm from 'components/for_pages/logged/EmailForm'
