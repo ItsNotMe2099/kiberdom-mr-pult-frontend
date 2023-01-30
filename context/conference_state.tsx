@@ -31,6 +31,7 @@ interface IState {
   handleRecIsPaused: () => void
   isStopRec: boolean
   handleStopRec: () => void
+  isEmailFormInvite: boolean
 }
 
 const defaultValue: IState = {
@@ -62,7 +63,8 @@ const defaultValue: IState = {
   isRecPaused: false,
   handleRecIsPaused: () => null,
   isStopRec: false,
-  handleStopRec: () => null
+  handleStopRec: () => null,
+  isEmailFormInvite: false
 }
 
 const ConfContext = createContext<IState>(defaultValue)
@@ -91,6 +93,7 @@ export function ConfWrapper(props: Props) {
   const [isRecControls, setIsRecControls] = useState<boolean>(false)
   const [isRecPaused, setIsRecPaused] = useState<boolean>(false)
   const [isStopRec, setIsStopRec] = useState<boolean>(false)
+  const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
 
   //temp
 
@@ -125,6 +128,7 @@ export function ConfWrapper(props: Props) {
     isRecording,
     isRecControls,
     isRecPaused,
+    isEmailFormInvite,
     handleStopRec: () => {
       setIsStopRec(true)
       setIsEmailFormActive(true)
@@ -159,6 +163,7 @@ export function ConfWrapper(props: Props) {
       setIsActiveUsersList(false)
       setIsActiveCameraMenu(false)
       setIsEmailFormActive(true)
+      setIsEmailFormInvite(true)
     },
     handleManualCamera: () => {
       setIsManualCamera(isManualCamera ? false : true)
@@ -179,6 +184,12 @@ export function ConfWrapper(props: Props) {
     handleCancelEmailForm: () => {
       setIsEmailFormActive(false)
       setIsActiveInvite(false)
+      if(isEmailFormInvite){
+        setIsEmailFormInvite(false)
+      }
+      if(isStopRec){
+        setIsStopRec(false)
+      }
     }
   }
 

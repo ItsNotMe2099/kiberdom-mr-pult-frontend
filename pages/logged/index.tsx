@@ -31,7 +31,7 @@ export default function LoggedPage() {
   return (
     <Layout loading={false}>
       <div className={classNames(styles.root, { [styles.loaded]: !loading })}>
-        <EmailForm style={confContext.isStopRec ? 'send' : 'invite'} isActive={confContext.isEmailFormActive} />
+        <EmailForm style={confContext.isEmailFormInvite ? 'invite' : 'send'} isActive={confContext.isEmailFormActive} />
         <Loader
           isActive={loading}
           color={appContext.isTrueConf ? 'green' : 'blue'}
