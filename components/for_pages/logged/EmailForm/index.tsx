@@ -26,6 +26,11 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
     onSubmit ? onSubmit() : null
   }
 
+  const handleCancel = () => {
+    formik.setFieldValue('email', '')
+    confContext.handleCancelEmailForm()
+  }
+
 
   const formik = useFormik({
     initialValues,
@@ -54,7 +59,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
             <div className={styles.title}>{style === 'invite' ? 'кого' : 'куда'}</div>
             <TextField name='email' label='эл. почта' brdrColor={colors.zoom} />
             <div className={styles.btns}>
-              <Button onClick={confContext.handleCancelEmailForm} color={'red'} fluid>
+              <Button onClick={handleCancel} color={'red'} fluid>
                 отмена
               </Button>
               <Button onClick={handleSubmit}
