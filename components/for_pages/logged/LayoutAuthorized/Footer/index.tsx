@@ -11,6 +11,8 @@ import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { CSSTransition } from 'react-transition-group'
+import Record from './Record'
+import Exit from './Exit'
 
 interface Props {
 
@@ -62,7 +64,7 @@ export default function Footer({ }: Props) {
         onClick={confContext.handleCameraMenu} icon={
           <CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)} />
         } />
-      <Item onClick={confContext.handleRecording} title='начать запись' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='record' icon={
+      <Record onClick={confContext.handleRecording} title='начать запись' icon={
         <>
           <CSSTransition
             timeout={500}
@@ -102,7 +104,7 @@ export default function Footer({ }: Props) {
           </CSSTransition>
         </>
       } />
-      <Item onExit={handleExit} exit={isExit} onClick={() => setIsExit(true)} title='завершить' color={appContext.isZoom ? 'blue' : 'green'} active={false} style='exit' icon={<ExitSvg />} />
+      <Exit onExit={handleExit} exit={isExit} onClick={() => setIsExit(true)} title='завершить' icon={<ExitSvg />} />
     </div>
   )
 }
