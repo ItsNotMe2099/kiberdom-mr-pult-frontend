@@ -18,7 +18,7 @@ export default function IndexPage() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
-    }, 5000)
+    }, 1000)
   }, [])
 
   const router = useRouter()
@@ -64,7 +64,7 @@ export default function IndexPage() {
       <div className={styles.root}>
         <Demonstration isActive={isDemonstration} onCancel={() => setIsDemonstration(false)} />
         <CSSTransition
-          timeout={2000}
+          timeout={1000}
           in={loading}
           nodeRef={logoRef}
           mountOnEnter

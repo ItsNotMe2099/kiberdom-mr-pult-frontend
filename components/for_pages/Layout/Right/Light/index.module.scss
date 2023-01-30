@@ -1,15 +1,21 @@
 @import "styles/index";
 
-.root {}
+.root {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+}
 
 .rootActive {
-  flex: 1;
+  height: 48%;
   .itemsDown {
+    min-height: 48%;
     .itemDown:last-child{
       display: flex;
     }
   }
   .items {
+    min-height: 48%;
     .item:last-child{
       display: flex;
     }
@@ -27,24 +33,30 @@
 
 .light {
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   //max-height: 250px;
 
   img {
-    position: relative !important;
     width: 50% !important;
-    transform: translate(50%, -200%);
+    transform: translate(50%, 0%);
   }
 }
 
 .items {
   display: flex;
   flex-direction: column-reverse;
+  min-height: 33%;
   .item:last-child{
     display: none;
   }
 }
 
 .itemsDown {
+  display: flex;
+  flex-direction: column;
+  min-height: 33%;
   .itemDown:last-child{
     display: none;
   }
@@ -54,13 +66,19 @@
 }
 
 .decorative {
+  display: flex;
+  flex-direction: column;
+  min-height: 33%;
+  .item{
+    height: 50%;
+  }
   .active:last-child {
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(93, 78, 0, 1) 35%, rgba(132, 111, 0, 1) 100%);
   }
 }
 
 .item {
-  height: 32px;
+  height: 33%;
   background: radial-gradient(514.65% 957.67% at 0% 50%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0) 100%);
   min-width: 100%;
   margin-bottom: 4px;
@@ -84,7 +102,7 @@
 }
 
 .item.opened {
-  height: 53px;
+  
 }
 
 .active {
@@ -92,16 +110,16 @@
 }
 
 .minimized {
-  height: 19px;
   padding: 0;
 }
 
 .mini {
+  height: 13%;
   .light{
     max-height: 180px;
   }
   img {
-    transform: translate(50%, -150%);
+    transform: translate(50%, 0%);
   }
 }
 

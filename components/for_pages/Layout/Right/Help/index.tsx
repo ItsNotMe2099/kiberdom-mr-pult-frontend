@@ -19,7 +19,7 @@ export default function Help({ }: Props) {
   }
 
   return (
-    <div className={styles.root}>
+    <div className={classNames(styles.root, {[styles.rootActive]: appContext.isHelpActive})}>
       {!appContext.isHelpActive ? <><div className={styles.title}>
         помощь
       </div>
@@ -31,20 +31,20 @@ export default function Help({ }: Props) {
           <div className={styles.gradient} onClick={appContext.handleHelpActive}></div>
           <Image src='/img/right-menu/help.svg' fill alt='' />
         </div></> :
-        <div>
+        <>
           <div className={styles.call}>
             <div className={styles.gradient}></div>
             <div className={styles.text}>перейти
-              в меню
+              в<br/> меню
               бара</div>
           </div>
           <div className={styles.call}>
             <div className={styles.gradient}></div>
             <div className={styles.text}>
-              позвать админи-стратора
+              позвать<br/> админи-<br/>стратора
             </div>
           </div>
-        </div>
+        </>
       }
     </div>
   )

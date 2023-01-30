@@ -1,9 +1,13 @@
 @import "styles/index";
 
-.root {}
+.root {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+}
 
-.rootActive{
-  flex: 1;
+.rootActive {
+  height: 48%;
 }
 
 .title {
@@ -17,22 +21,25 @@
 
 .climate {
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   //max-height: 250px;
 
   img {
-    position: relative !important;
     width: 50% !important;
-    transform: translate(50%, -200%);
+    transform: translate(50%, 0%);
   }
 }
 
 .items {
   display: flex;
   flex-direction: column-reverse;
+  min-height: 100%;
 }
 
 .item {
-  height: 32px;
+  height: 12.5%;
   min-width: 100%;
   margin-bottom: 4px;
   text-align: center;
@@ -47,22 +54,24 @@
 }
 
 .item.opened {
-  height: 71px;
+  
 }
 
 .active {
   background: conic-gradient(#000 0deg 90deg, #02D3B9, #000 270deg);
 }
 
-.minimized{
-  height: 19px;
+.minimized {
+  
 }
 
-.mini{
-  .climate{
+.mini {
+  height: 13%;
+  .climate {
     max-height: 180px;
   }
-  img{
-    transform: translate(50%, -150%);
+
+  img {
+    transform: translate(50%, 0%);
   }
 }

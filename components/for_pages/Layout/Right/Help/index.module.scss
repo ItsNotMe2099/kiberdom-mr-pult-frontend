@@ -1,7 +1,13 @@
 @import "styles/index";
 
 .root {
-  
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.rootActive {
+  height: 48%;
 }
 
 .title {
@@ -14,36 +20,42 @@
   margin-bottom: 10px;
 }
 
-.call{
-  .gradient{
+.call {
+  .gradient {
     padding: 125px 0;
   }
 }
 
-.help, .call {
+.help,
+.call {
   position: relative;
   min-height: 180px;
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
 
   img {
-    position: relative !important;
     width: 50% !important;
-    transform: translate(50%, 90%);
+    transform: translate(50%, 0%);
   }
 
   .text {
     position: relative;
-    width: 65%;
-    transform: translate(25%, 100%);
     font-weight: 600;
     font-size: 24px;
     color: #fff;
     text-align: center;
     cursor: pointer;
+    z-index: 2;
   }
 }
 
-.call{
-  min-height: 230px;
+.call {
+  min-height: 50%;
 }
 
 .gradient {
@@ -61,18 +73,17 @@
   justify-content: space-between;
 }
 
-.minimized{
+.minimized {
   min-height: 180px;
   max-height: 180px;
-  .gradient{
+
+  .gradient {
     padding: 90px 0;
   }
-  img{
-    transform: translate(50%, 100%);
+
+  img {
+    transform: translate(50%, 0%);
   }
 }
 
-.minimizedAlt{
-  min-height: 110px;
-  max-height: 110px;
-}
+.minimizedAlt {}

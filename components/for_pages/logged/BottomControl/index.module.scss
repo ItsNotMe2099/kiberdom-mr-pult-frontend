@@ -4,7 +4,6 @@
   background: linear-gradient(180deg, rgba(22, 22, 22, 1) 0%, rgba(22, 22, 22, 1) 35%, rgba(1, 1, 1, 1) 100%);
   display: flex;
   justify-content: center;
-  padding: 50% 0;
   padding-bottom: 18px;
   align-items: center;
   flex-direction: column;
@@ -12,8 +11,7 @@
   position: relative;
   cursor: pointer;
   svg{
-    top: 130px;
-    position: absolute;
+    
   }
 }
 

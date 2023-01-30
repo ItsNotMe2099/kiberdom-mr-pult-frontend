@@ -1,9 +1,13 @@
 @import "styles/index";
 
-.root {}
+.root {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+}
 
-.rootActive{
-  flex: 1;
+.rootActive {
+  height: 48%;
 }
 
 .title {
@@ -17,22 +21,25 @@
 
 .sound {
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   //max-height: 250px;
 
   img {
-    position: relative !important;
     width: 50% !important;
-    transform: translate(50%, -200%);
+    transform: translate(50%, 0%);
   }
 }
 
 .items {
   display: flex;
   flex-direction: column-reverse;
+  min-height: 100%;
 }
 
 .item {
-  padding: 11px 0;
+  height: 10%;
   background: linear-gradient(90deg, rgba(12, 12, 12, 1) 0%, rgba(73, 73, 73, 1) 50%, rgba(12, 12, 12, 1) 100%);
   min-width: 100%;
   margin-bottom: 4px;
@@ -46,24 +53,26 @@
   cursor: pointer;
 }
 
-.item.opened{
-  height: 49px;
+.item.opened {
+  
 }
 
 .active {
   background: linear-gradient(90deg, rgba(4, 0, 45, 1) 0%, rgba(19, 0, 245, 1) 50%, rgba(4, 0, 46, 1) 100%);
 }
 
-.minimized{
-  height: 12px;
+.minimized {
+  
   padding: 0;
 }
 
-.mini{
-  .sound{
+.mini {
+  height: 13%;
+  .sound {
     max-height: 180px;
   }
-  img{
-    transform: translate(50%, -150%);
+
+  img {
+    transform: translate(50%, 0%);
   }
 }

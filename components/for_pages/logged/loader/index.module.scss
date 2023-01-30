@@ -41,7 +41,7 @@
 
 .itemEnterActive {
   opacity: 1;
-  transition: opacity 2000ms;
+  transition: opacity 1000ms;
 }
 
 .itemExit{
@@ -50,5 +50,5 @@
 
 .itemExitActive {
   opacity: 0;
-  transition: opacity 2000ms;
+  transition: opacity 1000ms;
 }

@@ -26,7 +26,7 @@ export default function Loader({ icon, color, isActive }: Props) {
 
   return (
     <CSSTransition
-      timeout={2000}
+      timeout={1000}
       in={isActive}
       nodeRef={nodeRef}
       mountOnEnter
