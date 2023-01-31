@@ -31,6 +31,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
 
   const handleSubmit = async (data: { email: string }) => {
     onSubmit ? onSubmit() : null
+    setLoading(true)
     try {
       if (style === 'send') {
         await RecordRepository.send(data)
@@ -47,6 +48,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
       }
       appContext.showSnackbar(errorMessage, SnackbarType.error)
     }
+    setLoading(false)
   }
 
   const handleCancel = () => {
@@ -82,7 +84,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
             <div className={styles.title}>{style === 'invite' ? 'кого' : 'куда'}</div>
             <TextField name='email' label='эл. почта' brdrColor={colors.zoom} />
             <div className={styles.btns}>
-              <Button onClick={handleCancel} color={'red'} fluid>
+              <Button disabled={loading} onClick={handleCancel} color={'red'} fluid>
                 отмена
               </Button>
               <Button spinner={loading} onClick={() => handleSubmit(formik.values)}

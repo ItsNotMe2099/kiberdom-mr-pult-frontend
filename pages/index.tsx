@@ -27,12 +27,12 @@ export default function IndexPage() {
 
   const handleSubmitZoom = () => {
     appContext.loginZoom()
-    router.push('/logged')
+    router.push('/conference')
   }
 
   const handleSubmitTrueConf = () => {
     appContext.loginTrueConf()
-    router.push('/logged')
+    router.push('/conference')
   }
 
   const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)

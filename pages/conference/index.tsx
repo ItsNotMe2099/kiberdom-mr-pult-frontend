@@ -1,21 +1,21 @@
 import Layout from 'components/for_pages/Layout'
-import LayoutAuthorized from 'components/for_pages/logged/LayoutAuthorized'
-import Loader from 'components/for_pages/logged/loader'
+import LayoutAuthorized from 'components/for_pages/conference/LayoutAuthorized'
+import Loader from 'components/for_pages/conference/loader'
 import { useAppContext } from 'context/state'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import ScreenDemonstration from 'components/for_pages/logged/ScreenDemonstration'
-import BottomControl from 'components/for_pages/logged/BottomControl'
+import ScreenDemonstration from 'components/for_pages/conference/ScreenDemonstration'
+import BottomControl from 'components/for_pages/conference/BottomControl'
 import { useConfContext } from 'context/conference_state'
-import CameraControls from 'components/for_pages/logged/CameraControls'
-import UsersList from 'components/for_pages/logged/UsersList'
+import CameraControls from 'components/for_pages/conference/CameraControls'
+import UsersList from 'components/for_pages/conference/UsersList'
 import { colors } from 'styles/variables'
-import EmailForm from 'components/for_pages/logged/EmailForm'
+import EmailForm from 'components/for_pages/conference/EmailForm'
 import MicSvg from 'components/svg/MicSvg'
 import CamSvg from 'components/svg/CamSvg'
 
-export default function LoggedPage() {
+export default function ConferencePage() {
 
   const [loading, setIsLoading] = useState<boolean>(true)
 
