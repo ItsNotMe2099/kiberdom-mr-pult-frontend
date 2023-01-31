@@ -40,7 +40,7 @@ export default function MicSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={confContext.isMicOn === MicrophoneState.Off}
+        in={confContext.isMicOn === MicrophoneState.Off || confContext.isMicOn === null}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

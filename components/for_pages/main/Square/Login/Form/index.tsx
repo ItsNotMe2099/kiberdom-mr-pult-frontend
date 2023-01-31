@@ -1,8 +1,11 @@
 import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
 import { useAppContext } from 'context/state'
+import { Platform } from 'data/enum/Platorm'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
+import CoreRepository from 'data/repositories/CoreRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
@@ -13,9 +16,10 @@ interface Props {
   onSubmit?: () => void
   color: 'blue' | 'green'
   onCancel: () => void
+  platform: Platform
 }
 
-export default function LoginForm({ onSubmit, color, onCancel }: Props) {
+export default function LoginForm({ onSubmit, color, onCancel , platform }: Props) {
 
   const appContext = useAppContext()
 
@@ -26,10 +30,15 @@ export default function LoginForm({ onSubmit, color, onCancel }: Props) {
     password: ''
   }
 
+  const router = useRouter()
+  
   const handleSubmit = async (data: { login: string, password: string }) => {
     setLoading(true)
+    //onSubmit ? onSubmit() : null
     try {
+      await CoreRepository.selectPlatform(platform)
       await ConferenceRepository.join(data)
+      router.push('/conference')
     }
     catch (error: any) {
       let errorMessage = error.toString()
@@ -40,7 +49,6 @@ export default function LoginForm({ onSubmit, color, onCancel }: Props) {
       appContext.showSnackbar(errorMessage, SnackbarType.error)
     }
     setLoading(false)
-    onSubmit ? onSubmit() : null
   }
 
   const handleCancel = () => {

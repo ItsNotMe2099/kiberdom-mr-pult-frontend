@@ -68,7 +68,7 @@ const defaultValue: IState = {
   handleRecIsPaused: () => null,
   isStopRec: false,
   handleStopRec: () => null,
-  isEmailFormInvite: false
+  isEmailFormInvite: false,
 }
 
 const ConfContext = createContext<IState>(defaultValue)
