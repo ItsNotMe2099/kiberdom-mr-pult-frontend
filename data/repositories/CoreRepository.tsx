@@ -6,13 +6,11 @@ import {CameraState} from 'data/enum/CameraState'
 import {MicrophoneState} from 'data/enum/MicrophoneState'
 
 export default class CoreRepository {
-  static async fetchStatus(phone: string, code: string): Promise<ICoreStatus> {
+  static async fetchStatus(): Promise<ICoreStatus> {
     const res = await request<ICoreStatus>({
       method: 'get',
       url: '/api/v1/core/status',
       data: {
-        phone,
-        code,
       },
     })
     return res
@@ -41,7 +39,7 @@ export default class CoreRepository {
   static async setMicrophoneState(state: MicrophoneState): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: `/api/v1/core/microphone/${state}`,
+      url: `/api/v1/core/camera/${state}`,
       data: {},
     })
     return res

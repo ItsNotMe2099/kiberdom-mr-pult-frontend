@@ -1,11 +1,14 @@
 import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
 import { useConfContext } from 'context/conference_state'
+import { useAppContext } from 'context/state'
+//import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
+import { SnackbarType } from 'types/enums'
 import Validator from 'utils/validator'
 import styles from './index.module.scss'
 
@@ -22,11 +25,27 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
   }
 
   const confContext = useConfContext()
+  const appContext = useAppContext()
 
-  const handleSubmit = async (data: {email: string}) => {
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const handleSubmit = async (data: { email: string }) => {
     onSubmit ? onSubmit() : null
-    if(style === 'send'){
-      RecordRepository.send(data)
+    try {
+      if (style === 'send') {
+        await RecordRepository.send(data)
+      }
+      else {
+        //await ConferenceRepository.invite(data)
+      }
+    }
+    catch (error: any) {
+      let errorMessage = error.toString()
+      // extract the error message from the error object
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message
+      }
+      appContext.showSnackbar(errorMessage, SnackbarType.error)
     }
   }
 
@@ -66,7 +85,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
               <Button onClick={handleCancel} color={'red'} fluid>
                 отмена
               </Button>
-              <Button onClick={() => handleSubmit(formik.values)}
+              <Button spinner={loading} onClick={() => handleSubmit(formik.values)}
                 type='submit'
                 disabled={!Validator.emailRe.test(formik.values.email)}
                 color={'blue'}

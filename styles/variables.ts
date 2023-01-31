@@ -6,5 +6,6 @@ export const colors = {
   trueconf: '#0197A7',
   gray: '#707070',
   purple: '#8200F1',
-  red: '#E81B18'
+  red: '#E81B18',
+  yellow: '#D2FF54'
 }

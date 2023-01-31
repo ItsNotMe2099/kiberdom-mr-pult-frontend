@@ -2,7 +2,7 @@ import request from 'utils/request'
 import {IParticipant} from 'data/interfaces/IParticipant'
 import {IStatusResponse} from 'data/interfaces/IStatusResponse'
 
-export default class ConferenceRepository {
+export default class ParticipantRepository {
   static async fetch(): Promise<IParticipant[]> {
     const res = await request<IParticipant[]>({
       method: 'get',

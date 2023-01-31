@@ -1,5 +1,12 @@
-import { IUser } from 'data/interfaces/IUser'
-import { createContext, useContext, useEffect, useState } from 'react'
+import {IUser} from 'data/interfaces/IUser'
+import {createContext, useContext, useEffect, useState} from 'react'
+import {ICoreStatus} from 'data/interfaces/ICoreStatus'
+import CoreRepository from 'data/repositories/CoreRepository'
+import {RequestError} from 'types/types'
+import {Platform} from 'data/enum/Platorm'
+import {useRouter} from 'next/router'
+import { SnackbarData } from 'data/interfaces/ISnackBarData'
+import { SnackbarType } from 'types/enums'
 
 interface IState {
   isZoom: boolean
@@ -24,6 +31,11 @@ interface IState {
   loginZoom: () => void
   loginTrueConf: () => void
   logout: () => void
+  fetch: () => void
+  coreStatus: ICoreStatus | null
+  initialLoading: boolean
+  snackbar: SnackbarData | null,
+  showSnackbar: (text: string, type: SnackbarType) => void
 }
 
 const defaultValue: IState = {
@@ -48,7 +60,12 @@ const defaultValue: IState = {
   handleLightActive: () => null,
   loginZoom: () => null,
   loginTrueConf: () => null,
-  logout: () => null
+  logout: () => null,
+  fetch: () => null,
+  coreStatus: null,
+  initialLoading: false,
+  snackbar: null,
+  showSnackbar: (text, type) => null,
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -59,7 +76,7 @@ interface Props {
 }
 
 export function AppWrapper(props: Props) {
-
+  const router = useRouter()
   const [soundLevel, setSoundLevel] = useState<number>(50)
   const [climateLevel, setClimateLevel] = useState<number>(21)
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
@@ -69,11 +86,14 @@ export function AppWrapper(props: Props) {
 
   const [isZoom, setIsZoom] = useState<boolean>(false)
   const [isTrueConf, setIsTrueConf] = useState<boolean>(false)
+  const [initialLoading, setInitialLoading] = useState<boolean>(false)
 
   const [isSoundActive, setIsSoundActive] = useState<boolean>(false)
   const [isClimateActive, setIsClimateActive] = useState<boolean>(false)
   const [isHelpActive, setIsHelpActive] = useState<boolean>(false)
   const [isLightActive, setIsLightActive] = useState<boolean>(false)
+  const [coreStatus, setCoreStatus] = useState<ICoreStatus | null>(null)
+  const [snackbar, setSnackbar] = useState<SnackbarData | null>(null)
   //temp
   const zoomUser = {
     id: '303-334-43-45',
@@ -84,8 +104,17 @@ export function AppWrapper(props: Props) {
     id: '303-334-43-45',
     avatar: '', name: ''
   }
+  const init = async  () => {
+    const coreStatus = await fetch()
+    setInitialLoading(true)
+    if(coreStatus?.conference?.started && router.asPath === '/'){
+      router.push('/conference')
+    }
+  }
   //temp
-
+  useEffect(() => {
+    init()
+  }, [])
   useEffect(() => {
     if (isZoom) {
       setUser(zoomUser)
@@ -94,14 +123,25 @@ export function AppWrapper(props: Props) {
       setUser(trueConfUser)
     }
   }, [])
-
+  const fetch = async (): Promise<ICoreStatus | null> => {
+    try {
+      const coreStatus = await CoreRepository.fetchStatus()
+      setCoreStatus(coreStatus)
+      return coreStatus
+    }catch (e) {
+      if(e instanceof  RequestError){
+        //Show error
+      }
+    }
+    return null
+  }
 
   const value: IState = {
     ...defaultValue,
-    isZoom,
-    isTrueConf,
-    soundLevel,
-    climateLevel,
+    isZoom: coreStatus?.platform === Platform.Zoom,
+    isTrueConf: coreStatus?.platform === Platform.TrueConf,
+    soundLevel: coreStatus?.conference?.volume ?? 0,
+    climateLevel: coreStatus?.climate?.temperature ?? 0,
     lightLevelUp,
     lightLevelDown,
     user,
@@ -109,6 +149,13 @@ export function AppWrapper(props: Props) {
     isClimateActive,
     isHelpActive,
     isLightActive,
+    snackbar,
+    showSnackbar: (text, type: SnackbarType) => {
+      setSnackbar({ text, type })
+      setTimeout(() => {
+        setSnackbar(null)
+      }, 2000)
+    },
     updateSoundLevel: (level) => {
       setSoundLevel(level)
     },
@@ -154,7 +201,10 @@ export function AppWrapper(props: Props) {
     logout: () => {
       setIsTrueConf(false)
       setIsZoom(false)
-    }
+    },
+    fetch,
+    coreStatus,
+    initialLoading
   }
 
 

@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { CSSTransition } from 'react-transition-group'
 import Record from './Record'
 import Exit from './Exit'
+import ConferenceRepository from 'data/repositories/ConferenceRepository'
 
 interface Props {
 
@@ -45,6 +46,7 @@ export default function Footer({ }: Props) {
 
   const handleExit = () => {
     appContext.logout()
+    ConferenceRepository.exit()
     router.push('/')
   }
 

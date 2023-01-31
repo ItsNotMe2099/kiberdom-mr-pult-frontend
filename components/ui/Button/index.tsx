@@ -1,11 +1,13 @@
 import styles from './index.module.scss'
 import Link from 'next/link'
 import classNames from 'classnames'
-import {IButton} from 'types/types'
+import { IButton } from 'types/types'
+import Spinner from '../Spinner'
 
-interface Props extends IButton{
+interface Props extends IButton {
   children?: React.ReactNode
   disabled?: boolean
+  spinner?: boolean
   href?: string
   className?: string
   fluid?: boolean
@@ -40,9 +42,20 @@ export default function Button(props: Props) {
 
     </Link>
     :
-      <button onClick={props.onClick} type={props.type} disabled={props.disabled} className={`${styles.btn} ${getClassName()}`}>
-        {props.children}
-      </button>
+    <button onClick={props.onClick} type={props.type}
+      disabled={props.disabled || props.spinner}
+      className={`${styles.btn} ${getClassName()}`}>
+      <span className={classNames({
+        [styles.text]: true,
+        [styles.textHidden]: props.spinner,
+      })}>{props.children}</span>
+      <div className={classNames({
+        [styles.spinner]: true,
+        [styles.spinnerVisible]: props.spinner,
+      })}>
+        <Spinner size={22} color="#fff" secondaryColor="rgba(255,255,255,0.4)" />
+      </div>
+    </button>
 }
 
 Button.defaultProps = {
