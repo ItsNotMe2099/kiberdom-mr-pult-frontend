@@ -10,6 +10,7 @@ import CameraOnSvg from 'components/svg/CameraOnSvg'
 import CameraOffSvg from 'components/svg/CameraOffSvg'
 import { CSSTransition } from 'react-transition-group'
 import Button from 'components/ui/Button'
+import { Platform } from 'data/enum/Platorm'
 
 interface IUser {
   avatar?: string
@@ -52,7 +53,7 @@ export default function User({ user, style, onClick }: Props) {
         <div className={styles.name}>{user.name}</div>
       </div>
       {style === 'new' ? <div className={styles.allow} onClick={onClick}
-        style={{ backgroundColor: appContext.isZoom ? `${colors.zoom}` : `${colors.trueconf}` }}>
+        style={{ backgroundColor: appContext.coreStatus?.platform === Platform.Zoom ? `${colors.zoom}` : `${colors.trueconf}` }}>
         впустить
       </div> : null}
       {style === 'old' ?

@@ -4,9 +4,10 @@ import SoundSquare from 'components/for_pages/main/SoundSquare'
 import Square from 'components/for_pages/main/Square'
 import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import { useAppContext } from 'context/state'
+import { Platform } from 'data/enum/Platorm'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
@@ -15,25 +16,9 @@ export default function IndexPage() {
 
   const [loading, setIsLoading] = useState<boolean>(true)
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-  }, [])
-
   const router = useRouter()
 
   const appContext = useAppContext()
-
-  const handleSubmitZoom = () => {
-    appContext.loginZoom()
-    router.push('/conference')
-  }
-
-  const handleSubmitTrueConf = () => {
-    appContext.loginTrueConf()
-    router.push('/conference')
-  }
 
   const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)
   const [isActiveConf, setIsActiveConf] = useState<boolean>(false)
@@ -60,12 +45,12 @@ export default function IndexPage() {
   const trueConfLogin = useRef(null)
 
   return (
-    <Layout loading={loading}>
+    <Layout loading={appContext.initialLoading}>
       <div className={styles.root}>
         <Demonstration isActive={isDemonstration} onCancel={() => setIsDemonstration(false)} />
         <CSSTransition
           timeout={1000}
-          in={loading}
+          in={appContext.initialLoading}
           nodeRef={logoRef}
           mountOnEnter
           unmountOnExit
@@ -78,10 +63,10 @@ export default function IndexPage() {
         >
           <Image ref={logoRef} className={styles.img} src='/img/logo.svg' fill alt='' />
         </CSSTransition>
-        <Square onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null} className={styles.zoom} color='blue' active={!loading ? !isActiveZoom : !loading} img='/img/logos/zoom.png'>
+        <Square onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null} className={styles.zoom} color='blue' active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading} img='/img/logos/zoom.png'>
           <CSSTransition
             timeout={2000}
-            in={!loading ? !isActiveZoom : !loading}
+            in={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
             nodeRef={zoomLabelRef}
             mountOnEnter
             unmountOnExit
@@ -97,7 +82,7 @@ export default function IndexPage() {
             </div></CSSTransition>
           <CSSTransition
             timeout={2000}
-            in={!loading ? isActiveZoom : !loading}
+            in={!appContext.initialLoading ? isActiveZoom : !appContext.initialLoading}
             nodeRef={zoomLogin}
             mountOnEnter
             unmountOnExit
@@ -111,14 +96,19 @@ export default function IndexPage() {
             <div className={styles.login} ref={zoomLogin}>
               <div className={styles.gradient} style={{ background: getColor('blue') }}></div>
               <Image className={styles.imgLogin} src={'/img/logos/zoom.png'} alt='' fill />
-              <LoginForm onSubmit={handleSubmitZoom} onCancel={() => setIsActiveZoom(false)} color={'blue'} />
+              <LoginForm onSubmit={() => appContext.handlePlatform(Platform.Zoom)}
+                onCancel={() => setIsActiveZoom(false)}
+                color={'blue'} />
             </div>
           </CSSTransition>
         </Square>
-        <Square onClick={() => !isActiveConf ? setIsActiveConf(true) : null} className={styles.trueconf} color='green' active={!loading ? !isActiveConf : !loading} img='/img/logos/trueconf.svg'>
+        <Square onClick={() => !isActiveConf ? setIsActiveConf(true) : null}
+          className={styles.trueconf} color='green'
+          active={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
+          img='/img/logos/trueconf.svg'>
           <CSSTransition
             timeout={2000}
-            in={!loading ? !isActiveConf : !loading}
+            in={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
             nodeRef={trueLabelRef}
             mountOnEnter
             unmountOnExit
@@ -134,7 +124,7 @@ export default function IndexPage() {
             </div></CSSTransition>
           <CSSTransition
             timeout={2000}
-            in={!loading ? isActiveConf : !loading}
+            in={!appContext.initialLoading ? isActiveConf : !appContext.initialLoading}
             nodeRef={trueConfLogin}
             mountOnEnter
             unmountOnExit
@@ -148,14 +138,15 @@ export default function IndexPage() {
             <div className={styles.login} ref={trueConfLogin}>
               <div className={styles.gradient} style={{ background: getColor('green') }}></div>
               <Image className={styles.imgLogin} src={'/img/logos/trueconf.svg'} alt='' fill />
-              <LoginForm onSubmit={handleSubmitTrueConf} onCancel={() => setIsActiveConf(false)} color={'green'} />
+              <LoginForm onSubmit={() => appContext.handlePlatform(Platform.TrueConf)}
+                onCancel={() => setIsActiveConf(false)} color={'green'} />
             </div>
           </CSSTransition>
         </Square>
-        <Square onClick={() => !loading ? setIsDemonstration(true) : null} className={styles.screen} color='purple-left' active={!loading} img='/img/logos/screen.svg'>
+        <Square onClick={() => !appContext.initialLoading ? setIsDemonstration(true) : null} className={styles.screen} color='purple-left' active={!appContext.initialLoading} img='/img/logos/screen.svg'>
           <CSSTransition
             timeout={2000}
-            in={!loading}
+            in={!appContext.initialLoading}
             nodeRef={demLabelRef}
             mountOnEnter
             classNames={{
@@ -166,14 +157,14 @@ export default function IndexPage() {
             }}
           >
             <div className={styles.label} ref={demLabelRef}>
-              демонстрация<br/> экрана
+              демонстрация<br /> экрана
             </div></CSSTransition>
         </Square>
-        {loading ? <Square
+        {appContext.initialLoading ? <Square
           img=''
-          className={styles.sound} 
+          className={styles.sound}
           color='purple-right'
-          active={!loading}>
+          active={!appContext.initialLoading}>
         </Square> :
           <SoundSquare onClick={() => setIsOff(isOff ? false : true)} isOn={!isOff ? true : false} img='/img/logos/sound-off.svg' />}
       </div>

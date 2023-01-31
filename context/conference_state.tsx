@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from 'react'
 import {useAppContext} from 'context/state'
 import {MicrophoneState} from 'data/enum/MicrophoneState'
 import {CameraState} from 'data/enum/CameraState'
+import CoreRepository from 'data/repositories/CoreRepository'
 
 interface IState {
   isActiveCameraMenu: boolean
@@ -12,8 +13,8 @@ interface IState {
   isManualCamera: boolean
   isAutoCamera: boolean
   isStreamsCamera: boolean
-  isMicOn: boolean
-  isCamOn: boolean
+  isMicOn: MicrophoneState | null
+  isCamOn: CameraState | null
   users: IUser[]
   newUsers: IUser[]
   handleActiveUsersListMenu: () => void
@@ -45,8 +46,8 @@ const defaultValue: IState = {
   isManualCamera: false,
   isAutoCamera: false,
   isStreamsCamera: false,
-  isMicOn: false,
-  isCamOn: false,
+  isMicOn: null,
+  isCamOn: null,
   users: [],
   newUsers: [],
   handleActiveUsersListMenu: () => null,
@@ -87,8 +88,8 @@ export function ConfWrapper(props: Props) {
   const [isAutoCamera, setIsAutoCamera] = useState<boolean>(false)
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
 
-  const [isMicOn, setIsMicOn] = useState<boolean>(false)
-  const [isCamOn, setIsCamOn] = useState<boolean>(false)
+  const [isMicOn, setIsMicOn] = useState<MicrophoneState | null>(appContext?.coreStatus?.conference?.microphone ?? null)
+  const [isCamOn, setIsCamOn] = useState<CameraState | null>(appContext?.coreStatus?.conference?.camera ?? null)
 
   const [isEmailFormActive, setIsEmailFormActive] = useState<boolean>(false)
   const [isRecording, setIsRecording] = useState<boolean>(false)
@@ -124,8 +125,8 @@ export function ConfWrapper(props: Props) {
     isManualCamera,
     isAutoCamera,
     isStreamsCamera,
-    isMicOn: appContext?.coreStatus?.conference?.microphone === MicrophoneState.On,
-    isCamOn: appContext?.coreStatus?.conference?.camera === CameraState.On,
+    isMicOn,
+    isCamOn,
     users,
     newUsers,
     isRecording,
@@ -146,10 +147,12 @@ export function ConfWrapper(props: Props) {
       setIsRecording(true)
     },
     handleMicrophone: () => {
-      setIsMicOn(isMicOn ? false : true)
+      setIsMicOn(isMicOn === MicrophoneState.On ? MicrophoneState.Off : MicrophoneState.On)
+      CoreRepository.setMicrophoneState(isMicOn === MicrophoneState.On ? MicrophoneState.Off : MicrophoneState.On)
     },
     handleCamera: () => {
-      setIsCamOn(isCamOn ? false : true)
+      setIsCamOn(isCamOn === CameraState.On ? CameraState.Off : CameraState.On)
+      CoreRepository.setCameraState(isCamOn === CameraState.On ? CameraState.Off : CameraState.On)
     },
     handleActiveUsersListMenu: () => {
       setIsActiveUsersList(isActiveUsersList ? false : true)

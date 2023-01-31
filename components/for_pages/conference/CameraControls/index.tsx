@@ -1,5 +1,6 @@
 import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
+import { Platform } from 'data/enum/Platorm'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
@@ -34,15 +35,15 @@ export default function CameraControls({ isActive }: Props) {
         <Item
           active={confContext.isManualCamera}
           onClick={confContext.handleManualCamera}
-          color={appContext.isZoom ? 'blue' : 'green'} icon='/img/camera-controls/manual.svg' title='вручную' />
+          color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/manual.svg' title='вручную' />
         <Item
           active={confContext.isAutoCamera}
           onClick={confContext.handleAutoCamera}
-          color={appContext.isZoom ? 'blue' : 'green'} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
+          color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
         <Item
           active={confContext.isStreamsCamera}
           onClick={confContext.handleStreamsCamera}
-          color={appContext.isZoom ? 'blue' : 'green'} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
+          color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
       </div>
     </CSSTransition>
   )

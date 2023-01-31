@@ -13,6 +13,7 @@ import { CSSTransition } from 'react-transition-group'
 import Record from './Record'
 import Exit from './Exit'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
+import { Platform } from 'data/enum/Platorm'
 
 interface Props {
 
@@ -26,8 +27,8 @@ export default function Footer({ }: Props) {
   const getSvgColor = (type: boolean) => {
     return classNames(
       {
-        [styles.blue]: appContext.isZoom && type,
-        [styles.green]: appContext.isTrueConf && type
+        [styles.blue]: appContext.coreStatus?.platform === Platform.Zoom && type,
+        [styles.green]: appContext.coreStatus?.platform === Platform.TrueConf && type
       }
     )
   }
@@ -56,12 +57,12 @@ export default function Footer({ }: Props) {
   return (
     <div className={styles.root}>
       <Item style='members' title='участники' numberOfUsers={confContext.newUsers.length + confContext.users.length}
-        color={appContext.isZoom ? 'blue' : 'green'}
+        color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'}
         active={confContext.isActiveUsersList}
         onClick={confContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(confContext.isActiveUsersList)} />} />
-      <Item title='пригласить' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
+      <Item title='пригласить' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
         onClick={confContext.handleInvite} icon={<InviteSvg className={getSvgColor(confContext.isActiveInvite)} />} />
-      <Item title='упр. камерой' color={appContext.isZoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
+      <Item title='упр. камерой' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
         onClick={confContext.handleCameraMenu} icon={
           <CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)} />
         } />

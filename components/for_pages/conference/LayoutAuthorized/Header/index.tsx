@@ -1,5 +1,6 @@
 import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
+import { Platform } from 'data/enum/Platorm'
 import Image from 'next/image'
 import { colors } from 'styles/variables'
 import User from '../../UsersList/User'
@@ -31,7 +32,7 @@ export default function Header({ color, icon }: Props) {
         style='header' /> : null}
       {confContext.newUsers.length > 1 && !confContext.isActiveUsersList ?
         <div className={styles.allow} onClick={confContext.handleActiveUsersListMenu}
-          style={{ backgroundColor: appContext.isZoom ? `${colors.zoom}` : `${colors.trueconf}` }}>
+          style={{ backgroundColor: appContext.coreStatus?.platform === Platform.Zoom ? `${colors.zoom}` : `${colors.trueconf}` }}>
           {`впустить новых участников (+${confContext.newUsers.length})`}
         </div> : null}
       <Image className={styles.img} src={icon} alt='' fill />
