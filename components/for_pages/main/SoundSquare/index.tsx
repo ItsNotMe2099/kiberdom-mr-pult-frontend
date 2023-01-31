@@ -1,7 +1,5 @@
-import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { useRef } from 'react'
 import Gradient from 'components/for_pages/common/gradient'
 import { colors } from 'styles/variables'
 import MusicSvg from 'components/svg/MusicSvg'

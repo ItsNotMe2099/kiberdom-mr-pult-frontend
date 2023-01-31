@@ -1,7 +1,7 @@
 import request from 'utils/request'
 import {IStatusResponse} from 'data/interfaces/IStatusResponse'
 
-export default class ConferenceRepository {
+export default class RecordRepository {
   static async start(): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',

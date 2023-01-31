@@ -1,6 +1,7 @@
 import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
 import { useConfContext } from 'context/conference_state'
+import RecordRepository from 'data/repositories/RecordRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
@@ -22,8 +23,11 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
 
   const confContext = useConfContext()
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (data: {email: string}) => {
     onSubmit ? onSubmit() : null
+    if(style === 'send'){
+      RecordRepository.send(data)
+    }
   }
 
   const handleCancel = () => {
@@ -62,7 +66,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
               <Button onClick={handleCancel} color={'red'} fluid>
                 отмена
               </Button>
-              <Button onClick={handleSubmit}
+              <Button onClick={() => handleSubmit(formik.values)}
                 type='submit'
                 disabled={!Validator.emailRe.test(formik.values.email)}
                 color={'blue'}

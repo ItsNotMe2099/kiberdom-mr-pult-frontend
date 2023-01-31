@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import styles from './index.module.scss'
-import classNames from 'classnames'
 import { colors } from 'styles/variables'
 import Gradient from 'components/for_pages/common/gradient'
 

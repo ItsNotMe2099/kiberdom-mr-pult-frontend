@@ -1,4 +1,8 @@
+import { CameraState } from 'data/enum/CameraState'
+import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { IUser } from 'data/interfaces/IUser'
+import CoreRepository from 'data/repositories/CoreRepository'
+import RecordRepository from 'data/repositories/RecordRepository'
 import { createContext, useContext, useState } from 'react'
 
 interface IState {
@@ -29,7 +33,6 @@ interface IState {
   isRecControls: boolean
   isRecPaused: boolean
   handleRecIsPaused: () => void
-  isStopRec: boolean
   handleStopRec: () => void
   isEmailFormInvite: boolean
 }
@@ -62,7 +65,6 @@ const defaultValue: IState = {
   isRecControls: false,
   isRecPaused: false,
   handleRecIsPaused: () => null,
-  isStopRec: false,
   handleStopRec: () => null,
   isEmailFormInvite: false
 }
@@ -92,7 +94,6 @@ export function ConfWrapper(props: Props) {
 
   const [isRecControls, setIsRecControls] = useState<boolean>(false)
   const [isRecPaused, setIsRecPaused] = useState<boolean>(false)
-  const [isStopRec, setIsStopRec] = useState<boolean>(false)
   const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
 
   //temp
@@ -115,7 +116,6 @@ export function ConfWrapper(props: Props) {
   const value: IState = {
     ...defaultValue,
     isActiveCameraMenu,
-    isStopRec,
     isActiveUsersList,
     isActiveInvite,
     isManualCamera,
@@ -130,23 +130,29 @@ export function ConfWrapper(props: Props) {
     isRecPaused,
     isEmailFormInvite,
     handleStopRec: () => {
-      setIsStopRec(true)
+      setIsRecording(false)
+      setIsRecControls(false)
+      RecordRepository.stop()
       setIsEmailFormActive(true)
     },
     handleRecIsPaused: () => {
       setIsRecPaused(isRecPaused ? false : true)
+      RecordRepository.pause()
     },
     handleVisibleRecControls: () => {
       setIsRecControls(true)
     },
     handleRecording: () => {
       setIsRecording(true)
+      RecordRepository.start()
     },
     handleMicrophone: () => {
       setIsMicOn(isMicOn ? false : true)
+      CoreRepository.setMicrophoneState(isMicOn ? MicrophoneState.Off : MicrophoneState.On)
     },
     handleCamera: () => {
       setIsCamOn(isCamOn ? false : true)
+      CoreRepository.setCameraState(isCamOn ? CameraState.Off : CameraState.On)
     },
     handleActiveUsersListMenu: () => {
       setIsActiveUsersList(isActiveUsersList ? false : true)
@@ -186,9 +192,6 @@ export function ConfWrapper(props: Props) {
       setIsActiveInvite(false)
       if(isEmailFormInvite){
         setIsEmailFormInvite(false)
-      }
-      if(isStopRec){
-        setIsStopRec(false)
       }
     }
   }

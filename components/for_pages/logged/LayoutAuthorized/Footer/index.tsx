@@ -2,7 +2,6 @@ import CameraSvg from 'components/svg/CameraSvg'
 import ExitSvg from 'components/svg/ExitSvg'
 import InviteSvg from 'components/svg/InviteSvg'
 import Members2Svg from 'components/svg/Members2Svg'
-import RecordSvg from 'components/svg/RecordSvg'
 import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import styles from './index.module.scss'
@@ -64,7 +63,7 @@ export default function Footer({ }: Props) {
         onClick={confContext.handleCameraMenu} icon={
           <CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)} />
         } />
-      <Record onClick={confContext.handleRecording} title='начать запись' icon={
+      <Record onClick={() => confContext.isRecording ? null : confContext.handleRecording()} title='начать запись' icon={
         <>
           <CSSTransition
             timeout={500}

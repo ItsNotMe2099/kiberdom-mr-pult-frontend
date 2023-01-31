@@ -37,7 +37,7 @@ async function request<T = any>(options: string | Options): Promise<T> {
     config = options.config as any
   }
 
-  const correctUrl = `${HOST_INNER || HOST}${url}${(method === 'get' && data) ? `?${queryParams(data)}` : ''}`
+  const correctUrl = `${process.env.NEXT_PUBLIC_API_URL || HOST_INNER || HOST}${url}${(method === 'get' && data) ? `?${queryParams(data)}` : ''}`
 
 
   const mulipartFormData = typeof FormData == 'undefined' ? null : new FormData()
