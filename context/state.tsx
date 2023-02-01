@@ -9,6 +9,8 @@ import { SnackbarData } from 'data/interfaces/ISnackBarData'
 import { SnackbarType } from 'types/enums'
 import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { CameraState } from 'data/enum/CameraState'
+import ParticipantRepository from 'data/repositories/ParticipantsRepository'
+import RecordRepository from 'data/repositories/RecordRepository'
 
 interface IState {
   handlePlatform: (platform: Platform) => void
@@ -65,6 +67,8 @@ interface IState {
   isStopRec: boolean
   handleStopRec: () => void
   isEmailFormInvite: boolean
+  isMuteAll: boolean
+  handleMuteAll: () => void
 }
 
 const defaultValue: IState = {
@@ -122,6 +126,8 @@ const defaultValue: IState = {
   isStopRec: false,
   handleStopRec: () => null,
   isEmailFormInvite: false,
+  isMuteAll: false,
+  handleMuteAll: () => null
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -168,6 +174,9 @@ export function AppWrapper(props: Props) {
   const [isRecPaused, setIsRecPaused] = useState<boolean>(false)
   const [isStopRec, setIsStopRec] = useState<boolean>(false)
   const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
+
+  const [isMuteAll, setIsMuteAll] = useState<boolean>(false)
+
   //temp
   const zoomUser = {
     id: '303-334-43-45',
@@ -317,18 +326,24 @@ export function AppWrapper(props: Props) {
     isRecControls,
     isRecPaused,
     isEmailFormInvite,
-    handleStopRec: () => {
-      setIsStopRec(true)
-      setIsEmailFormActive(true)
+    handleStopRec: async () => {
+      const newStatus = true
+      await RecordRepository.stop()
+      setIsStopRec(newStatus)
+      setIsEmailFormActive(newStatus)
     },
-    handleRecIsPaused: () => {
-      setIsRecPaused(isRecPaused ? false : true)
+    handleRecIsPaused: async () => {
+      const newState = isRecPaused ? false : true
+      await RecordRepository.pause()
+      setIsRecPaused(newState)
     },
     handleVisibleRecControls: () => {
       setIsRecControls(true)
     },
-    handleRecording: () => {
-      setIsRecording(true)
+    handleRecording: async () => {
+      const newState = true
+      await RecordRepository.start()
+      setIsRecording(newState)
     },
     handleMicrophone: async () => {
       const newMicState = micState === MicrophoneState.On ? MicrophoneState.Off : MicrophoneState.On
@@ -384,6 +399,12 @@ export function AppWrapper(props: Props) {
       if (isStopRec) {
         setIsStopRec(false)
       }
+    },
+    isMuteAll,
+    handleMuteAll: async () => {
+      const newState = true
+      await ParticipantRepository.muteAudioAll()
+      setIsMuteAll(newState)
     }
   }
 

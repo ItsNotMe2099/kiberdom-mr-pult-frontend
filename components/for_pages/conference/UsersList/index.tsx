@@ -42,7 +42,7 @@ export default function UsersList({ isActive }: Props) {
             <User user={i} key={index} style='old' />
           )}
         </div>
-        <div className={styles.micControl}>
+        <div className={styles.micControl} onClick={() => appContext.isMuteAll ? null : appContext.handleMuteAll()}>
           <MicrophoneOffSvg className={styles.img} />
           <div className={styles.text}>выключить всем микрофон</div>
         </div>

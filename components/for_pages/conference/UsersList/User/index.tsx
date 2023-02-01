@@ -58,10 +58,10 @@ export default function User({ user, style, onClick }: Props) {
       </div> : null}
       {style === 'old' ?
         <div className={styles.controls}>
-          <div className={styles.microphone} onClick={() => setIsMicOn(isMicOn ? false : true)}>
-            {isMicOn ? <MicrophoneOnSvg className={styles.on} /> : <MicrophoneOffSvg className={styles.off} />}
+          <div className={styles.microphone}>
+            {!appContext.isMuteAll ? <MicrophoneOnSvg className={styles.on} /> : <MicrophoneOffSvg className={styles.off} />}
           </div>
-          <div className={styles.camera} onClick={() => setIsCamOn(isCamOn ? false : true)}>
+          <div className={styles.camera}>
             {isCamOn ? <CameraOnSvg className={styles.onCam} /> : <CameraOffSvg className={styles.offCam} />}
           </div>
           <div onClick={() => setIsDisconnect(true)}>
