@@ -22,7 +22,7 @@ export default function MicSvg({  }: Props) {
     <>
       <CSSTransition
         timeout={500}
-        in={appContext.isMicOn === MicrophoneState.On}
+        in={appContext.micState === MicrophoneState.On}
         nodeRef={onRef}
         mountOnEnter
         unmountOnExit
@@ -39,7 +39,7 @@ export default function MicSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={appContext.isMicOn === MicrophoneState.Off || appContext.isMicOn === null}
+        in={appContext.micState === MicrophoneState.Off}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

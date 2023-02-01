@@ -21,7 +21,7 @@ export default function CamSvg({  }: Props) {
     <>
       <CSSTransition
         timeout={500}
-        in={appContext.isCamOn === CameraState.On}
+        in={appContext.camState === CameraState.On}
         nodeRef={onRef}
         mountOnEnter
         unmountOnExit
@@ -39,7 +39,7 @@ export default function CamSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={appContext.isCamOn === CameraState.Off || appContext.isCamOn === null}
+        in={appContext.camState === CameraState.Off}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

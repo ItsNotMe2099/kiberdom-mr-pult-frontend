@@ -39,7 +39,7 @@ export default function ConferencePage() {
                   {appContext.coreStatus?.platform === Platform.Zoom ? `linear-gradient(43.73deg, rgba(11, 91, 252, 0) 44.44%, rgba(11, 91, 252, 0.3) 70.44%, ${colors.zoom} 99.75%)` :
                     `linear-gradient(43.73deg, rgba(1, 151, 167, 0) 44.44%, rgba(1, 151, 167, 0.3) 70.44%, ${colors.trueconf} 99.75%)`
                   }
-                  isActive={appContext.isMicOn === MicrophoneState.On} onClick={appContext.handleMicrophone}
+                  isActive={appContext.micState === MicrophoneState.On} onClick={appContext.handleMicrophone}
                   img={<MicSvg />} title='микрофон' />
                 <CameraControls isActive={appContext.isActiveCameraMenu} />
                 <BottomControl
@@ -47,7 +47,7 @@ export default function ConferencePage() {
                   {appContext.coreStatus?.platform === Platform.Zoom ? `linear-gradient(316.27deg, rgba(11, 91, 252, 0) 39.75%, rgba(11, 91, 252, 0.3) 67.43%, ${colors.zoom} 100%)` :
                     `linear-gradient(316.27deg, rgba(1, 151, 167, 0) 39.75%, rgba(1, 151, 167, 0.3) 67.43%, ${colors.trueconf} 100%)`
                   }
-                  isActive={appContext.isCamOn === CameraState.On} onClick={appContext.handleCamera}
+                  isActive={appContext.camState === CameraState.On} onClick={appContext.handleCamera}
                   img={<CamSvg />} title='камера' />
               </div>
             </div>
