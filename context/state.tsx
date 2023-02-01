@@ -42,8 +42,8 @@ interface IState {
   isManualCamera: boolean
   isAutoCamera: boolean
   isStreamsCamera: boolean
-  micState: MicrophoneState | undefined
-  camState: CameraState | undefined
+  micState: MicrophoneState
+  camState: CameraState
   users: IUser[]
   newUsers: IUser[]
   handleActiveUsersListMenu: () => void
@@ -134,8 +134,8 @@ interface Props {
 export function AppWrapper(props: Props) {
   const router = useRouter()
   const [coreStatus, setCoreStatus] = useState<ICoreStatus | null>(null)
-  const [volumeLevel, setVolumeLevel] = useState<number>(coreStatus?.conference?.volume ?? 0)
-  const [climateLevel, setClimateLevel] = useState<number>(coreStatus?.climate?.temperature ?? 0)
+  const [volumeLevel, setVolumeLevel] = useState<number>(0)
+  const [climateLevel, setClimateLevel] = useState<number>(0)
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
   const [lightLevelDown, setLightLevelDown] = useState<number>(1)
 
@@ -158,8 +158,8 @@ export function AppWrapper(props: Props) {
   const [isAutoCamera, setIsAutoCamera] = useState<boolean>(false)
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
 
-  const [micState, setMicState] = useState<MicrophoneState | undefined>(MicrophoneState.Off)
-  const [camState, setCamState] = useState<CameraState | undefined>(CameraState.Off)
+  const [micState, setMicState] = useState<MicrophoneState>(MicrophoneState.Off)
+  const [camState, setCamState] = useState<CameraState>(CameraState.Off)
 
   const [isEmailFormActive, setIsEmailFormActive] = useState<boolean>(false)
   const [isRecording, setIsRecording] = useState<boolean>(false)
@@ -223,6 +223,7 @@ export function AppWrapper(props: Props) {
       setCoreStatus(coreStatus)
       setMicState(coreStatus.conference.microphone ?? MicrophoneState.Off)
       setCamState(coreStatus.conference.camera ?? CameraState.Off)
+      setVolumeLevel(coreStatus.conference.volume ?? 0)
       setInitialLoading(false)
       return coreStatus
     } catch (e) {
@@ -257,9 +258,10 @@ export function AppWrapper(props: Props) {
         setSnackbar(null)
       }, 2000)
     },
-    updateVolumeLevel: (level) => {
+    updateVolumeLevel: async (level) => {
+      await CoreRepository.setVolume(level)
+      setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, volume: level } } as ICoreStatus)
       setVolumeLevel(level)
-      CoreRepository.setVolume(level)
     },
     updateClimateLevel: (level) => {
       setClimateLevel(level)

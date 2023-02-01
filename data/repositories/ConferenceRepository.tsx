@@ -52,7 +52,7 @@ export default class ConferenceRepository {
     return res
   }
 
-  static async setScreenDemonstrationState(state: 'on' | 'off'): Promise<IStatusResponse> {
+  static async setScreenDemonstrationState(state: 'start' | 'stop'): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: `/api/v1/core/screen/demo/${state}`,

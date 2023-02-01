@@ -5,20 +5,25 @@ import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
-  icon: string
-  color: 'blue' | 'green'
+  icon?: string
+  color: 'blue' | 'green' | 'purple' | 'yellow'
   isActive: boolean
+  text: string
 }
 
-export default function Loader({ icon, color, isActive }: Props) {
+export default function Loader({ icon, color, isActive, text }: Props) {
 
 
-  const getColor = (color: 'blue' | 'green') => {
+  const getColor = (color: 'blue' | 'green' | 'purple' | 'yellow') => {
     switch (color) {
       case 'blue':
         return `conic-gradient(#000 0deg 110deg, ${colors.zoom}, #000 250deg)`
       case 'green':
         return `conic-gradient(#000 0deg 110deg, ${colors.trueconf}, #000 250deg)`
+      case 'purple':
+        return `conic-gradient(#000 0deg 110deg, ${colors.purple}, #000 250deg)`
+      case 'yellow':
+        return `conic-gradient(#000 0deg 110deg, ${colors.yellow}, #000 250deg)`
     }
   }
 
@@ -40,9 +45,9 @@ export default function Loader({ icon, color, isActive }: Props) {
     >
       <div className={styles.root} ref={nodeRef}>
         <div className={styles.container} style={{ background: getColor(color) }}>
-          <Image className={styles.img} src={icon} alt='' fill />
+          {icon ? <Image className={styles.img} src={icon} alt='' fill /> : null}
           <div className={styles.wait}>
-            запускаю, подождите...
+            {text}
           </div>
         </div>
       </div>

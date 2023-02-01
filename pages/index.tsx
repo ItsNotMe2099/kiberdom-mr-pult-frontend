@@ -1,3 +1,4 @@
+import Loader from 'components/for_pages/common/loader'
 import Layout from 'components/for_pages/Layout'
 import Demonstration from 'components/for_pages/main/Demonstration'
 import SoundSquare from 'components/for_pages/main/SoundSquare'
@@ -5,10 +6,12 @@ import Square from 'components/for_pages/main/Square'
 import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
+import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
+import { SnackbarType } from 'types/enums'
 import styles from './index.module.scss'
 
 export default function IndexPage() {
@@ -21,6 +24,41 @@ export default function IndexPage() {
   const [isOff, setIsOff] = useState<boolean>(true)
 
   const [isDemonstration, setIsDemonstration] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const handleScreenDemo = async () => {
+    setLoading(true)
+    try {
+      await ConferenceRepository.setScreenDemonstrationState('start')
+      setIsDemonstration(true)
+    }
+    catch (error: any) {
+      let errorMessage = error.toString()
+      // extract the error message from the error object
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message
+      }
+      appContext.showSnackbar(errorMessage, SnackbarType.error)
+    }
+    setLoading(false)
+  }
+
+  const handleScreenDemoCancel = async () => {
+    setLoading(true)
+    try {
+      await ConferenceRepository.setScreenDemonstrationState('stop')
+      setIsDemonstration(false)
+    }
+    catch (error: any) {
+      let errorMessage = error.toString()
+      // extract the error message from the error object
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message
+      }
+      appContext.showSnackbar(errorMessage, SnackbarType.error)
+    }
+    setLoading(false)
+  }
 
   const getColor = (color: 'blue' | 'green') => {
     switch (color) {
@@ -42,7 +80,11 @@ export default function IndexPage() {
   return (
     <Layout loading={appContext.initialLoading}>
       <div className={styles.root}>
-        <Demonstration isActive={isDemonstration} onCancel={() => setIsDemonstration(false)} />
+        <Loader
+          text='подождите...'
+          isActive={loading}
+          color={'purple'} />
+        <Demonstration isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
         <CSSTransition
           timeout={500}
           in={appContext.initialLoading}
@@ -138,7 +180,7 @@ export default function IndexPage() {
             </div>
           </CSSTransition>
         </Square>
-        <Square onClick={() => !appContext.initialLoading ? setIsDemonstration(true) : null} className={styles.screen} color='purple-left' active={!appContext.initialLoading} img='/img/logos/screen.svg'>
+        <Square onClick={() => !appContext.initialLoading ? handleScreenDemo() : null} className={styles.screen} color='purple-left' active={!appContext.initialLoading} img='/img/logos/screen.svg'>
           <CSSTransition
             timeout={500}
             in={!appContext.initialLoading}
