@@ -23,7 +23,7 @@ export default function Climate({ }: Props) {
   }
 
   const isOthersControlsActive = () => {
-    if(appContext.isSoundActive || appContext.isHelpActive || appContext.isLightActive){
+    if(appContext.isVolumeActive || appContext.isHelpActive || appContext.isLightActive){
       return true
     }
     return false

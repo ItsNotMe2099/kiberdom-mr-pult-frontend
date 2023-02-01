@@ -1,4 +1,4 @@
-import { useConfContext } from 'context/conference_state'
+import { useAppContext } from 'context/state'
 import { useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
@@ -12,7 +12,7 @@ interface Props {
 
 export default function Record({ icon, onClick, title }: Props) {
 
-  const confContext = useConfContext()
+  const appContext = useAppContext()
 
   const handleClick = () => {
     onClick ? onClick() : null
@@ -25,19 +25,19 @@ export default function Record({ icon, onClick, title }: Props) {
   const resumeRef = useRef(null)
 
   useEffect(() => {
-    if (confContext.isRecording) {
+    if (appContext.isRecording) {
       setTimeout(() => {
-        confContext.handleVisibleRecControls()
+        appContext.handleVisibleRecControls()
       }, 10000)
     }
-  }, [confContext.isRecording])
+  }, [appContext.isRecording])
 
   return (
-    <div className={classNames(styles.root, {[styles.recording]: confContext.isRecording})} onClick={handleClick}>
+    <div className={classNames(styles.root, {[styles.recording]: appContext.isRecording})} onClick={handleClick}>
       {icon}
       <CSSTransition
         timeout={500}
-        in={!confContext.isRecording}
+        in={!appContext.isRecording}
         nodeRef={titleRef}
         mountOnEnter
         unmountOnExit
@@ -52,7 +52,7 @@ export default function Record({ icon, onClick, title }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={confContext.isRecording}
+        in={appContext.isRecording}
         nodeRef={recRef}
         mountOnEnter
         unmountOnExit
@@ -70,7 +70,7 @@ export default function Record({ icon, onClick, title }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={confContext.isRecControls}
+        in={appContext.isRecControls}
         nodeRef={recControlsRef}
         mountOnEnter
         unmountOnExit
@@ -84,7 +84,7 @@ export default function Record({ icon, onClick, title }: Props) {
         <div className={styles.recControls} ref={recControlsRef}>
           <CSSTransition
             timeout={500}
-            in={!confContext.isRecPaused}
+            in={!appContext.isRecPaused}
             nodeRef={pauseRef}
             mountOnEnter
             unmountOnExit
@@ -95,13 +95,13 @@ export default function Record({ icon, onClick, title }: Props) {
               exitActive: styles.itemExitActive,
             }}
           >
-            <div className={styles.pause} onClick={confContext.handleRecIsPaused} ref={pauseRef}>
+            <div className={styles.pause} onClick={appContext.handleRecIsPaused} ref={pauseRef}>
               пауза
             </div>
           </CSSTransition>
           <CSSTransition
             timeout={500}
-            in={confContext.isRecPaused}
+            in={appContext.isRecPaused}
             nodeRef={resumeRef}
             mountOnEnter
             unmountOnExit
@@ -112,11 +112,11 @@ export default function Record({ icon, onClick, title }: Props) {
               exitActive: styles.itemExitActive,
             }}
           >
-            <div className={styles.resume} onClick={confContext.handleRecIsPaused} ref={resumeRef}>
+            <div className={styles.resume} onClick={appContext.handleRecIsPaused} ref={resumeRef}>
               продолжить
             </div>
           </CSSTransition>
-          <div className={styles.stop} onClick={confContext.handleStopRec} ref={pauseRef}>
+          <div className={styles.stop} onClick={appContext.handleStopRec} ref={pauseRef}>
             остановить<br/> запись
           </div>
         </div>

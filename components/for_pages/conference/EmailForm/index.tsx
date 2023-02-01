@@ -1,6 +1,5 @@
 import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
-import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 //import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
@@ -24,7 +23,6 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
     email: ''
   }
 
-  const confContext = useConfContext()
   const appContext = useAppContext()
 
   const [loading, setLoading] = useState<boolean>(false)
@@ -53,7 +51,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
 
   const handleCancel = () => {
     formik.setFieldValue('email', '')
-    confContext.handleCancelEmailForm()
+    appContext.handleCancelEmailForm()
   }
 
 

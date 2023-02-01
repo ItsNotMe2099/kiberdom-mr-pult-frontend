@@ -6,17 +6,12 @@ import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 export default function IndexPage() {
-
-  const [loading, setIsLoading] = useState<boolean>(true)
-
-  const router = useRouter()
 
   const appContext = useAppContext()
 
@@ -49,7 +44,7 @@ export default function IndexPage() {
       <div className={styles.root}>
         <Demonstration isActive={isDemonstration} onCancel={() => setIsDemonstration(false)} />
         <CSSTransition
-          timeout={1000}
+          timeout={500}
           in={appContext.initialLoading}
           nodeRef={logoRef}
           mountOnEnter
@@ -65,7 +60,7 @@ export default function IndexPage() {
         </CSSTransition>
         <Square onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null} className={styles.zoom} color='blue' active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading} img='/img/logos/zoom.png'>
           <CSSTransition
-            timeout={2000}
+            timeout={500}
             in={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
             nodeRef={zoomLabelRef}
             mountOnEnter
@@ -107,7 +102,7 @@ export default function IndexPage() {
           active={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
           img='/img/logos/trueconf.svg'>
           <CSSTransition
-            timeout={2000}
+            timeout={500}
             in={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
             nodeRef={trueLabelRef}
             mountOnEnter
@@ -145,7 +140,7 @@ export default function IndexPage() {
         </Square>
         <Square onClick={() => !appContext.initialLoading ? setIsDemonstration(true) : null} className={styles.screen} color='purple-left' active={!appContext.initialLoading} img='/img/logos/screen.svg'>
           <CSSTransition
-            timeout={2000}
+            timeout={500}
             in={!appContext.initialLoading}
             nodeRef={demLabelRef}
             mountOnEnter
@@ -160,13 +155,7 @@ export default function IndexPage() {
               демонстрация<br /> экрана
             </div></CSSTransition>
         </Square>
-        {appContext.initialLoading ? <Square
-          img=''
-          className={styles.sound}
-          color='purple-right'
-          active={!appContext.initialLoading}>
-        </Square> :
-          <SoundSquare onClick={() => setIsOff(isOff ? false : true)} isOn={!isOff ? true : false} img='/img/logos/sound-off.svg' />}
+        <SoundSquare loading={appContext.initialLoading} onClick={() => setIsOff(isOff ? false : true)} isOn={!isOff ? true : false} img='/img/logos/sound-off.svg' />
       </div>
     </Layout>
   )

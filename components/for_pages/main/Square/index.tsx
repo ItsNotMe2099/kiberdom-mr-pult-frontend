@@ -44,7 +44,7 @@ export default function Square({ color, active, img, imgWidth, children, classNa
       </div>
       <>{children}</>
       <CSSTransition
-        timeout={2000}
+        timeout={500}
         in={active}
         nodeRef={nodeRef}
         mountOnEnter

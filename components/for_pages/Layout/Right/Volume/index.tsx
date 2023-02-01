@@ -12,13 +12,13 @@ interface ItemProps {
   index?: number
 }
 
-export default function Sound({ }: Props) {
+export default function Volume({ }: Props) {
 
   const appContext = useAppContext()
 
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
-      appContext.updateSoundLevel((index + 1) * 10)
+      appContext.updateVolumeLevel((index + 1) * 10)
     }
   }
 
@@ -31,13 +31,13 @@ export default function Sound({ }: Props) {
 
   const Item = ({ level, index }: ItemProps) => {
     return (
-      <div onClick={() => appContext.isSoundActive ? handleItemClick(index) : null}
+      <div onClick={() => appContext.isVolumeActive ? handleItemClick(index) : null}
         className={classNames(styles.item, {
-          [styles.active]: level && level <= appContext.soundLevel,
-          [styles.opened]: appContext.isSoundActive,
+          [styles.active]: level && level <= appContext.volumeLevel,
+          [styles.opened]: appContext.isVolumeActive,
           [styles.minimized]: isOthersControlsActive() === true
         })}>
-        {appContext.isSoundActive ? level : null}
+        {appContext.isVolumeActive ? level : null}
       </div>
     )
   }
@@ -48,16 +48,16 @@ export default function Sound({ }: Props) {
 
   return (
     <div className=
-    {classNames(styles.root, {[styles.rootActive]: appContext.isSoundActive, [styles.mini]: isOthersControlsActive() === true})}>
-      {!appContext.isSoundActive ? <div className={styles.title}>
+    {classNames(styles.root, {[styles.rootActive]: appContext.isVolumeActive, [styles.mini]: isOthersControlsActive() === true})}>
+      {!appContext.isVolumeActive ? <div className={styles.title}>
         звук
       </div> : null}
-      <div className={styles.sound} onClick={appContext.handleSoundActive}>
+      <div className={styles.volume} onClick={appContext.handleVolumeActive}>
         <div className={styles.items}>
           {items.map((i, index) =>
             <Item index={index} key={index} level={(index + 1) * 10} />)}
         </div>
-        {!appContext.isSoundActive ? <Image src='/img/right-menu/sound.svg' fill alt='' /> : null}
+        {!appContext.isVolumeActive ? <Image src='/img/right-menu/sound.svg' fill alt='' /> : null}
       </div>
     </div>
   )

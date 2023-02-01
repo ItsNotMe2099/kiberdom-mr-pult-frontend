@@ -12,7 +12,7 @@ export default function Help({ }: Props) {
   const appContext = useAppContext()
 
   const isOthersControlsActive = () => {
-    if (appContext.isSoundActive || appContext.isLightActive) {
+    if (appContext.isVolumeActive || appContext.isLightActive) {
       return true
     }
     return false

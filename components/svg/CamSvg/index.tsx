@@ -1,4 +1,3 @@
-import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import { CameraState } from 'data/enum/CameraState'
 import { Platform } from 'data/enum/Platorm'
@@ -17,13 +16,12 @@ export default function CamSvg({  }: Props) {
   const offRef = useRef(null)
 
   const appContext = useAppContext()
-  const confContext = useConfContext()
 
   return (
     <>
       <CSSTransition
         timeout={500}
-        in={confContext.isCamOn === CameraState.On}
+        in={appContext.isCamOn === CameraState.On}
         nodeRef={onRef}
         mountOnEnter
         unmountOnExit
@@ -41,7 +39,7 @@ export default function CamSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={confContext.isCamOn === CameraState.Off || confContext.isCamOn === null}
+        in={appContext.isCamOn === CameraState.Off || appContext.isCamOn === null}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

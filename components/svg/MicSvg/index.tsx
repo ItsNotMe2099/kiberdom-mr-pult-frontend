@@ -1,4 +1,3 @@
-import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { Platform } from 'data/enum/Platorm'
@@ -17,13 +16,13 @@ export default function MicSvg({  }: Props) {
   const offRef = useRef(null)
 
   const appContext = useAppContext()
-  const confContext = useConfContext()
+
 
   return (
     <>
       <CSSTransition
         timeout={500}
-        in={confContext.isMicOn === MicrophoneState.On}
+        in={appContext.isMicOn === MicrophoneState.On}
         nodeRef={onRef}
         mountOnEnter
         unmountOnExit
@@ -40,7 +39,7 @@ export default function MicSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={confContext.isMicOn === MicrophoneState.Off || confContext.isMicOn === null}
+        in={appContext.isMicOn === MicrophoneState.Off || appContext.isMicOn === null}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

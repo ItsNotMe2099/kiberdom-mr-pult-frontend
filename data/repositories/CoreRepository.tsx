@@ -39,7 +39,7 @@ export default class CoreRepository {
   static async setMicrophoneState(state: MicrophoneState): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: `/api/v1/core/camera/${state}`,
+      url: `/api/v1/core/microphone/${state}`,
       data: {},
     })
     return res

@@ -1,4 +1,3 @@
-import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
 import { useRef } from 'react'
@@ -13,7 +12,6 @@ interface Props {
 export default function CameraControls({ isActive }: Props) {
 
   const appContext = useAppContext()
-  const confContext = useConfContext()
 
   const nodeRef = useRef(null)
 
@@ -33,16 +31,16 @@ export default function CameraControls({ isActive }: Props) {
     >
       <div className={styles.root} ref={nodeRef}>
         <Item
-          active={confContext.isManualCamera}
-          onClick={confContext.handleManualCamera}
+          active={appContext.isManualCamera}
+          onClick={appContext.handleManualCamera}
           color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/manual.svg' title='вручную' />
         <Item
-          active={confContext.isAutoCamera}
-          onClick={confContext.handleAutoCamera}
+          active={appContext.isAutoCamera}
+          onClick={appContext.handleAutoCamera}
           color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
         <Item
-          active={confContext.isStreamsCamera}
-          onClick={confContext.handleStreamsCamera}
+          active={appContext.isStreamsCamera}
+          onClick={appContext.handleStreamsCamera}
           color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
       </div>
     </CSSTransition>

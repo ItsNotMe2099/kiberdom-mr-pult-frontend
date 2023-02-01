@@ -1,4 +1,3 @@
-import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
 import Image from 'next/image'
@@ -14,7 +13,6 @@ interface Props {
 export default function Header({ color, icon }: Props) {
 
   const appContext = useAppContext()
-  const confContext = useConfContext()
 
   const getColor = (color: 'blue' | 'green') => {
     switch (color) {
@@ -27,13 +25,13 @@ export default function Header({ color, icon }: Props) {
 
   return (
     <div className={styles.root} style={{ background: getColor(color) }}>
-      {confContext.newUsers.length === 1 && !confContext.isActiveUsersList ? <User onClick={confContext.handleActiveUsersListMenu}
-        user={confContext.newUsers[0]}
+      {appContext.newUsers.length === 1 && !appContext.isActiveUsersList ? <User onClick={appContext.handleActiveUsersListMenu}
+        user={appContext.newUsers[0]}
         style='header' /> : null}
-      {confContext.newUsers.length > 1 && !confContext.isActiveUsersList ?
-        <div className={styles.allow} onClick={confContext.handleActiveUsersListMenu}
+      {appContext.newUsers.length > 1 && !appContext.isActiveUsersList ?
+        <div className={styles.allow} onClick={appContext.handleActiveUsersListMenu}
           style={{ backgroundColor: appContext.coreStatus?.platform === Platform.Zoom ? `${colors.zoom}` : `${colors.trueconf}` }}>
-          {`впустить новых участников (+${confContext.newUsers.length})`}
+          {`впустить новых участников (+${appContext.newUsers.length})`}
         </div> : null}
       <Image className={styles.img} src={icon} alt='' fill />
       <div className={styles.bottom}>

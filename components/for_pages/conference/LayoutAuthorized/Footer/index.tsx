@@ -2,7 +2,6 @@ import CameraSvg from 'components/svg/CameraSvg'
 import ExitSvg from 'components/svg/ExitSvg'
 import InviteSvg from 'components/svg/InviteSvg'
 import Members2Svg from 'components/svg/Members2Svg'
-import { useConfContext } from 'context/conference_state'
 import { useAppContext } from 'context/state'
 import styles from './index.module.scss'
 import Item from './Item'
@@ -21,7 +20,6 @@ interface Props {
 
 export default function Footer({ }: Props) {
 
-  const confContext = useConfContext()
   const appContext = useAppContext()
 
   const getSvgColor = (type: boolean) => {
@@ -56,21 +54,21 @@ export default function Footer({ }: Props) {
 
   return (
     <div className={styles.root}>
-      <Item style='members' title='участники' numberOfUsers={confContext.newUsers.length + confContext.users.length}
+      <Item style='members' title='участники' numberOfUsers={appContext.newUsers.length + appContext.users.length}
         color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'}
-        active={confContext.isActiveUsersList}
-        onClick={confContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(confContext.isActiveUsersList)} />} />
-      <Item title='пригласить' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={confContext.isActiveInvite}
-        onClick={confContext.handleInvite} icon={<InviteSvg className={getSvgColor(confContext.isActiveInvite)} />} />
-      <Item title='упр. камерой' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={confContext.isActiveCameraMenu}
-        onClick={confContext.handleCameraMenu} icon={
-          <CameraSvg className={getSvgColor(confContext.isActiveCameraMenu)} />
+        active={appContext.isActiveUsersList}
+        onClick={appContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(appContext.isActiveUsersList)} />} />
+      <Item title='пригласить' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={appContext.isActiveInvite}
+        onClick={appContext.handleInvite} icon={<InviteSvg className={getSvgColor(appContext.isActiveInvite)} />} />
+      <Item title='упр. камерой' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={appContext.isActiveCameraMenu}
+        onClick={appContext.handleCameraMenu} icon={
+          <CameraSvg className={getSvgColor(appContext.isActiveCameraMenu)} />
         } />
-      <Record onClick={() => confContext.isRecording ? null : confContext.handleRecording()} title='начать запись' icon={
+      <Record onClick={() => appContext.isRecording ? null : appContext.handleRecording()} title='начать запись' icon={
         <>
           <CSSTransition
             timeout={500}
-            in={!confContext.isRecording}
+            in={!appContext.isRecording}
             nodeRef={notRecordingRef}
             mountOnEnter
             unmountOnExit
@@ -88,7 +86,7 @@ export default function Footer({ }: Props) {
           </CSSTransition>
           <CSSTransition
             timeout={500}
-            in={confContext.isRecording}
+            in={appContext.isRecording}
             nodeRef={recRef}
             mountOnEnter
             unmountOnExit

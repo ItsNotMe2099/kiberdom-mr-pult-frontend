@@ -29,7 +29,7 @@ export default function Light({ }: Props) {
   }
 
   const isOthersControlsActive = () => {
-    if (appContext.isSoundActive || appContext.isHelpActive || appContext.isClimateActive) {
+    if (appContext.isVolumeActive || appContext.isHelpActive || appContext.isClimateActive) {
       return true
     }
     return false
