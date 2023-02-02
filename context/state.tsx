@@ -274,42 +274,42 @@ export function AppWrapper(props: Props) {
       }, 2000)
     },
     updateVolumeLevel: async (level) => {
-      await CoreRepository.setVolume(level)
-      setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, volume: level } } as ICoreStatus)
+      //await CoreRepository.setVolume(level)
+      //setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, volume: level } } as ICoreStatus)
       setVolumeLevel(level)
     },
     updateClimateLevel: async (level) => {
-      await IotRepository.setState('CLIMAT', level)
+      //await IotRepository.setState('CLIMAT', level)
       setClimateLevel(level)
     },
     updateLightLevelUpZone: async (level) => {
-      await IotRepository.setState('LAMP-Z-1', level)
+      //await IotRepository.setState('LAMP-Z-1', level)
       setLightLevelUp(level)
     },
     updateLightLevelDownZone: async (level) => {
-      await IotRepository.setState('LAMP-Z-2', level)
+      //await IotRepository.setState('LAMP-Z-2', level)
       setLightLevelDown(level)
     },
     handleVolumeActive: () => {
-      setIsVolumeActive(true)
+      setIsVolumeActive(isVolumeActive ? false : true)
       setIsHelpActive(false)
       setIsClimateActive(false)
       setIsLightActive(false)
     },
     handleHelpActive: () => {
-      setIsHelpActive(true)
+      setIsHelpActive(isHelpActive ? false : true)
       setIsVolumeActive(false)
       setIsClimateActive(false)
       setIsLightActive(false)
     },
     handleClimateActive: () => {
-      setIsClimateActive(true)
+      setIsClimateActive(isClimateActive ? false : true)
       setIsHelpActive(false)
       setIsVolumeActive(false)
       setIsLightActive(false)
     },
     handleLightActive: () => {
-      setIsLightActive(true)
+      setIsLightActive(isLightActive ? false : true)
       setIsHelpActive(false)
       setIsClimateActive(false)
       setIsVolumeActive(false)

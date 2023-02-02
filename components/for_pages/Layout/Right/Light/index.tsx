@@ -2,6 +2,7 @@ import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import { useEffect, useState } from 'react'
 
 interface Props {
 
@@ -16,9 +17,28 @@ export default function Light({ }: Props) {
 
   const appContext = useAppContext()
 
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    if (appContext.isLightActive) {
+      const newTimer = setTimeout(() => {
+        appContext.handleLightActive()
+      }, 5000)
+      setTimer(newTimer)
+    }
+  }, [appContext.isLightActive])
+
+
   const handleItemUpZoneClick = (index?: number) => {
     if (index !== undefined) {
       appContext.updateLightLevelUpZone(index + 1)
+      if (timer) {
+        clearTimeout(timer)
+      }
+      const newTimer = setTimeout(() => {
+        appContext.handleLightActive()
+      }, 5000)
+      setTimer(newTimer)
     }
   }
 
@@ -26,6 +46,13 @@ export default function Light({ }: Props) {
     if (index !== undefined) {
       appContext.updateLightLevelDownZone(index + 1)
     }
+    if (timer) {
+      clearTimeout(timer)
+    }
+    const newTimer = setTimeout(() => {
+      appContext.handleLightActive()
+    }, 5000)
+    setTimer(newTimer)
   }
 
   const isOthersControlsActive = () => {
@@ -73,7 +100,7 @@ export default function Light({ }: Props) {
       {!appContext.isLightActive ? <div className={styles.title}>
         свет
       </div> : null}
-      <div className={styles.light} onClick={appContext.handleLightActive}>
+      <div className={styles.light} onClick={() => !appContext.isLightActive ? appContext.handleLightActive() : null}>
         <div className={styles.items}>
           {itemsUp.map((i, index) =>
             <ItemUp index={index} key={index} level={index + 1} />)}

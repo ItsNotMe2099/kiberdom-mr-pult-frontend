@@ -2,6 +2,7 @@ import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import { useEffect, useState } from 'react'
 
 interface Props {
 
@@ -16,17 +17,35 @@ export default function Volume({ }: Props) {
 
   const appContext = useAppContext()
 
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    if (appContext.isVolumeActive) {
+      const newTimer = setTimeout(() => {
+        appContext.handleVolumeActive()
+      }, 5000)
+      setTimer(newTimer)
+    }
+  }, [appContext.isVolumeActive])
+
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
       appContext.updateVolumeLevel((index + 1) * 10)
-      /*if(appContext.volumeLevel === 10 && index === 0){
+      /*if (index === 0 && appContext.volumeLevel === 10) {
         appContext.updateVolumeLevel(0)
       }*/
+      if (timer) {
+        clearTimeout(timer)
+      }
+      const newTimer = setTimeout(() => {
+        appContext.handleVolumeActive()
+      }, 5000)
+      setTimer(newTimer)
     }
   }
 
   const isOthersControlsActive = () => {
-    if(appContext.isClimateActive || appContext.isHelpActive || appContext.isLightActive){
+    if (appContext.isClimateActive || appContext.isHelpActive || appContext.isLightActive) {
       return true
     }
     return false
@@ -51,11 +70,11 @@ export default function Volume({ }: Props) {
 
   return (
     <div className=
-    {classNames(styles.root, {[styles.rootActive]: appContext.isVolumeActive, [styles.mini]: isOthersControlsActive() === true})}>
+      {classNames(styles.root, { [styles.rootActive]: appContext.isVolumeActive, [styles.mini]: isOthersControlsActive() === true })}>
       {!appContext.isVolumeActive ? <div className={styles.title}>
         звук
       </div> : null}
-      <div className={styles.volume} onClick={appContext.handleVolumeActive}>
+      <div className={styles.volume} onClick={() => !appContext.isVolumeActive ? appContext.handleVolumeActive() : null}>
         <div className={styles.items}>
           {items.map((i, index) =>
             <Item index={index} key={index} level={(index + 1) * 10} />)}
