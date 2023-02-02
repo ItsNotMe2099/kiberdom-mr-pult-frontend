@@ -6,6 +6,7 @@ import Square from 'components/for_pages/main/Square'
 import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
+import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
@@ -25,11 +26,12 @@ export default function IndexPage() {
 
   const [isDemonstration, setIsDemonstration] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
+  const [data, setData] = useState<IWiFi | null>(null)
 
   const handleScreenDemo = async () => {
     setLoading(true)
     try {
-      await ConferenceRepository.setScreenDemonstrationState('start')
+      await ConferenceRepository.setScreenDemonstrationState('start').then(i => setData(i.wifi ?? null))
       setIsDemonstration(true)
     }
     catch (error: any) {
@@ -84,7 +86,7 @@ export default function IndexPage() {
           text='подождите...'
           isActive={loading}
           color={'purple'} />
-        <Demonstration isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
+        <Demonstration wifi={data} isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
         <CSSTransition
           timeout={500}
           in={appContext.initialLoading}
@@ -100,7 +102,12 @@ export default function IndexPage() {
         >
           <Image ref={logoRef} className={styles.img} src='/img/logo.svg' fill alt='' />
         </CSSTransition>
-        <Square onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null} className={styles.zoom} color='blue' active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading} img='/img/logos/zoom.png'>
+        <Square
+          onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null}
+          className={styles.zoom}
+          color='blue'
+          active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
+          img='/img/logos/zoom.png'>
           <CSSTransition
             timeout={500}
             in={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
@@ -180,7 +187,11 @@ export default function IndexPage() {
             </div>
           </CSSTransition>
         </Square>
-        <Square onClick={() => !appContext.initialLoading ? handleScreenDemo() : null} className={styles.screen} color='purple-left' active={!appContext.initialLoading} img='/img/logos/screen.svg'>
+        <Square
+          onClick={() => !appContext.initialLoading ? handleScreenDemo() : null}
+          className={styles.screen} color='purple-left'
+          active={!appContext.initialLoading}
+          img='/img/logos/screen.svg'>
           <CSSTransition
             timeout={500}
             in={!appContext.initialLoading}
@@ -197,7 +208,11 @@ export default function IndexPage() {
               демонстрация<br /> экрана
             </div></CSSTransition>
         </Square>
-        <SoundSquare loading={appContext.initialLoading} onClick={() => setIsOff(isOff ? false : true)} isOn={!isOff ? true : false} img='/img/logos/sound-off.svg' />
+        <SoundSquare
+          loading={appContext.initialLoading}
+          onClick={() => setIsOff(isOff ? false : true)}
+          isOn={!isOff ? true : false}
+          img='/img/logos/sound-off.svg' />
       </div>
     </Layout>
   )

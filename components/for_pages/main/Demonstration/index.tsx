@@ -3,13 +3,15 @@ import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import { IWiFi } from 'data/interfaces/IWiFi'
 
 interface Props {
   isActive: boolean
   onCancel: () => void
+  wifi: IWiFi | null
 }
 
-export default function Demonstration({ isActive, onCancel }: Props) {
+export default function Demonstration({ isActive, onCancel, wifi }: Props) {
 
   const nodeRef = useRef(null)
 
@@ -54,14 +56,14 @@ export default function Demonstration({ isActive, onCancel }: Props) {
                     для демонстрации<br/> подключитесь к wifi
                   </div>
                   <div className={styles.field}>
-                    <span>сеть</span><span>name</span>
+                    <span>сеть</span><span>{wifi?.ssid}</span>
                   </div>
                   <div className={styles.field}>
-                    <span>пароль</span><span>D D M E J N</span>
+                    <span>пароль</span><span>{wifi?.password}</span>
                   </div>
                 </div>
                 <div className={styles.right}>
-                  <Image className={styles.qr} src={'/img/dev/qr-jesus.png'} alt='' fill />
+                  <Image className={styles.qr} src={wifi ? wifi.qr : '/img/dev/qr-jesus.png'} alt='' fill />
                 </div>
               </div>
               <div className={styles.devices}>
