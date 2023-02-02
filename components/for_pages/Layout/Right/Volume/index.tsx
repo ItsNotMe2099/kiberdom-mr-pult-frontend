@@ -19,6 +19,9 @@ export default function Volume({ }: Props) {
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
       appContext.updateVolumeLevel((index + 1) * 10)
+      /*if(appContext.volumeLevel === 10 && index === 0){
+        appContext.updateVolumeLevel(0)
+      }*/
     }
   }
 

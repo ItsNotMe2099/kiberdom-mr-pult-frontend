@@ -17,6 +17,7 @@ interface Props {
 export default function SoundSquare({ className, onClick, isOn, loading }: Props) {
 
   const nodeRef = useRef(null)
+  const iconRef = useRef(null)
 
   return (
     <div onClick={onClick} className={classNames(styles.root, className)}>
@@ -54,7 +55,21 @@ export default function SoundSquare({ className, onClick, isOn, loading }: Props
           музыка
         </div>
       </CSSTransition>
-      <MusicSvg isOn={isOn} />
+      <CSSTransition
+        timeout={500}
+        in={!loading}
+        nodeRef={iconRef}
+        mountOnEnter
+        unmountOnExit
+        classNames={{
+          enter: styles.itemEnter,
+          enterActive: styles.itemEnterActive,
+          exit: styles.itemExit,
+          exitActive: styles.itemExitActive,
+        }}
+      >
+        <div className={styles.icon} ref={iconRef}><MusicSvg isOn={isOn} /></div>
+      </CSSTransition>
     </div>
   )
 }
