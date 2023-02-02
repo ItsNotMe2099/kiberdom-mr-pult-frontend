@@ -11,6 +11,7 @@ import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { CameraState } from 'data/enum/CameraState'
 import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
+import IotRepository from 'data/repositories/IotRepository'
 
 interface IState {
   handlePlatform: (platform: Platform) => void
@@ -141,13 +142,13 @@ export function AppWrapper(props: Props) {
   const router = useRouter()
   const [coreStatus, setCoreStatus] = useState<ICoreStatus | null>(null)
   const [volumeLevel, setVolumeLevel] = useState<number>(0)
-  const [climateLevel, setClimateLevel] = useState<number>(0)
+  const [climateLevel, setClimateLevel] = useState<number>(20)
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
   const [lightLevelDown, setLightLevelDown] = useState<number>(1)
 
   const [user, setUser] = useState<IUser | undefined>(props.user)
 
-  const [initialLoading, setInitialLoading] = useState<boolean>(false)
+  const [initialLoading, setInitialLoading] = useState<boolean>(true)
 
   const [isVolumeActive, setIsVolumeActive] = useState<boolean>(false)
   const [isClimateActive, setIsClimateActive] = useState<boolean>(false)
@@ -226,13 +227,18 @@ export function AppWrapper(props: Props) {
   }, [])
 
   const fetch = async (): Promise<ICoreStatus | null> => {
-    setInitialLoading(true)
     try {
       const coreStatus = await CoreRepository.fetchStatus()
+      const climateLevel = await IotRepository.getState('CLIMAT')
+      const lightLevelUp = await IotRepository.getState('LAMP-Z-1')
+      const lightLevelDown = await IotRepository.getState('LAMP-Z-2')
       setCoreStatus(coreStatus)
       setMicState(coreStatus.conference.microphone ?? MicrophoneState.Off)
       setCamState(coreStatus.conference.camera ?? CameraState.Off)
       setVolumeLevel(coreStatus.conference.volume ?? 0)
+      setClimateLevel(climateLevel.state ?? 20)
+      setLightLevelUp(lightLevelUp.state ?? 1)
+      setLightLevelDown(lightLevelDown.state ?? 1)
       setInitialLoading(false)
       return coreStatus
     } catch (e) {
@@ -272,13 +278,16 @@ export function AppWrapper(props: Props) {
       setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, volume: level } } as ICoreStatus)
       setVolumeLevel(level)
     },
-    updateClimateLevel: (level) => {
+    updateClimateLevel: async (level) => {
+      await IotRepository.setState('CLIMAT', level)
       setClimateLevel(level)
     },
-    updateLightLevelUpZone: (level) => {
+    updateLightLevelUpZone: async (level) => {
+      await IotRepository.setState('LAMP-Z-1', level)
       setLightLevelUp(level)
     },
-    updateLightLevelDownZone: (level) => {
+    updateLightLevelDownZone: async (level) => {
+      await IotRepository.setState('LAMP-Z-2', level)
       setLightLevelDown(level)
     },
     handleVolumeActive: () => {
@@ -354,7 +363,7 @@ export function AppWrapper(props: Props) {
     handleCamera: async () => {
       const newState = camState === CameraState.On ? CameraState.Off : CameraState.On
       await CoreRepository.setCameraState(newState)
-      setCoreStatus( { ...coreStatus, conference: { ...coreStatus?.conference, camera: newState } } as ICoreStatus)
+      setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, camera: newState } } as ICoreStatus)
       setCamState(newState)
     },
     handleActiveUsersListMenu: () => {

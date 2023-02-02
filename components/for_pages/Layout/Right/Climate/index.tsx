@@ -18,7 +18,7 @@ export default function Climate({ }: Props) {
 
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
-      appContext.updateClimateLevel(index + 18)
+      appContext.updateClimateLevel(index + 20)
     }
   }
 
@@ -56,7 +56,7 @@ export default function Climate({ }: Props) {
       <div className={styles.climate} onClick={appContext.handleClimateActive}>
         <div className={styles.items}>
           {items.map((i, index) =>
-            <Item index={index} key={index} level={index + 18} />)}
+            <Item index={index} key={index} level={index + 20} />)}
         </div>
         {!appContext.isClimateActive ? <Image src='/img/right-menu/climate.svg' fill alt='' /> : null}
       </div>
