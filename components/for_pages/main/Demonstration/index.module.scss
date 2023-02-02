@@ -4,9 +4,18 @@
   background: linear-gradient(43.73deg, rgba(0, 0, 0, 1) 44.44%, rgba(0, 0, 0, 1) 70.44%, $purple 99.75%);
   position: absolute;
   width: 100%;
-  height: 85%;
+  height: 100%;
   z-index: 22;
   margin: auto;
+}
+
+.screen {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  top: -10%;
 }
 
 .container {
@@ -20,10 +29,20 @@
   z-index: 4;
 }
 
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .top {
   display: flex;
   justify-content: center;
-  width: 50%;
+  flex-direction: column;
 }
 
 .text {
@@ -36,6 +55,7 @@
   display: flex;
   flex-direction: column;
   margin-right: 10px;
+  flex: 1;
 }
 
 .field {
@@ -79,11 +99,15 @@
   text-align: center;
 }
 
+.withQr{
+  display: flex;
+  justify-content: space-between;
+}
+
 .img {
   width: 280px !important;
   height: auto !important;
-  top: 35% !important;
-  left: 35% !important;
+  position: relative !important;
   z-index: 1;
   opacity: 0.5;
 }
@@ -97,6 +121,7 @@
 .devices {
   display: flex;
   margin-top: 20px;
+  justify-content: space-between;
 }
 
 .use {
@@ -104,6 +129,7 @@
   font-size: 18px;
   padding: 31px 0;
   margin-right: 20px;
+  white-space: nowrap;
 }
 
 .device {
@@ -125,9 +151,7 @@
 }
 
 .instruction {
-  max-height: 230px !important;
   position: relative !important;
-  width: 50% !important;
   margin-top: 10px;
 }
 
@@ -136,5 +160,4 @@
   font-size: 18px;
   margin-top: 10px;
   text-align: right;
-  width: 50%;
 }
