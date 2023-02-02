@@ -44,8 +44,12 @@ export default function Footer({ }: Props) {
   const router = useRouter()
 
   const handleExit = () => {
-    appContext.logout()
     ConferenceRepository.exit()
+    router.push('/')
+  }
+
+  const handleLeave = () => {
+    ConferenceRepository.leave()
     router.push('/')
   }
 
@@ -104,7 +108,13 @@ export default function Footer({ }: Props) {
           </CSSTransition>
         </>
       } />
-      <Exit onExit={handleExit} exit={isExit} onClick={() => setIsExit(true)} title='завершить' icon={<ExitSvg />} />
+      <Exit
+        onExit={handleExit}
+        onLeave={handleLeave}
+        exit={isExit}
+        onClick={() => setIsExit(true)}
+        title='завершить'
+        icon={<ExitSvg />} />
     </div>
   )
 }

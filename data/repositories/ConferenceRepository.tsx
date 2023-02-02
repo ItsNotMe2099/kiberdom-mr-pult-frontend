@@ -43,6 +43,16 @@ export default class ConferenceRepository {
     return res
   }
 
+  static async leave(): Promise<IStatusResponse> {
+    const res = await request<IStatusResponse>({
+      method: 'post',
+      url: '/api/v1/core/conference/leave',
+      data: {
+      },
+    })
+    return res
+  }
+
   static async invite(data: {username: string, email: string}): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',

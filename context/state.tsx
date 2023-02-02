@@ -14,7 +14,6 @@ import RecordRepository from 'data/repositories/RecordRepository'
 import IotRepository from 'data/repositories/IotRepository'
 
 interface IState {
-  handlePlatform: (platform: Platform) => void
   volumeLevel: number
   climateLevel: number
   lightLevelUp: number
@@ -32,7 +31,6 @@ interface IState {
   handleClimateActive: () => void
   handleHelpActive: () => void
   handleLightActive: () => void
-  logout: () => void
   fetch: () => void
   coreStatus: ICoreStatus | null
   initialLoading: boolean
@@ -73,7 +71,6 @@ interface IState {
 }
 
 const defaultValue: IState = {
-  handlePlatform: (platform) => null,
   volumeLevel: 0,
   climateLevel: 0,
   lightLevelUp: 0,
@@ -91,7 +88,6 @@ const defaultValue: IState = {
   handleClimateActive: () => null,
   handleHelpActive: () => null,
   handleLightActive: () => null,
-  logout: () => null,
   fetch: () => null,
   coreStatus: null,
   initialLoading: false,
@@ -252,11 +248,6 @@ export function AppWrapper(props: Props) {
 
   const value: IState = {
     ...defaultValue,
-    handlePlatform: async (platform: Platform) => {
-      await CoreRepository.selectPlatform(platform)
-      fetch()
-      router.push('/conference')
-    },
     volumeLevel,
     climateLevel,
     lightLevelUp,
@@ -313,9 +304,6 @@ export function AppWrapper(props: Props) {
       setIsHelpActive(false)
       setIsClimateActive(false)
       setIsVolumeActive(false)
-    },
-    logout: () => {
-
     },
     fetch,
     coreStatus,

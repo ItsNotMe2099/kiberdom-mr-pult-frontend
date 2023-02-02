@@ -140,7 +140,8 @@ export default function IndexPage() {
             <div className={styles.login} ref={zoomLogin}>
               <div className={styles.gradient} style={{ background: getColor('blue') }}></div>
               <Image className={styles.imgLogin} src={'/img/logos/zoom.png'} alt='' fill />
-              <LoginForm platform={Platform.Zoom} onSubmit={() => appContext.handlePlatform(Platform.Zoom)}
+              <LoginForm
+                platform={Platform.Zoom}
                 onCancel={() => setIsActiveZoom(false)}
                 color={'blue'} />
             </div>
@@ -182,7 +183,8 @@ export default function IndexPage() {
             <div className={styles.login} ref={trueConfLogin}>
               <div className={styles.gradient} style={{ background: getColor('green') }}></div>
               <Image className={styles.imgLogin} src={'/img/logos/trueconf.svg'} alt='' fill />
-              <LoginForm platform={Platform.TrueConf} onSubmit={() => appContext.handlePlatform(Platform.TrueConf)}
+              <LoginForm
+                platform={Platform.TrueConf}
                 onCancel={() => setIsActiveConf(false)} color={'green'} />
             </div>
           </CSSTransition>

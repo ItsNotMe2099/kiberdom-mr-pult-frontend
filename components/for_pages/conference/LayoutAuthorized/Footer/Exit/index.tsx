@@ -8,9 +8,10 @@ interface Props {
   onClick?: () => void
   exit?: boolean
   onExit?: () => void
+  onLeave?: () => void
 }
 
-export default function Exit({ icon, onClick, title, exit, onExit }: Props) {
+export default function Exit({ icon, onClick, title, exit, onExit, onLeave }: Props) {
 
   const handleClick = () => {
     onClick ? onClick() : null
@@ -38,7 +39,7 @@ export default function Exit({ icon, onClick, title, exit, onExit }: Props) {
           <div className={styles.end} onClick={onExit}>
             <span>завершить<br /> для всех</span>
           </div>
-          <div className={styles.leave} onClick={onExit}>
+          <div className={styles.leave} onClick={onLeave}>
             <span>покинуть<br />  встречу</span>
           </div>
         </div>
