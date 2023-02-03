@@ -3,6 +3,9 @@ import classNames from 'classnames'
 import ScreenDemonstrateSvg from 'components/svg/ScreenDemonstrateSvg'
 import NoScreenDemonstrateSvg from 'components/svg/NoScreenDemonstrateSvg'
 import { ReactElement, useState } from 'react'
+import { useRouter } from 'next/router'
+import LedRepository from 'data/repositories/LedRepository'
+import { LedState } from 'data/enum/LedState'
 
 interface IOption {
   img: ReactElement<SVGElement>
@@ -12,10 +15,10 @@ interface IOption {
 interface Props {
   color: 'blue' | 'green' | 'gray'
   options?: IOption[]
-  number: number
+  index: number
 }
 
-export default function ScreenControls({ color, options, number }: Props) {
+export default function ScreenControls({ color, options, index }: Props) {
 
   const getColor = (color: 'blue' | 'green' | 'gray', last?: boolean, number?: boolean, bottom?: boolean, option?: boolean) => {
     switch (color) {
@@ -70,26 +73,39 @@ export default function ScreenControls({ color, options, number }: Props) {
     }
   }
 
-  const [isDemonstrate, SetIsDemonstrate] = useState<boolean>(false)
+  const [isActive, SetIsActive] = useState<boolean>(false)
+
+  const handleClick = async (state: LedState) => {
+    await LedRepository.setLedState(state, index)
+    SetIsActive(state === LedState.On ? true : false)
+  }
+
+  const router = useRouter()
 
   return (
     <div className={styles.root}>
       <div className={styles.top}>
-        <div className={styles.number} style={isDemonstrate ? { background: getColor(color, false, true) } : {}}>
-          {number}
+        <div className={styles.number} style={isActive ? { background: getColor(color, false, true) } : {}}>
+          {index + 1}
         </div>
-        <div className={classNames(styles.demonstrate, { [styles.active]: isDemonstrate })} style={isDemonstrate ? { background: getColor(color) } : {}} onClick={() => SetIsDemonstrate(true)}>
+        <div
+          className={classNames(styles.demonstrate, { [styles.active]: isActive })}
+          style={isActive ? { background: getColor(color) } : {}}
+          onClick={() => router.asPath === '/' ? null : handleClick(LedState.On)}>
           <ScreenDemonstrateSvg />
         </div>
-        <div className={classNames(styles.noDemonstrate, { [styles.active]: !isDemonstrate })} style={!isDemonstrate ? { background: getColor(color, true) } : {}} onClick={() => SetIsDemonstrate(false)}>
+        <div
+          className={classNames(styles.noDemonstrate, { [styles.active]: !isActive })}
+          style={!isActive ? { background: getColor(color, true) } : {}}
+          onClick={() => router.asPath === '/' ? null : handleClick(LedState.Off)}>
           <NoScreenDemonstrateSvg />
         </div>
       </div>
-      <div className={styles.bottom} style={isDemonstrate ? { background: getColor(color, false, false, true) } : {}}>
+      <div className={styles.bottom} style={isActive ? { background: getColor(color, false, false, true) } : {}}>
         {options?.map((i, index) =>
           <div
-            className={classNames(styles.option, { [styles.active]: isDemonstrate && index !== options.length - 1 })}
-            style={isDemonstrate && index === 0 ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
+            className={classNames(styles.option, { [styles.active]: isActive && index !== options.length - 1 })}
+            style={isActive && index === 0 ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
             {i.img}
             <div className={styles.text}>{i.label}</div>
           </div>

@@ -16,12 +16,8 @@ interface Props {
 export default function Left({ isZoom, isTrueConf, loading }: Props) {
 
   const getOptions = (isZoom: boolean, isTrueConf: boolean) => {
-    if (isZoom) {
-      return [{ img: <MembersSvg />, label: 'заставка' },
-      { img: <SpeakerSvg />, label: 'спикер' }, { img: <DemonstrateSvg />, label: 'демонстрация' }]
-    }
-    else if (isTrueConf) {
-      return [{ img: <MembersSvg />, label: 'заставка' },
+    if (isZoom || isTrueConf) {
+      return [{ img: <MembersSvg />, label: 'участники' },
       { img: <SpeakerSvg />, label: 'спикер' }, { img: <DemonstrateSvg />, label: 'демонстрация' }]
     }
     else {
@@ -47,10 +43,10 @@ export default function Left({ isZoom, isTrueConf, loading }: Props) {
           <div className={styles.title}>
             ЭКРАНЫ
           </div>
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={1} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={2} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={3} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} number={4} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={0} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={1} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={2} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={3} />
         </div>
       </CSSTransition>
     </div>
