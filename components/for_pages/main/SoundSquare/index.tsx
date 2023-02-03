@@ -7,7 +7,6 @@ import { CSSTransition } from 'react-transition-group'
 import { useRef } from 'react'
 
 interface Props {
-  img: string
   className?: string
   onClick?: () => void
   isOn: boolean

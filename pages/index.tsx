@@ -219,8 +219,7 @@ export default function IndexPage() {
         <SoundSquare
           loading={appContext.initialLoading}
           onClick={() => setIsOff(isOff ? false : true)}
-          isOn={!isOff ? true : false}
-          img='/img/logos/sound-off.svg' />
+          isOn={!isOff ? true : false} />
       </div>
     </Layout>
   )
