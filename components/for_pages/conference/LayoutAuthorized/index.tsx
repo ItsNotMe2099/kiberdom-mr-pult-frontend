@@ -15,8 +15,7 @@ export default function LayoutAuthorized({ children }: Props) {
   return (
     <div className={styles.root}>
       <Header
-        color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'}
-        icon={appContext.coreStatus?.platform === Platform.TrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
+        platform={appContext.coreStatus?.platform as Platform} />
       {children}
       <Footer />
     </div>

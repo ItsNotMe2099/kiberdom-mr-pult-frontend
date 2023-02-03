@@ -33,15 +33,15 @@ export default function CameraControls({ isActive }: Props) {
         <Item
           active={appContext.isManualCamera}
           onClick={appContext.handleManualCamera}
-          color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/manual.svg' title='вручную' />
+          platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/manual.svg' title='вручную' />
         <Item
           active={appContext.isAutoCamera}
           onClick={appContext.handleAutoCamera}
-          color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
+          platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
         <Item
           active={appContext.isStreamsCamera}
           onClick={appContext.handleStreamsCamera}
-          color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
+          platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
       </div>
     </CSSTransition>
   )

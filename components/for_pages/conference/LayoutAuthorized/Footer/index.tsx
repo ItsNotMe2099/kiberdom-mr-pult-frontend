@@ -46,11 +46,13 @@ export default function Footer({ }: Props) {
   const handleExit = () => {
     ConferenceRepository.exit()
     router.push('/')
+    appContext.fetch()
   }
 
   const handleLeave = () => {
     ConferenceRepository.leave()
     router.push('/')
+    appContext.fetch()
   }
 
   const notRecordingRef = useRef(null)
@@ -59,12 +61,12 @@ export default function Footer({ }: Props) {
   return (
     <div className={styles.root}>
       <Item style='members' title='участники' numberOfUsers={appContext.newUsers.length + appContext.users.length}
-        color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'}
+        platform={appContext.coreStatus?.platform as Platform}
         active={appContext.isActiveUsersList}
         onClick={appContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(appContext.isActiveUsersList)} />} />
-      <Item title='пригласить' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={appContext.isActiveInvite}
+      <Item title='пригласить' platform={appContext.coreStatus?.platform as Platform} active={appContext.isActiveInvite}
         onClick={appContext.handleInvite} icon={<InviteSvg className={getSvgColor(appContext.isActiveInvite)} />} />
-      <Item title='упр. камерой' color={appContext.coreStatus?.platform === Platform.Zoom ? 'blue' : 'green'} active={appContext.isActiveCameraMenu}
+      <Item title='упр. камерой' platform={appContext.coreStatus?.platform as Platform} active={appContext.isActiveCameraMenu}
         onClick={appContext.handleCameraMenu} icon={
           <CameraSvg className={getSvgColor(appContext.isActiveCameraMenu)} />
         } />

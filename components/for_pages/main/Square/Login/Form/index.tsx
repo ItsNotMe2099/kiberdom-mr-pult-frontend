@@ -6,7 +6,6 @@ import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
 import Validator from 'utils/validator'
@@ -19,11 +18,9 @@ interface Props {
   platform: Platform
 }
 
-export default function LoginForm({ onSubmit, color, onCancel , platform }: Props) {
+export default function LoginForm({ onSubmit, color, onCancel, platform }: Props) {
 
   const appContext = useAppContext()
-
-  const [loading, setLoading] = useState<boolean>(false)
 
   const initialValues = {
     login: '',
@@ -31,14 +28,15 @@ export default function LoginForm({ onSubmit, color, onCancel , platform }: Prop
   }
 
   const router = useRouter()
-  
+
   const handleSubmit = async (data: { login: string, password: string }) => {
-    setLoading(true)
+    appContext.handleLoginLoading(true)
     //onSubmit ? onSubmit() : null
     try {
       await CoreRepository.selectPlatform(platform)
       await ConferenceRepository.join(data)
-      router.push('/conference')
+      router.push(`/conference/${platform}`)
+      appContext.fetch()
     }
     catch (error: any) {
       let errorMessage = error.toString()
@@ -48,7 +46,7 @@ export default function LoginForm({ onSubmit, color, onCancel , platform }: Prop
       }
       appContext.showSnackbar(errorMessage, SnackbarType.error)
     }
-    setLoading(false)
+    appContext.handleLoginLoading(false)
   }
 
   const handleCancel = () => {
@@ -61,11 +59,11 @@ export default function LoginForm({ onSubmit, color, onCancel , platform }: Prop
     onSubmit: handleSubmit
   })
 
-  const getBorderColor = (color: 'blue' | 'green') => {
-    switch (color) {
-      case 'blue':
+  const getBorderColor = () => {
+    switch (platform) {
+      case Platform.Zoom:
         return colors.zoom
-      case 'green':
+      case Platform.TrueConf:
         return colors.trueconf
     }
   }
@@ -73,13 +71,23 @@ export default function LoginForm({ onSubmit, color, onCancel , platform }: Prop
   return (
     <FormikProvider value={formik}>
       <Form className={styles.form}>
-        <TextField validate={Validator.required} name='login' label='ID' brdrColor={getBorderColor(color)} />
-        <TextField validate={Validator.required} className={styles.key} name='password' type={'password'} label='ключ' brdrColor={getBorderColor(color)} />
+        <TextField
+          validate={Validator.required}
+          name='login'
+          label='ID'
+          brdrColor={getBorderColor()} />
+        <TextField
+          validate={Validator.required}
+          className={styles.key}
+          name='password'
+          type={'password'}
+          label='ключ'
+          brdrColor={getBorderColor()} />
         <div className={styles.btns}>
-          <Button disabled={loading} onClick={handleCancel} color={'red'} fluid>
+          <Button onClick={handleCancel} color={'red'} fluid>
             отмена
           </Button>
-          <Button spinner={loading} type='submit' color={color} fluid>
+          <Button type='submit' color={color} fluid>
             подключить
           </Button>
         </div>

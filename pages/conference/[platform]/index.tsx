@@ -15,10 +15,13 @@ import CamSvg from 'components/svg/CamSvg'
 import { Platform } from 'data/enum/Platorm'
 import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { CameraState } from 'data/enum/CameraState'
+import { useRouter } from 'next/router'
 
 export default function ConferencePage() {
 
   const appContext = useAppContext()
+
+  const router = useRouter()
 
   return (
     <Layout loading={false}>
@@ -27,8 +30,8 @@ export default function ConferencePage() {
         <Loader
           text='запускаю, подождите...'
           isActive={appContext.initialLoading}
-          color={appContext.coreStatus?.platform === Platform.TrueConf ? 'green' : 'blue'}
-          icon={appContext.coreStatus?.platform === Platform.TrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
+          color={router.asPath === `/conference/${Platform.TrueConf}` ? 'green' : 'blue'}
+          icon={router.asPath === `/conference/${Platform.TrueConf}` ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
         <LayoutAuthorized>
           <div className={styles.wrapper}>
             <UsersList isActive={appContext.isActiveUsersList} />

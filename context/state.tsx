@@ -68,6 +68,8 @@ interface IState {
   isEmailFormInvite: boolean
   isMuteAll: boolean
   handleMuteAll: () => void
+  handleLoginLoading: (state: boolean) => void
+  loginLoading: boolean
 }
 
 const defaultValue: IState = {
@@ -124,7 +126,9 @@ const defaultValue: IState = {
   handleStopRec: () => null,
   isEmailFormInvite: false,
   isMuteAll: false,
-  handleMuteAll: () => null
+  handleMuteAll: () => null,
+  loginLoading: false,
+  handleLoginLoading: (state) => null,
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -173,6 +177,8 @@ export function AppWrapper(props: Props) {
   const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
 
   const [isMuteAll, setIsMuteAll] = useState<boolean>(false)
+
+  const [loginLoading, setLoginLoading] = useState(false)
 
   //temp
   const zoomUser = {
@@ -223,6 +229,7 @@ export function AppWrapper(props: Props) {
   }, [])
 
   const fetch = async (): Promise<ICoreStatus | null> => {
+    setInitialLoading(true)
     try {
       const coreStatus = await CoreRepository.fetchStatus()
       const climateLevel = await IotRepository.getState('CLIMAT')
@@ -258,6 +265,10 @@ export function AppWrapper(props: Props) {
     isHelpActive,
     isLightActive,
     snackbar,
+    loginLoading,
+    handleLoginLoading: (state: boolean) => {
+      setLoginLoading(state)
+    },
     showSnackbar: (text, type: SnackbarType) => {
       setSnackbar({ text, type })
       setTimeout(() => {

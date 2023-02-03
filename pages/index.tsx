@@ -86,6 +86,12 @@ export default function IndexPage() {
           text='подождите...'
           isActive={loading}
           color={'purple'} />
+        <Loader
+          text='запускаю, подождите...'
+          isActive={appContext.loginLoading}
+          color={isActiveZoom ? 'blue' : isActiveConf ? 'green' : 'purple'}
+          icon={isActiveConf ? '/img/logos/trueconf.svg' : isActiveZoom ? '/img/logos/zoom.png' : ''}
+        />
         <Demonstration wifi={data} isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
         <CSSTransition
           timeout={500}
