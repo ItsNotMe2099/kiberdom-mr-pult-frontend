@@ -20,9 +20,9 @@ export default function SoundSquare({ className, onClick, isOn, loading }: Props
   const iconRef = useRef(null)
 
   return (
-    <div onClick={onClick} className={classNames(styles.root, className)}>
+    <div onClick={onClick} className={classNames(styles.root, className, {[styles.cursor]: loading})}>
       <Gradient
-        isActive={isOn}
+        isActive={isOn && !loading}
         timeout={500}
         enterClass={styles.itemEnter}
         enterActiveClass={styles.itemEnterActive}
