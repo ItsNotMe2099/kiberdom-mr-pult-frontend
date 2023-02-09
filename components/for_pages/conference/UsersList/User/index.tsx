@@ -11,6 +11,7 @@ import CameraOffSvg from 'components/svg/CameraOffSvg'
 import { CSSTransition } from 'react-transition-group'
 import Button from 'components/ui/Button'
 import { Platform } from 'data/enum/Platorm'
+import { IParticipant } from 'data/interfaces/IParticipant'
 
 interface IUser {
   avatar?: string
@@ -18,7 +19,7 @@ interface IUser {
 }
 
 interface Props {
-  user: IUser
+  user: IParticipant
   style?: 'new' | 'old' | 'header'
   onClick?: () => void
 }
@@ -46,11 +47,11 @@ export default function User({ user, style, onClick }: Props) {
   return (
     <div className={classNames(styles.root, getClass())}>
       <div className={styles.main}>
-        {user.avatar ?
-          <Image className={styles.img} src={user.avatar} alt='' fill />
+        {user.avatar_url ?
+          <img className={styles.img} src={user.avatar_url} alt='' />
           :
           <div className={styles.avatar}><Image className={styles.ava} src={'/img/logos/user.svg'} alt='' fill /></div>}
-        <div className={styles.name}>{user.name}</div>
+        <div className={styles.name}>{user.user_name}</div>
       </div>
       {style === 'new' ? <div className={styles.allow} onClick={onClick}
         style={{ backgroundColor: appContext.coreStatus?.platform === Platform.Zoom ? `${colors.zoom}` : `${colors.trueconf}` }}>

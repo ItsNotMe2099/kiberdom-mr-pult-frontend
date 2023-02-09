@@ -53,7 +53,7 @@ export default class CoreRepository {
     return res
   }
 
-  static async setVolume(level: number): Promise<IStatusResponse> {
+  static async setVolume(level: string): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: '/api/v1/core/volume/set',

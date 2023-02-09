@@ -1,20 +1,23 @@
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
+import { IParticipant } from 'data/interfaces/IParticipant'
 import Footer from './Footer'
 import Header from './Header'
 import styles from './index.module.scss'
 
 interface Props {
   children?: React.ReactNode
+  newUsers: IParticipant[]
 }
 
-export default function LayoutAuthorized({ children }: Props) {
+export default function LayoutAuthorized({ children, newUsers }: Props) {
 
   const appContext = useAppContext()
 
   return (
     <div className={styles.root}>
       <Header
+        newUsers={newUsers}
         platform={appContext.coreStatus?.platform as Platform} />
       {children}
       <Footer />

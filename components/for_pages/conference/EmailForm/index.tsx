@@ -1,7 +1,7 @@
 import TextField from 'components/fields/TextField'
 import Button from 'components/ui/Button'
 import { useAppContext } from 'context/state'
-//import ConferenceRepository from 'data/repositories/ConferenceRepository'
+import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
 import { useRef, useState } from 'react'
@@ -35,7 +35,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
         await RecordRepository.send(data)
       }
       else {
-        //await ConferenceRepository.invite(data)
+        await ConferenceRepository.invite(data)
       }
     }
     catch (error: any) {
@@ -63,39 +63,41 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
   const nodeRef = useRef(null)
 
   return (
-    <CSSTransition
-      timeout={500}
-      in={isActive}
-      nodeRef={nodeRef}
-      mountOnEnter
-      unmountOnExit
-      classNames={{
-        enter: styles.itemEnter,
-        enterActive: styles.itemEnterActive,
-        exit: styles.itemExit,
-        exitActive: styles.itemExitActive,
-      }}
-    >
-      <div className={styles.root}>
-        <FormikProvider value={formik}>
-          <Form className={styles.form} ref={nodeRef}>
-            <div className={styles.title}>{style === 'invite' ? 'кого' : 'куда'}</div>
-            <TextField name='email' label='эл. почта' brdrColor={colors.zoom} />
-            <div className={styles.btns}>
-              <Button disabled={loading} onClick={handleCancel} color={'red'} fluid>
-                отмена
-              </Button>
-              <Button spinner={loading} onClick={() => handleSubmit(formik.values)}
-                type='submit'
-                disabled={!Validator.emailRe.test(formik.values.email)}
-                color={'blue'}
-                fluid>
-                {style === 'send' ? 'отправить файл mp4' : 'подключить'}
-              </Button>
-            </div>
-          </Form>
-        </FormikProvider>
-      </div>
-    </CSSTransition>
+    <>
+      <CSSTransition
+        timeout={500}
+        in={isActive}
+        nodeRef={nodeRef}
+        mountOnEnter
+        unmountOnExit
+        classNames={{
+          enter: styles.itemEnter,
+          enterActive: styles.itemEnterActive,
+          exit: styles.itemExit,
+          exitActive: styles.itemExitActive,
+        }}
+      >
+        <div className={styles.root}>
+          <FormikProvider value={formik}>
+            <Form className={styles.form} ref={nodeRef}>
+              <div className={styles.title}>{style === 'invite' ? 'кого' : 'куда'}</div>
+              <TextField name='email' label='эл. почта' brdrColor={colors.zoom} />
+              <div className={styles.btns}>
+                <Button disabled={loading} onClick={handleCancel} color={'red'} fluid>
+                  отмена
+                </Button>
+                <Button spinner={loading} onClick={() => handleSubmit(formik.values)}
+                  type='submit'
+                  disabled={!Validator.emailRe.test(formik.values.email)}
+                  color={'blue'}
+                  fluid>
+                  {style === 'send' ? 'отправить файл mp4' : 'подключить'}
+                </Button>
+              </div>
+            </Form>
+          </FormikProvider>
+        </div>
+      </CSSTransition>
+    </>
   )
 }

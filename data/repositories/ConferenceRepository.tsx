@@ -53,7 +53,7 @@ export default class ConferenceRepository {
     return res
   }
 
-  static async invite(data: {username: string, email: string}): Promise<IStatusResponse> {
+  static async invite(data: {/*username: string,*/ email: string}): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: '/api/v1/core/invite/send',

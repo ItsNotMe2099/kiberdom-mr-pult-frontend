@@ -1,5 +1,6 @@
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
+import { IParticipant } from 'data/interfaces/IParticipant'
 import Image from 'next/image'
 import { colors } from 'styles/variables'
 import User from '../../UsersList/User'
@@ -7,9 +8,10 @@ import styles from './index.module.scss'
 
 interface Props {
   platform: Platform
+  newUsers: IParticipant[]
 }
 
-export default function Header({ platform }: Props) {
+export default function Header({ platform, newUsers }: Props) {
 
   const appContext = useAppContext()
 
@@ -42,13 +44,13 @@ export default function Header({ platform }: Props) {
 
   return (
     <div className={styles.root} style={{ background: getColor() }}>
-      {appContext.newUsers.length === 1 && !appContext.isActiveUsersList ? <User onClick={appContext.handleActiveUsersListMenu}
-        user={appContext.newUsers[0]}
+      {newUsers.length === 1 && !appContext.isActiveUsersList ? <User onClick={appContext.handleActiveUsersListMenu}
+        user={newUsers[0]}
         style='header' /> : null}
       {appContext.newUsers.length > 1 && !appContext.isActiveUsersList ?
         <div className={styles.allow} onClick={appContext.handleActiveUsersListMenu}
           style={{ backgroundColor: getAllowColor()}}>
-          {`впустить новых участников (+${appContext.newUsers.length})`}
+          {`впустить новых участников (+${newUsers.length})`}
         </div> : null}
       <Image className={styles.img} src={getIcon() as string} alt='' fill />
       <div className={styles.bottom}>

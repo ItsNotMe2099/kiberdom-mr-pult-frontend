@@ -253,6 +253,8 @@ export function AppWrapper(props: Props) {
     return null
   }
 
+  console.log(coreStatus)
+
   const value: IState = {
     ...defaultValue,
     volumeLevel,
@@ -276,20 +278,20 @@ export function AppWrapper(props: Props) {
       }, 2000)
     },
     updateVolumeLevel: async (level) => {
-      await CoreRepository.setVolume(level)
+      await CoreRepository.setVolume(level.toString())
       setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, volume: level } } as ICoreStatus)
       setVolumeLevel(level)
     },
     updateClimateLevel: async (level) => {
-      await IotRepository.setState('CLIMAT', level)
+      await IotRepository.setState('CLIMAT', level.toString())
       setClimateLevel(level)
     },
     updateLightLevelUpZone: async (level) => {
-      await IotRepository.setState('LAMP-Z-1', level)
+      await IotRepository.setState('LAMP-Z-1', level.toString())
       setLightLevelUp(level)
     },
     updateLightLevelDownZone: async (level) => {
-      await IotRepository.setState('LAMP-Z-2', level)
+      await IotRepository.setState('LAMP-Z-2', level.toString())
       setLightLevelDown(level)
     },
     handleVolumeActive: () => {

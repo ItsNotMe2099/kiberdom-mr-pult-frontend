@@ -1,5 +1,6 @@
 import MicrophoneOffSvg from 'components/svg/MicrophoneOffSvg'
 import { useAppContext } from 'context/state'
+import { IParticipant } from 'data/interfaces/IParticipant'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
@@ -7,9 +8,10 @@ import User from './User'
 
 interface Props {
   isActive: boolean
+  users: IParticipant[]
 }
 
-export default function UsersList({ isActive }: Props) {
+export default function UsersList({ isActive, users }: Props) {
 
   const appContext = useAppContext()
 
@@ -35,10 +37,10 @@ export default function UsersList({ isActive }: Props) {
     >
       <div className={styles.root} ref={nodeRef}>
         <div className={styles.list}>
-          {appContext.newUsers.map((i, index) =>
+          {users.map((i, index) =>
             <User user={i} key={index} style='new' onClick={handleNewUsers} />
           )}
-          {appContext.users.map((i, index) =>
+          {users.map((i, index) =>
             <User user={i} key={index} style='old' />
           )}
         </div>

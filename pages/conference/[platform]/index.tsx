@@ -16,12 +16,26 @@ import { Platform } from 'data/enum/Platorm'
 import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { CameraState } from 'data/enum/CameraState'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import ParticipantRepository from 'data/repositories/ParticipantsRepository'
+import { IParticipant } from 'data/interfaces/IParticipant'
 
 export default function ConferencePage() {
 
   const appContext = useAppContext()
 
   const router = useRouter()
+
+  const [users, setUsers] = useState<IParticipant[]>([])
+
+  const fetchUsers = async () => {
+    const newUsers = await ParticipantRepository.fetch()
+    setUsers(newUsers)
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
 
   return (
     <Layout loading={false}>
@@ -32,9 +46,9 @@ export default function ConferencePage() {
           isActive={appContext.initialLoading}
           color={router.asPath === `/conference/${Platform.TrueConf}` ? 'green' : 'blue'}
           icon={router.asPath === `/conference/${Platform.TrueConf}` ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
-        <LayoutAuthorized>
+        <LayoutAuthorized newUsers={users}>
           <div className={styles.wrapper}>
-            <UsersList isActive={appContext.isActiveUsersList} />
+            <UsersList isActive={appContext.isActiveUsersList} users={users}/>
             <div className={styles.main}>
               <ScreenDemonstration />
               <div className={styles.bottom}>
