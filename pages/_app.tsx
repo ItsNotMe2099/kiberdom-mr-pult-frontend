@@ -16,10 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      alert(`${window.innerWidth} window.innerWidth`)
-      alert(`${window.innerHeight} window.innerHeight`)
-      alert(`${window.outerWidth} window.outerWidth`)
-      alert(`${window.outerHeight} indow.outerHeight`)
+      alert(`${window.innerWidth} window.innerWidth, ${window.innerHeight} window.innerHeight, ${window.outerWidth} window.outerWidth, ${window.outerHeight} indow.outerHeight`)
     }
   })
 
