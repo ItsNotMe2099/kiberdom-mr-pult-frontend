@@ -12,6 +12,7 @@ import { CameraState } from 'data/enum/CameraState'
 import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
 import IotRepository from 'data/repositories/IotRepository'
+import { ILedStatus } from 'data/interfaces/ILedStatus'
 
 interface IState {
   volumeLevel: number
@@ -70,6 +71,7 @@ interface IState {
   handleMuteAll: () => void
   handleLoginLoading: (state: boolean) => void
   loginLoading: boolean
+  led: {[key: string]: ILedStatus} | null
 }
 
 const defaultValue: IState = {
@@ -129,6 +131,7 @@ const defaultValue: IState = {
   handleMuteAll: () => null,
   loginLoading: false,
   handleLoginLoading: (state) => null,
+  led: null
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -141,6 +144,7 @@ interface Props {
 export function AppWrapper(props: Props) {
   const router = useRouter()
   const [coreStatus, setCoreStatus] = useState<ICoreStatus | null>(null)
+  const [led, setLed] = useState<{[key: string]: ILedStatus} | null>(null)
   const [volumeLevel, setVolumeLevel] = useState<number>(0)
   const [climateLevel, setClimateLevel] = useState<number>(20)
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
@@ -242,6 +246,7 @@ export function AppWrapper(props: Props) {
       setClimateLevel(climateLevel.state ?? 20)
       setLightLevelUp(lightLevelUp.state ?? 1)
       setLightLevelDown(lightLevelDown.state ?? 1)
+      setLed(coreStatus.led)
       setInitialLoading(false)
       return coreStatus
     } catch (e) {
@@ -268,6 +273,7 @@ export function AppWrapper(props: Props) {
     isLightActive,
     snackbar,
     loginLoading,
+    led,
     handleLoginLoading: (state: boolean) => {
       setLoginLoading(state)
     },

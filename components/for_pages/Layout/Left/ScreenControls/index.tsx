@@ -2,10 +2,11 @@ import styles from './index.module.scss'
 import classNames from 'classnames'
 import ScreenDemonstrateSvg from 'components/svg/ScreenDemonstrateSvg'
 import NoScreenDemonstrateSvg from 'components/svg/NoScreenDemonstrateSvg'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import LedRepository from 'data/repositories/LedRepository'
 import { LedState } from 'data/enum/LedState'
+import { useAppContext } from 'context/state'
 
 interface IOption {
   img: ReactElement<SVGElement>
@@ -15,7 +16,7 @@ interface IOption {
 interface Props {
   color: 'blue' | 'green' | 'gray'
   options?: IOption[]
-  index: number
+  index: string
 }
 
 export default function ScreenControls({ color, options, index }: Props) {
@@ -76,17 +77,26 @@ export default function ScreenControls({ color, options, index }: Props) {
   const [isActive, SetIsActive] = useState<boolean>(false)
 
   const handleClick = async (state: LedState) => {
-    await LedRepository.setLedState(state, index)
+    await LedRepository.setLedState(state, +index)
     SetIsActive(state === LedState.On ? true : false)
   }
 
+  const appContext = useAppContext()
+
   const router = useRouter()
+
+  useEffect(() => {
+    if(appContext.led?.[index].power === LedState.On && router.asPath !== '/' && !isActive){
+      SetIsActive(true)
+      console.log('dewhfuiwhuih4')
+    }
+  }, [appContext.led])
 
   return (
     <div className={styles.root}>
       <div className={styles.top}>
         <div className={styles.number} style={isActive ? { background: getColor(color, false, true) } : {}}>
-          {index + 1}
+          {+index + 1}
         </div>
         <div
           className={classNames(styles.demonstrate, { [styles.active]: isActive })}
