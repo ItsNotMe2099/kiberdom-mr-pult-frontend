@@ -53,7 +53,7 @@ export default function Demonstration({ isActive, onCancel, wifi }: Props) {
               <div className={styles.withQr}>
                 <div className={styles.left}>
                   <div className={styles.text}>
-                    для демонстрации<br/> подключитесь к wifi
+                    для демонстрации<br /> подключитесь к wifi
                   </div>
                   <div className={styles.field}>
                     <span>сеть</span><span>{wifi?.ssid}</span>
@@ -86,14 +86,13 @@ export default function Demonstration({ isActive, onCancel, wifi }: Props) {
                 </div>
               </div>
             </div>
-            <div className={styles.imgWrapper}>
-              <Image className={styles.instruction} src={getImg(device)} alt='' fill />
-              {device !== 'win' ?
+            <Image className={styles.instruction} src={getImg(device)} alt='' fill />
+            {device !== 'win' ?
+              <div className={styles.tipWrapper}>
                 <div className={styles.tip}>
                   * room name—переговорная 1
-                </div>
-                : null}
-            </div>
+                </div></div>
+              : null}
           </div>
           <div className={styles.title} onClick={onCancel}>
             завершить демонстрацию
