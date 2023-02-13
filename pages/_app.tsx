@@ -3,6 +3,7 @@ import 'styles/globals.scss'
 import type { AppProps as NextAppProps } from 'next/app'
 import { AppWrapper } from 'context/state'
 import Snackbar from 'components/for_pages/Layout/Snackbar'
+import { useEffect } from 'react'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
@@ -12,10 +13,15 @@ export interface AppProps extends NextAppProps {
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-  alert(`${window.innerWidth} window.innerWidth`)
-  alert(`${window.innerHeight} window.innerHeight`)
-  alert(`${window.outerWidth} window.outerWidth`)
-  alert(`${window.outerHeight} indow.outerHeight`)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      alert(`${window.innerWidth} window.innerWidth`)
+      alert(`${window.innerHeight} window.innerHeight`)
+      alert(`${window.outerWidth} window.outerWidth`)
+      alert(`${window.outerHeight} indow.outerHeight`)
+    }
+  })
 
 
   return (
