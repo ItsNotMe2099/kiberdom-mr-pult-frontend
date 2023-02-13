@@ -1,10 +1,12 @@
 import TextField from 'components/fields/TextField'
+import Loader from 'components/for_pages/common/loader'
 import Button from 'components/ui/Button'
 import { useAppContext } from 'context/state'
+import { StatusResponseType } from 'data/enum/StatusResponseType'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
@@ -27,15 +29,31 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
 
   const [loading, setLoading] = useState<boolean>(false)
 
+  const [success, setSuccess] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setSuccess(false)
+      }, 5000)
+    }
+  }, [success])
+
   const handleSubmit = async (data: { email: string }) => {
     onSubmit ? onSubmit() : null
     setLoading(true)
     try {
       if (style === 'send') {
-        await RecordRepository.send(data)
+        const res = await RecordRepository.send(data)
+        if (res.status === StatusResponseType.Ok) {
+          setSuccess(true)
+        }
       }
       else {
-        await ConferenceRepository.invite(data)
+        const res = await ConferenceRepository.invite(data)
+        if (res.status === StatusResponseType.Ok) {
+          setSuccess(true)
+        }
       }
     }
     catch (error: any) {
@@ -86,9 +104,9 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
                 <Button disabled={loading} onClick={handleCancel} color={'red'} fluid>
                   отмена
                 </Button>
-                <Button spinner={loading} onClick={() => handleSubmit(formik.values)}
+                <Button onClick={() => handleSubmit(formik.values)}
                   type='submit'
-                  disabled={!Validator.emailRe.test(formik.values.email)}
+                  disabled={!Validator.emailRe.test(formik.values.email) || loading}
                   color={'blue'}
                   fluid>
                   {style === 'send' ? 'отправить файл mp4' : 'подключить'}
@@ -98,6 +116,16 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
           </FormikProvider>
         </div>
       </CSSTransition>
+      <Loader
+        color='purple'
+        isActive={loading}
+        text='отправляю, подождите...'
+        icon='/img/logos/send.svg' />
+      <Loader
+        color='yellow'
+        isActive={success}
+        text='отправленно!'
+        icon='/img/logos/success.svg' />
     </>
   )
 }

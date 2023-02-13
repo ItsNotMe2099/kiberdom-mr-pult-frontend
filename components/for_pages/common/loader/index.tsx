@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
+import classNames from 'classnames'
 
 interface Props {
   icon?: string
@@ -45,7 +46,7 @@ export default function Loader({ icon, color, isActive, text }: Props) {
     >
       <div className={styles.root} ref={nodeRef}>
         <div className={styles.container} style={{ background: getColor(color) }}>
-          {icon ? <Image className={styles.img} src={icon} alt='' fill /> : null}
+          {icon ? <Image className={classNames(styles.img, {[styles.large]: (color === 'purple' || color ==='yellow')})} src={icon} alt='' fill /> : null}
           <div className={styles.wait}>
             {text}
           </div>

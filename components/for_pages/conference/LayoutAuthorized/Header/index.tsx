@@ -47,11 +47,11 @@ export default function Header({ platform, newUsers }: Props) {
       {newUsers.length === 1 && !appContext.isActiveUsersList ? <User onClick={appContext.handleActiveUsersListMenu}
         user={newUsers[0]}
         style='header' /> : null}
-      {appContext.newUsers.length > 1 && !appContext.isActiveUsersList ?
+      {/*appContext.newUsers.length > 1 && !appContext.isActiveUsersList ?
         <div className={styles.allow} onClick={appContext.handleActiveUsersListMenu}
           style={{ backgroundColor: getAllowColor()}}>
           {`впустить новых участников (+${newUsers.length})`}
-        </div> : null}
+  </div> : null*/}
       <Image className={styles.img} src={getIcon() as string} alt='' fill />
       <div className={styles.bottom}>
         <div className={styles.id}>

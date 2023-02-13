@@ -18,6 +18,7 @@
   justify-content: center;
   align-items: center;
   padding: 50px 40px 70px 40px;
+  width: 100%;
 }
 
 .wait {
@@ -33,6 +34,10 @@
   height: 27px !important;
   z-index: 12;
   position: relative !important;
+}
+
+.large{
+  height: 90px !important;
 }
 
 .itemEnter {
