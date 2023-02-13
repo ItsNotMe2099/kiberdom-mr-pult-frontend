@@ -12,6 +12,11 @@ export interface AppProps extends NextAppProps {
 
 function MyApp({ Component, pageProps }: AppProps) {
 
+  alert(`${window.innerWidth} window.innerWidth`)
+  alert(`${window.innerHeight} window.innerHeight`)
+  alert(`${window.outerWidth} window.outerWidth`)
+  alert(`${window.outerHeight} indow.outerHeight`)
+
 
   return (
     <AppWrapper>
