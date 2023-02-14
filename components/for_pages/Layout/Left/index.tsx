@@ -2,6 +2,7 @@ import BackSvg from 'components/svg/BackSvg'
 import DemonstrateSvg from 'components/svg/DemonstrateSvg'
 import MembersSvg from 'components/svg/MembersSvg'
 import SpeakerSvg from 'components/svg/SpeakerSvg'
+import { LedState } from 'data/enum/LedState'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
@@ -17,8 +18,9 @@ export default function Left({ isZoom, isTrueConf, loading }: Props) {
 
   const getOptions = (isZoom: boolean, isTrueConf: boolean) => {
     if (isZoom || isTrueConf) {
-      return [{ img: <MembersSvg />, label: 'участники' },
-      { img: <SpeakerSvg />, label: 'спикер' }, { img: <DemonstrateSvg />, label: 'демонстрация' }]
+      return [{ img: <MembersSvg />, label: 'участники', value: LedState.Content },
+      { img: <SpeakerSvg />, label: 'спикер', value: LedState.Gallery },
+      { img: <DemonstrateSvg />, label: 'демонстрация' }]
     }
     else {
       return [{ img: <BackSvg />, label: 'заставка' }, { img: <DemonstrateSvg />, label: 'демонстрация' }]
@@ -43,10 +45,10 @@ export default function Left({ isZoom, isTrueConf, loading }: Props) {
           <div className={styles.title}>
             ЭКРАНЫ
           </div>
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={'0'} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={'1'} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={'2'} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} index={'3'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'0'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'1'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'2'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'3'} />
         </div>
       </CSSTransition>
     </div>

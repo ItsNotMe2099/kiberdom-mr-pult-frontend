@@ -11,15 +11,16 @@ import { useAppContext } from 'context/state'
 interface IOption {
   img: ReactElement<SVGElement>
   label: string
+  value?: string
 }
 
 interface Props {
   color: 'blue' | 'green' | 'gray'
   options?: IOption[]
-  index: string
+  indexScreen: string
 }
 
-export default function ScreenControls({ color, options, index }: Props) {
+export default function ScreenControls({ color, options, indexScreen }: Props) {
 
   const getColor = (color: 'blue' | 'green' | 'gray', last?: boolean, number?: boolean, bottom?: boolean, option?: boolean) => {
     switch (color) {
@@ -77,7 +78,7 @@ export default function ScreenControls({ color, options, index }: Props) {
   const [isActive, SetIsActive] = useState<boolean>(false)
 
   const handleClick = async (state: LedState) => {
-    await LedRepository.setLedState(state, +index)
+    await LedRepository.setLedState(state, +indexScreen)
     SetIsActive(state === LedState.On ? true : false)
   }
 
@@ -85,18 +86,36 @@ export default function ScreenControls({ color, options, index }: Props) {
 
   const router = useRouter()
 
+  const [option, setOption] = useState<LedState | null>(null)
+
   useEffect(() => {
-    if(appContext.led?.[index].power === LedState.On && router.asPath !== '/' && !isActive){
+    if (appContext.led?.[indexScreen].power === LedState.On && router.asPath !== '/' && !isActive) {
       SetIsActive(true)
-      console.log('dewhfuiwhuih4')
+    }
+    if (appContext.led?.[indexScreen].mode) {
+      setOption(appContext.led?.[indexScreen].mode as LedState)
     }
   }, [appContext.led])
+
+  const handleClickOption = async (index: number) => {
+    if (options && index !== options?.length - 1) {
+      setOption(index === 0 ? LedState.Content : LedState.Gallery)
+    }
+    if (index === 0) {
+      await LedRepository.setLedState(LedState.Content, +indexScreen)
+    }
+    if (index === 1) {
+      await LedRepository.setLedState(LedState.Gallery, +indexScreen)
+    }
+  }
+
+  console.log(option)
 
   return (
     <div className={styles.root}>
       <div className={styles.top}>
         <div className={styles.number} style={isActive ? { background: getColor(color, false, true) } : {}}>
-          {+index + 1}
+          {+indexScreen + 1}
         </div>
         <div
           className={classNames(styles.demonstrate, { [styles.active]: isActive })}
@@ -112,10 +131,11 @@ export default function ScreenControls({ color, options, index }: Props) {
         </div>
       </div>
       <div className={styles.bottom} style={isActive ? { background: getColor(color, false, false, true) } : {}}>
-        {options?.map((i, index) =>
+        {options?.map((i, indexOption) =>
           <div
-            className={classNames(styles.option, { [styles.active]: isActive && index !== options.length - 1 })}
-            style={isActive && index === 0 ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
+            onClick={() => handleClickOption(indexOption)}
+            className={classNames(styles.option, { [styles.active]: isActive && indexOption !== options.length - 1 })}
+            style={isActive && i.value === option ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
             {i.img}
             <div className={styles.text}>{i.label}</div>
           </div>
