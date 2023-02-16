@@ -89,11 +89,11 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
   const [option, setOption] = useState<LedState | null>(null)
 
   useEffect(() => {
-    if (appContext.led?.[indexScreen].power === LedState.On && router.asPath !== '/' && !isActive) {
+    if (appContext.led?.[indexScreen]?.power === LedState.On && router.asPath !== '/' && !isActive) {
       SetIsActive(true)
     }
-    if (appContext.led?.[indexScreen].mode) {
-      setOption(appContext.led?.[indexScreen].mode as LedState)
+    if (appContext.led?.[indexScreen]?.mode) {
+      setOption(appContext.led?.[indexScreen]?.mode as LedState)
     }
   }, [appContext.led])
 
