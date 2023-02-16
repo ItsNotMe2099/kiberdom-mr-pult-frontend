@@ -9,15 +9,15 @@ import User from './User'
 interface Props {
   isActive: boolean
   users: IParticipant[]
+  onMuteAll: () => void
+  onAdmit?: () => void
+  onExpel?: () => void
+  onMute?: () => void
 }
 
-export default function UsersList({ isActive, users }: Props) {
+export default function UsersList({ isActive, users, onMuteAll, onAdmit, onExpel, onMute }: Props) {
 
   const appContext = useAppContext()
-
-  const handleNewUsers = () => {
-
-  }
 
   const nodeRef = useRef(null)
 
@@ -38,13 +38,13 @@ export default function UsersList({ isActive, users }: Props) {
       <div className={styles.root} ref={nodeRef}>
         <div className={styles.list}>
           {users.filter(i => i.is_in_waiting_room === true).map((i, index) =>
-            <User user={i} key={index} style='new' onClick={handleNewUsers} />
+            <User user={i} key={index} style='new' onAdmit={onAdmit} />
           )}
           {users.filter(i => i.is_in_waiting_room === false).map((i, index) =>
-            <User user={i} key={index} style='old' />
+            <User user={i} key={index} style='old' onExpel={onExpel} onMute={onMute}/>
           )}
         </div>
-        <div className={styles.micControl} onClick={() => appContext.isMuteAll ? null : appContext.handleMuteAll()}>
+        <div className={styles.micControl} onClick={onMuteAll}>
           <MicrophoneOffSvg className={styles.img} />
           <div className={styles.text}>выключить всем микрофон</div>
         </div>

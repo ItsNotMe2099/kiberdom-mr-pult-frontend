@@ -1,6 +1,5 @@
 import Gradient from 'components/for_pages/common/gradient'
 import { Platform } from 'data/enum/Platorm'
-import { useRef } from 'react'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
@@ -30,8 +29,6 @@ export default function Item({ style, icon, active, onClick, platform, title, nu
     onClick ? onClick() : null
   }
 
-  const exitRef = useRef(null)
-
   return (
     <div className={styles.root} onClick={handleClick}>
       <Gradient
@@ -44,7 +41,7 @@ export default function Item({ style, icon, active, onClick, platform, title, nu
         style={getColor() as string} />
       {icon}
       <div className={styles.title}>{title}</div>
-      {style === 'members' ? <div className={styles.number}>{numberOfUsers}</div> : null}
+      {style === 'members' && numberOfUsers as number > 0 ? <div className={styles.number}>{numberOfUsers}</div> : null}
     </div >
   )
 }

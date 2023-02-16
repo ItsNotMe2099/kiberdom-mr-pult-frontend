@@ -57,7 +57,7 @@ export default function Header({ platform, users }: Props) {
       <Image className={styles.img} src={getIcon() as string} alt='' fill />
       <div className={styles.bottom}>
         <div className={styles.id}>
-          ID {appContext.user?.id}
+          ID 303-334-43-45
         </div>
         <div className={styles.separator}>
           •

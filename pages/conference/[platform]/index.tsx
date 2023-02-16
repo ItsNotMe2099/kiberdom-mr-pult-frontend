@@ -37,6 +37,15 @@ export default function ConferencePage() {
     fetchUsers()
   }, [])
 
+  const handleMuteAll = async () => {
+    await ParticipantRepository.muteAudioAll()
+    await fetchUsers()
+  }
+
+  const handleFetchAgain = async () => {
+    await fetchUsers()
+  }
+
   return (
     <Layout loading={false}>
       <div className={classNames(styles.root, { [styles.loaded]: !appContext.initialLoading })}>
@@ -48,7 +57,14 @@ export default function ConferencePage() {
           icon={router.asPath === `/conference/${Platform.TrueConf}` ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
         <LayoutAuthorized users={users}>
           <div className={styles.wrapper}>
-            <UsersList isActive={appContext.isActiveUsersList} users={users}/>
+            <UsersList
+              isActive={appContext.isActiveUsersList}
+              users={users}
+              onMuteAll={handleMuteAll}
+              onAdmit={handleFetchAgain}
+              onExpel={handleFetchAgain}
+              onMute={handleFetchAgain}
+            />
             <div className={styles.main}>
               <ScreenDemonstration />
               <div className={styles.bottom}>

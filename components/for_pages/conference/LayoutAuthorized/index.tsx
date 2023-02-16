@@ -20,7 +20,7 @@ export default function LayoutAuthorized({ children, users }: Props) {
         users={users}
         platform={appContext.coreStatus?.platform as Platform} />
       {children}
-      <Footer />
+      <Footer users={users}/>
     </div>
   )
 }

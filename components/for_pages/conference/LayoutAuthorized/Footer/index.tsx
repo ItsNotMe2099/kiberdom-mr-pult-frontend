@@ -13,12 +13,13 @@ import Record from './Record'
 import Exit from './Exit'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import { Platform } from 'data/enum/Platorm'
+import { IParticipant } from 'data/interfaces/IParticipant'
 
 interface Props {
-
+  users: IParticipant[]
 }
 
-export default function Footer({ }: Props) {
+export default function Footer({ users }: Props) {
 
   const appContext = useAppContext()
 
@@ -60,7 +61,7 @@ export default function Footer({ }: Props) {
 
   return (
     <div className={styles.root}>
-      <Item style='members' title='участники' numberOfUsers={appContext.newUsers.length + appContext.users.length}
+      <Item style='members' title='участники' numberOfUsers={users.length}
         platform={appContext.coreStatus?.platform as Platform}
         active={appContext.isActiveUsersList}
         onClick={appContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(appContext.isActiveUsersList)} />} />

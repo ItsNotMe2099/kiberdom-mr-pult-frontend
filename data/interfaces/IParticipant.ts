@@ -1,3 +1,5 @@
+import { ParticipantAudioState } from "data/enum/ParticipantAudioState";
+
 export interface IParticipantCameraStatus{
   am_i_controlling?: boolean;
   can_i_request_control?: boolean;
@@ -6,7 +8,7 @@ export interface IParticipantCameraStatus{
   can_zoom_camera?: boolean;
 }
 export interface IParticipantAudioStatus{
-  state?: string;
+  state?: ParticipantAudioState;
   type?: string;
 }
 export interface IParticipantVideoStatus{

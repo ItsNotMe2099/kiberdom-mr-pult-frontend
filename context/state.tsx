@@ -1,15 +1,12 @@
-import { IUser } from 'data/interfaces/IUser'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { ICoreStatus } from 'data/interfaces/ICoreStatus'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { RequestError } from 'types/types'
-import { Platform } from 'data/enum/Platorm'
 import { useRouter } from 'next/router'
 import { SnackbarData } from 'data/interfaces/ISnackBarData'
 import { SnackbarType } from 'types/enums'
 import { MicrophoneState } from 'data/enum/MicrophoneState'
 import { CameraState } from 'data/enum/CameraState'
-import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import RecordRepository from 'data/repositories/RecordRepository'
 import IotRepository from 'data/repositories/IotRepository'
 import { ILedStatus } from 'data/interfaces/ILedStatus'
@@ -23,7 +20,6 @@ interface IState {
   updateClimateLevel: (level: number) => void
   updateLightLevelUpZone: (level: number) => void
   updateLightLevelDownZone: (level: number) => void
-  user: IUser | undefined
   isVolumeActive: boolean
   isClimateActive: boolean
   isHelpActive: boolean
@@ -46,8 +42,6 @@ interface IState {
   isStreamsCamera: boolean
   micState: MicrophoneState
   camState: CameraState
-  users: IUser[]
-  newUsers: IUser[]
   handleActiveUsersListMenu: () => void
   handleCameraMenu: () => void
   handleInvite: () => void
@@ -67,11 +61,9 @@ interface IState {
   isStopRec: boolean
   handleStopRec: () => void
   isEmailFormInvite: boolean
-  isMuteAll: boolean
-  handleMuteAll: () => void
   handleLoginLoading: (state: boolean) => void
   loginLoading: boolean
-  led: {[key: string]: ILedStatus} | null
+  led: { [key: string]: ILedStatus } | null
 }
 
 const defaultValue: IState = {
@@ -83,7 +75,6 @@ const defaultValue: IState = {
   updateClimateLevel: (level) => null,
   updateLightLevelUpZone: (level) => null,
   updateLightLevelDownZone: (level) => null,
-  user: undefined,
   isVolumeActive: false,
   isClimateActive: false,
   isHelpActive: false,
@@ -106,8 +97,6 @@ const defaultValue: IState = {
   isStreamsCamera: false,
   micState: MicrophoneState.Off,
   camState: CameraState.Off,
-  users: [],
-  newUsers: [],
   handleActiveUsersListMenu: () => null,
   handleCameraMenu: () => null,
   handleInvite: () => null,
@@ -127,8 +116,6 @@ const defaultValue: IState = {
   isStopRec: false,
   handleStopRec: () => null,
   isEmailFormInvite: false,
-  isMuteAll: false,
-  handleMuteAll: () => null,
   loginLoading: false,
   handleLoginLoading: (state) => null,
   led: null
@@ -138,19 +125,16 @@ const AppContext = createContext<IState>(defaultValue)
 
 interface Props {
   children: React.ReactNode
-  user?: IUser
 }
 
 export function AppWrapper(props: Props) {
   const router = useRouter()
   const [coreStatus, setCoreStatus] = useState<ICoreStatus | null>(null)
-  const [led, setLed] = useState<{[key: string]: ILedStatus} | null>(null)
+  const [led, setLed] = useState<{ [key: string]: ILedStatus } | null>(null)
   const [volumeLevel, setVolumeLevel] = useState<number>(0)
   const [climateLevel, setClimateLevel] = useState<number>(20)
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
   const [lightLevelDown, setLightLevelDown] = useState<number>(1)
-
-  const [user, setUser] = useState<IUser | undefined>(props.user)
 
   const [initialLoading, setInitialLoading] = useState<boolean>(true)
 
@@ -180,37 +164,7 @@ export function AppWrapper(props: Props) {
   const [isStopRec, setIsStopRec] = useState<boolean>(false)
   const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
 
-  const [isMuteAll, setIsMuteAll] = useState<boolean>(false)
-
   const [loginLoading, setLoginLoading] = useState(false)
-
-  //temp
-  const zoomUser = {
-    id: '303-334-43-45',
-    avatar: '', name: ''
-  }
-
-  const trueConfUser = {
-    id: '303-334-43-45',
-    avatar: '', name: ''
-  }
-  //temp
-  //temp
-
-  const tempNewUsers = [
-    { id: '1', avatar: '', name: 'Генри Форд' },
-    { id: '2', avatar: '/img/dev/avatar.png', name: 'Генри Форд' },
-  ]
-
-  const tempUsers = [
-    { id: '3', avatar: '/img/dev/avatar.png', name: 'Генри Форд' },
-  ]
-
-  //temp
-
-  const [newUsers, setNewUsers] = useState<IUser[]>(tempNewUsers)
-
-  const [users, setUsers] = useState<IUser[]>(tempUsers)
 
   const init = async () => {
     const coreStatus = await fetch()
@@ -221,15 +175,6 @@ export function AppWrapper(props: Props) {
 
   useEffect(() => {
     init()
-  }, [])
-
-  useEffect(() => {
-    if (coreStatus?.platform === Platform.Zoom) {
-      setUser(zoomUser)
-    }
-    else {
-      setUser(trueConfUser)
-    }
   }, [])
 
   const fetch = async (): Promise<ICoreStatus | null> => {
@@ -266,7 +211,6 @@ export function AppWrapper(props: Props) {
     climateLevel,
     lightLevelUp,
     lightLevelDown,
-    user,
     isVolumeActive,
     isClimateActive,
     isHelpActive,
@@ -336,8 +280,6 @@ export function AppWrapper(props: Props) {
     isStreamsCamera,
     micState,
     camState,
-    users,
-    newUsers,
     isRecording,
     isRecControls,
     isRecPaused,
@@ -415,12 +357,6 @@ export function AppWrapper(props: Props) {
       if (isStopRec) {
         setIsStopRec(false)
       }
-    },
-    isMuteAll,
-    handleMuteAll: async () => {
-      const newState = true
-      await ParticipantRepository.muteAudioAll()
-      setIsMuteAll(newState)
     }
   }
 
