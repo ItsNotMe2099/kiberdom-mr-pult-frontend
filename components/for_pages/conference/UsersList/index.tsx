@@ -37,10 +37,10 @@ export default function UsersList({ isActive, users }: Props) {
     >
       <div className={styles.root} ref={nodeRef}>
         <div className={styles.list}>
-          {users.map((i, index) =>
+          {users.filter(i => i.is_in_waiting_room === true).map((i, index) =>
             <User user={i} key={index} style='new' onClick={handleNewUsers} />
           )}
-          {users.map((i, index) =>
+          {users.filter(i => i.is_in_waiting_room === false).map((i, index) =>
             <User user={i} key={index} style='old' />
           )}
         </div>

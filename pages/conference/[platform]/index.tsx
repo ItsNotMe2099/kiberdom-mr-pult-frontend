@@ -29,8 +29,8 @@ export default function ConferencePage() {
   const [users, setUsers] = useState<IParticipant[]>([])
 
   const fetchUsers = async () => {
-    const newUsers = await ParticipantRepository.fetch()
-    setUsers(newUsers)
+    const users = await ParticipantRepository.fetch()
+    setUsers(users)
   }
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ConferencePage() {
           isActive={appContext.initialLoading}
           color={router.asPath === `/conference/${Platform.TrueConf}` ? 'green' : 'blue'}
           icon={router.asPath === `/conference/${Platform.TrueConf}` ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
-        <LayoutAuthorized newUsers={users}>
+        <LayoutAuthorized users={users}>
           <div className={styles.wrapper}>
             <UsersList isActive={appContext.isActiveUsersList} users={users}/>
             <div className={styles.main}>

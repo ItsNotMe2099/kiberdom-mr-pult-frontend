@@ -40,4 +40,5 @@ export interface IParticipant{
   user_name?: string;
   user_type?: string;
   video_status?: IParticipantVideoStatus
-};
+  is_in_waiting_room: boolean
+}

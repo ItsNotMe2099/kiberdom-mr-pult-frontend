@@ -7,17 +7,17 @@ import styles from './index.module.scss'
 
 interface Props {
   children?: React.ReactNode
-  newUsers: IParticipant[]
+  users: IParticipant[]
 }
 
-export default function LayoutAuthorized({ children, newUsers }: Props) {
+export default function LayoutAuthorized({ children, users }: Props) {
 
   const appContext = useAppContext()
 
   return (
     <div className={styles.root}>
       <Header
-        newUsers={newUsers}
+        users={users}
         platform={appContext.coreStatus?.platform as Platform} />
       {children}
       <Footer />
