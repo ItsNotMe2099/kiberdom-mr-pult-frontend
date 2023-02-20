@@ -58,7 +58,7 @@ export default function User({ user, style, onClick, onExpel, onMute, onAdmit }:
     onExpel ? onExpel() : null
   }
 
-  console.log('user.audio_status?.state',user.audio_status?.state)
+  console.log('user.audio_status?.state',user.audio_status_state)
 
   return (
     <div className={classNames(styles.root, getClass())} onClick={onClick}>
@@ -77,10 +77,10 @@ export default function User({ user, style, onClick, onExpel, onMute, onAdmit }:
         <div className={styles.controls}>
           <div className={styles.microphone}
             onClick={() =>
-              user.audio_status?.state === ParticipantAudioState.Unmuted && user.user_id ?
+              user.audio_status_state === ParticipantAudioState.Unmuted && user.user_id ?
                 handleMuteAudioForUser(user.user_id)
                 : null}>
-            {user.audio_status?.state ===
+            {user.audio_status_state ===
               ParticipantAudioState.Unmuted ?
               <MicrophoneOnSvg className={styles.on} />
               : <MicrophoneOffSvg className={styles.off} />}
