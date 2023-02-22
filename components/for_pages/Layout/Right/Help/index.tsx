@@ -43,7 +43,7 @@ export default function Help({ }: Props) {
   return (
     <div className={classNames(styles.root, { [styles.rootActive]: appContext.isHelpActive })}>
       {!appContext.isHelpActive ? <><div className={styles.title}>
-        помощь
+        забота
       </div>
         <div className=
           {classNames(styles.help, {
