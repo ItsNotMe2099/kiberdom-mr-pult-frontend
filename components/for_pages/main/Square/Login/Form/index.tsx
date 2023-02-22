@@ -72,12 +72,10 @@ export default function LoginForm({ onSubmit, color, onCancel, platform }: Props
     <FormikProvider value={formik}>
       <Form className={styles.form}>
         <TextField
-          validate={Validator.required}
           name='login'
           label='ID'
           brdrColor={getBorderColor()} />
         <TextField
-          validate={Validator.required}
           className={styles.key}
           name='password'
           type={'password'}

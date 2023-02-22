@@ -9,7 +9,7 @@ import { Platform } from 'data/enum/Platorm'
 import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
@@ -78,6 +78,19 @@ export default function IndexPage() {
   const demLabelRef = useRef(null)
   const zoomLogin = useRef(null)
   const trueConfLogin = useRef(null)
+
+  useEffect(() => {
+    if (isActiveZoom) {
+      setTimeout(() => {
+        setIsActiveZoom(false)
+      }, 5000)
+    }
+    else if (isActiveConf) {
+      setTimeout(() => {
+        setIsActiveConf(false)
+      }, 5000)
+    }
+  }, [isActiveConf, isActiveZoom])
 
   return (
     <Layout loading={appContext.initialLoading}>
