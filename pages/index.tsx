@@ -5,6 +5,7 @@ import SoundSquare from 'components/for_pages/main/SoundSquare'
 import Square from 'components/for_pages/main/Square'
 import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import { useAppContext } from 'context/state'
+import { BgMusicState } from 'data/enum/BgMusicState'
 import { Platform } from 'data/enum/Platorm'
 import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
@@ -21,8 +22,6 @@ export default function IndexPage() {
 
   const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)
   const [isActiveConf, setIsActiveConf] = useState<boolean>(false)
-
-  const [isOff, setIsOff] = useState<boolean>(true)
 
   const [isDemonstration, setIsDemonstration] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -115,6 +114,10 @@ export default function IndexPage() {
       }
     }
   }, [isActiveConf, isActiveZoom])
+
+  /*useEffect(() => {
+    document.documentElement.requestFullscreen()
+  }, [])*/
 
   return (
     <Layout loading={appContext.initialLoading}>
@@ -255,8 +258,8 @@ export default function IndexPage() {
         </Square>
         <SoundSquare
           loading={appContext.initialLoading}
-          onClick={() => setIsOff(isOff ? false : true)}
-          isOn={!isOff ? true : false} />
+          onClick={appContext.handleBgMusic}
+          isOn={appContext.bgMusicState === BgMusicState.On ? true : false} />
       </div>
     </Layout>
   )

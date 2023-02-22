@@ -10,6 +10,7 @@ import { CameraState } from 'data/enum/CameraState'
 import RecordRepository from 'data/repositories/RecordRepository'
 import IotRepository from 'data/repositories/IotRepository'
 import { ILedStatus } from 'data/interfaces/ILedStatus'
+import { BgMusicState } from 'data/enum/BgMusicState'
 
 interface IState {
   volumeLevel: number
@@ -42,6 +43,7 @@ interface IState {
   isStreamsCamera: boolean
   micState: MicrophoneState
   camState: CameraState
+  bgMusicState: BgMusicState
   handleActiveUsersListMenu: () => void
   handleCameraMenu: () => void
   handleInvite: () => void
@@ -50,6 +52,7 @@ interface IState {
   handleStreamsCamera: () => void
   handleMicrophone: () => void
   handleCamera: () => void
+  handleBgMusic: () => void
   isEmailFormActive: boolean
   handleCancelEmailForm: () => void
   handleRecording: () => void
@@ -97,6 +100,7 @@ const defaultValue: IState = {
   isStreamsCamera: false,
   micState: MicrophoneState.Off,
   camState: CameraState.Off,
+  bgMusicState: BgMusicState.Off,
   handleActiveUsersListMenu: () => null,
   handleCameraMenu: () => null,
   handleInvite: () => null,
@@ -105,6 +109,7 @@ const defaultValue: IState = {
   handleStreamsCamera: () => null,
   handleMicrophone: () => null,
   handleCamera: () => null,
+  handleBgMusic: () => null,
   isEmailFormActive: false,
   handleCancelEmailForm: () => null,
   handleRecording: () => null,
@@ -153,8 +158,10 @@ export function AppWrapper(props: Props) {
   const [isAutoCamera, setIsAutoCamera] = useState<boolean>(false)
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
 
+  //ON/OFF states
   const [micState, setMicState] = useState<MicrophoneState>(MicrophoneState.Off)
   const [camState, setCamState] = useState<CameraState>(CameraState.Off)
+  const [bgMusicState, setBgMusicState] = useState<BgMusicState>(BgMusicState.Off)
 
   const [isEmailFormActive, setIsEmailFormActive] = useState<boolean>(false)
   const [isRecording, setIsRecording] = useState<boolean>(false)
@@ -314,6 +321,12 @@ export function AppWrapper(props: Props) {
       await CoreRepository.setCameraState(newState)
       setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, camera: newState } } as ICoreStatus)
       setCamState(newState)
+    },
+    handleBgMusic: async () => {
+      const newState = bgMusicState === BgMusicState.On ? BgMusicState.Off : BgMusicState.On
+      await CoreRepository.setBgMusicState(newState)
+      setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, bgMusic: newState } } as ICoreStatus)
+      setBgMusicState(newState)
     },
     handleActiveUsersListMenu: () => {
       setIsActiveUsersList(isActiveUsersList ? false : true)

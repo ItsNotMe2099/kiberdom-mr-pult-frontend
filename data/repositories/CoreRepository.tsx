@@ -1,9 +1,10 @@
 import request from 'utils/request'
-import {ICoreStatus} from 'data/interfaces/ICoreStatus'
-import {Platform} from 'data/enum/Platorm'
-import {IStatusResponse} from 'data/interfaces/IStatusResponse'
-import {CameraState} from 'data/enum/CameraState'
-import {MicrophoneState} from 'data/enum/MicrophoneState'
+import { ICoreStatus } from 'data/interfaces/ICoreStatus'
+import { Platform } from 'data/enum/Platorm'
+import { IStatusResponse } from 'data/interfaces/IStatusResponse'
+import { CameraState } from 'data/enum/CameraState'
+import { MicrophoneState } from 'data/enum/MicrophoneState'
+import { BgMusicState } from 'data/enum/BgMusicState'
 
 export default class CoreRepository {
   static async fetchStatus(): Promise<ICoreStatus> {
@@ -53,11 +54,20 @@ export default class CoreRepository {
     return res
   }
 
+  static async setBgMusicState(state: BgMusicState): Promise<IStatusResponse> {
+    const res = await request<IStatusResponse>({
+      method: 'post',
+      url: `/api/v1/core/audioprocessor/bgmusic/${state}`,
+      data: {},
+    })
+    return res
+  }
+
   static async setVolume(level: string): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: '/api/v1/core/volume/set',
-      data: {level},
+      data: { level },
     })
     return res
   }
