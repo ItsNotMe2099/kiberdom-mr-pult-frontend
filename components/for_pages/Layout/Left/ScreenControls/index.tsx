@@ -120,20 +120,20 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
         <div
           className={classNames(styles.demonstrate, { [styles.active]: isActive })}
           style={isActive ? { background: getColor(color) } : {}}
-          onClick={() => router.asPath === '/' ? null : handleClick(LedState.On)}>
+          onClick={() => handleClick(LedState.On)}>
           <ScreenDemonstrateSvg />
         </div>
         <div
           className={classNames(styles.noDemonstrate, { [styles.active]: !isActive })}
           style={!isActive ? { background: getColor(color, true) } : {}}
-          onClick={() => router.asPath === '/' ? null : handleClick(LedState.Off)}>
+          onClick={() => handleClick(LedState.Off)}>
           <NoScreenDemonstrateSvg />
         </div>
       </div>
       <div className={styles.bottom} style={isActive ? { background: getColor(color, false, false, true) } : {}}>
         {options?.map((i, indexOption) =>
           <div
-            onClick={() => handleClickOption(indexOption)}
+            onClick={() => router.asPath !== '/' ? handleClickOption(indexOption) : null}
             className={classNames(styles.option, { [styles.active]: isActive && indexOption !== options.length - 1 })}
             style={isActive && i.value === option ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
             {i.img}
