@@ -32,6 +32,9 @@ export default function Light({ }: Props) {
   const handleItemUpZoneClick = (index?: number) => {
     if (index !== undefined) {
       appContext.updateLightLevelUpZone(index + 1)
+      if (index === 0 && appContext.lightLevelUp === 1) {
+        appContext.updateLightLevelUpZone(0)
+      }
       if (timer) {
         clearTimeout(timer)
       }
@@ -45,6 +48,9 @@ export default function Light({ }: Props) {
   const handleItemDownZoneClick = (index?: number) => {
     if (index !== undefined) {
       appContext.updateLightLevelDownZone(index + 1)
+      if (index === 0 && appContext.lightLevelDown === 1) {
+        appContext.updateLightLevelDownZone(0)
+      }
     }
     if (timer) {
       clearTimeout(timer)
