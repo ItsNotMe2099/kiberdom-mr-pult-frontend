@@ -33,6 +33,12 @@ export default function IndexPage() {
     try {
       await ConferenceRepository.setScreenDemonstrationState('start').then(i => setData(i.wifi ?? null))
       setIsDemonstration(true)
+      if (isActiveConf) {
+        setIsActiveConf(false)
+      }
+      else if (isActiveZoom) {
+        setIsActiveZoom(false)
+      }
     }
     catch (error: any) {
       let errorMessage = error.toString()
@@ -90,7 +96,7 @@ export default function IndexPage() {
   }
 
   useEffect(() => {
-    if (isActiveZoom && !appContext.loginLoading) {
+    if (isActiveZoom) {
       const zoomTimer = setTimeout(() => {
         setIsActiveZoom(false)
       }, 5000)
@@ -99,7 +105,7 @@ export default function IndexPage() {
         clearTimeout(zoomTimer)
       }
     }
-    else if (isActiveConf && !appContext.loginLoading) {
+    else if (isActiveConf) {
       const confTimer = setTimeout(() => {
         setIsActiveConf(false)
       }, 5000)
