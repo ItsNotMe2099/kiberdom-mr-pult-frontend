@@ -33,7 +33,12 @@ export default function LoginForm({ onSubmit, color, onCancel, platform }: Props
     //onSubmit ? onSubmit() : null
     try {
       await CoreRepository.selectPlatform(platform)
-      await ConferenceRepository.join(data)
+      if (data.login) {
+        await ConferenceRepository.join(data)
+      }
+      else {
+        await ConferenceRepository.create()
+      }
       router.push(`/conference/${platform}`)
       appContext.fetch()
     }
