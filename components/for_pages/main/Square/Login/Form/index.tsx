@@ -8,7 +8,6 @@ import { useFormik, Form, FormikProvider } from 'formik'
 import { useRouter } from 'next/router'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
-import Validator from 'utils/validator'
 import styles from './index.module.scss'
 
 interface Props {

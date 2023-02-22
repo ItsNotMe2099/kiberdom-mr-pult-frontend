@@ -79,16 +79,34 @@ export default function IndexPage() {
   const zoomLogin = useRef(null)
   const trueConfLogin = useRef(null)
 
+  const handleActiveZoom = () => {
+    !isActiveZoom ? setIsActiveZoom(true) : null
+    setIsActiveConf(false)
+  }
+
+  const handleActiveConf = () => {
+    !isActiveConf ? setIsActiveConf(true) : null
+    setIsActiveZoom(false)
+  }
+
   useEffect(() => {
-    if (isActiveZoom) {
-      setTimeout(() => {
+    if (isActiveZoom && !appContext.loginLoading) {
+      const zoomTimer = setTimeout(() => {
         setIsActiveZoom(false)
       }, 5000)
+
+      return () => {
+        clearTimeout(zoomTimer)
+      }
     }
-    else if (isActiveConf) {
-      setTimeout(() => {
+    else if (isActiveConf && !appContext.loginLoading) {
+      const confTimer = setTimeout(() => {
         setIsActiveConf(false)
       }, 5000)
+
+      return () => {
+        clearTimeout(confTimer)
+      }
     }
   }, [isActiveConf, isActiveZoom])
 
@@ -122,7 +140,7 @@ export default function IndexPage() {
           <Image ref={logoRef} className={styles.img} src='/img/logo.svg' fill alt='' />
         </CSSTransition>
         <Square
-          onClick={() => !isActiveZoom ? setIsActiveZoom(true) : null}
+          onClick={handleActiveZoom}
           className={styles.zoom}
           color='blue'
           active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
@@ -166,7 +184,7 @@ export default function IndexPage() {
             </div>
           </CSSTransition>
         </Square>
-        <Square onClick={() => !isActiveConf ? setIsActiveConf(true) : null}
+        <Square onClick={handleActiveConf}
           className={styles.trueconf} color='green'
           active={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
           img='/img/logos/trueconf.svg'>
