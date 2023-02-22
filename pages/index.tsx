@@ -10,7 +10,7 @@ import { Platform } from 'data/enum/Platorm'
 import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
@@ -81,8 +81,6 @@ export default function IndexPage() {
   const zoomLabelRef = useRef(null)
   const trueLabelRef = useRef(null)
   const demLabelRef = useRef(null)
-  const zoomLogin = useRef(null)
-  const trueConfLogin = useRef(null)
 
   const handleActiveZoom = () => {
     !isActiveZoom ? setIsActiveZoom(true) : null
@@ -93,27 +91,6 @@ export default function IndexPage() {
     !isActiveConf ? setIsActiveConf(true) : null
     setIsActiveZoom(false)
   }
-
-  useEffect(() => {
-    if (isActiveZoom) {
-      const zoomTimer = setTimeout(() => {
-        setIsActiveZoom(false)
-      }, 5000)
-
-      return () => {
-        clearTimeout(zoomTimer)
-      }
-    }
-    else if (isActiveConf) {
-      const confTimer = setTimeout(() => {
-        setIsActiveConf(false)
-      }, 5000)
-
-      return () => {
-        clearTimeout(confTimer)
-      }
-    }
-  }, [isActiveConf, isActiveZoom])
 
   /*useEffect(() => {
     document.documentElement.requestFullscreen()
@@ -170,28 +147,13 @@ export default function IndexPage() {
             <div className={styles.label} ref={zoomLabelRef}>
               старт zoom
             </div></CSSTransition>
-          <CSSTransition
-            timeout={2000}
-            in={!appContext.initialLoading ? isActiveZoom : !appContext.initialLoading}
-            nodeRef={zoomLogin}
-            mountOnEnter
-            unmountOnExit
-            classNames={{
-              enter: styles.loginEnter,
-              enterActive: styles.loginEnterActive,
-              exit: styles.loginExit,
-              exitActive: styles.loginExitActive,
-            }}
-          >
-            <div className={styles.login} ref={zoomLogin}>
-              <div className={styles.gradient} style={{ background: getColor('blue') }}></div>
-              <Image className={styles.imgLogin} src={'/img/logos/zoom.png'} alt='' fill />
-              <LoginForm
-                platform={Platform.Zoom}
-                onCancel={() => setIsActiveZoom(false)}
-                color={'blue'} />
-            </div>
-          </CSSTransition>
+          <LoginForm
+            image='/img/logos/zoom.png'
+            timeOut={() => setIsActiveZoom(false)}
+            active={!appContext.initialLoading ? isActiveZoom : !appContext.initialLoading}
+            platform={Platform.Zoom}
+            onCancel={() => setIsActiveZoom(false)}
+            color={'blue'} />
         </Square>
         <Square onClick={handleActiveConf}
           className={styles.trueconf} color='green'
@@ -213,27 +175,12 @@ export default function IndexPage() {
             <div className={styles.label} ref={trueLabelRef}>
               cтарт trueconf
             </div></CSSTransition>
-          <CSSTransition
-            timeout={2000}
-            in={!appContext.initialLoading ? isActiveConf : !appContext.initialLoading}
-            nodeRef={trueConfLogin}
-            mountOnEnter
-            unmountOnExit
-            classNames={{
-              enter: styles.loginEnter,
-              enterActive: styles.loginEnterActive,
-              exit: styles.loginExit,
-              exitActive: styles.loginExitActive,
-            }}
-          >
-            <div className={styles.login} ref={trueConfLogin}>
-              <div className={styles.gradient} style={{ background: getColor('green') }}></div>
-              <Image className={styles.imgLogin} src={'/img/logos/trueconf.svg'} alt='' fill />
-              <LoginForm
-                platform={Platform.TrueConf}
-                onCancel={() => setIsActiveConf(false)} color={'green'} />
-            </div>
-          </CSSTransition>
+          <LoginForm
+            timeOut={() => setIsActiveConf(false)}
+            image='/img/logos/trueconf.svg'
+            active={!appContext.initialLoading ? isActiveConf : !appContext.initialLoading}
+            platform={Platform.TrueConf}
+            onCancel={() => setIsActiveConf(false)} color={'green'} />
         </Square>
         <Square
           onClick={() => !appContext.initialLoading ? handleScreenDemo() : null}

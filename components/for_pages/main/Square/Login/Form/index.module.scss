@@ -20,3 +20,50 @@
         height: 100%;
     }
 }
+
+.login {
+    position: absolute;
+    z-index: 12;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px;
+    justify-content: flex-end;
+    cursor: auto;
+  }
+  
+  .gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+  }
+  
+  .imgLogin {
+    width: 180px !important;
+    height: 40px !important;
+    z-index: 12;
+    inset: -15% 0 0 0 !important;
+    position: relative !important;
+  }
+
+  .loginEnter {
+    opacity: 0;
+  }
+  
+  .loginEnterActive {
+    opacity: 1;
+    transition: opacity 2000ms;
+  }
+  
+  .loginExit {
+    opacity: 1;
+  }
+  
+  .loginExitActive {
+    opacity: 0;
+    transition: opacity 2000ms;
+  }

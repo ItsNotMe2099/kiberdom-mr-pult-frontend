@@ -5,7 +5,10 @@ import { Platform } from 'data/enum/Platorm'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
 import styles from './index.module.scss'
@@ -15,11 +18,16 @@ interface Props {
   color: 'blue' | 'green'
   onCancel: () => void
   platform: Platform
+  active: boolean
+  image: string
+  timeOut: () => void
 }
 
-export default function LoginForm({ onSubmit, color, onCancel, platform }: Props) {
+export default function LoginForm({ onSubmit, color, onCancel, platform, active, image, timeOut }: Props) {
 
   const appContext = useAppContext()
+
+  const [isActive, setIsActive] = useState<boolean>(active)
 
   const initialValues = {
     login: '',
@@ -72,28 +80,69 @@ export default function LoginForm({ onSubmit, color, onCancel, platform }: Props
     }
   }
 
+  const nodeRef = useRef(null)
+
+  const getColor = (color: 'blue' | 'green') => {
+    switch (color) {
+      case 'blue':
+        return `linear-gradient(136.27deg, rgba(11, 91, 253, 0) 41.98%, rgba(11, 91, 253, 0.3) 69.36%, ${colors.zoom} 100.25%)`
+      case 'green':
+        return `linear-gradient(223.73deg, rgba(1, 151, 167, 0) 42.72%, rgba(1, 151, 167, 0.3) 69.64%, ${colors.trueconf} 100%)`
+    }
+  }
+
+  useEffect(() => {
+    if (active) {
+      const timer = setTimeout(() => {
+        appContext.loginLoading ? null : timeOut()
+      }, 5000)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [active, formik.values, appContext.loginLoading])
+
   return (
-    <FormikProvider value={formik}>
-      <Form className={styles.form}>
-        <TextField
-          name='login'
-          label='ID'
-          brdrColor={getBorderColor()} />
-        <TextField
-          className={styles.key}
-          name='password'
-          type={'password'}
-          label='ключ'
-          brdrColor={getBorderColor()} />
-        <div className={styles.btns}>
-          <Button onClick={handleCancel} color={'red'} fluid>
-            отмена
-          </Button>
-          <Button type='submit' color={color} fluid>
-            подключить
-          </Button>
-        </div>
-      </Form>
-    </FormikProvider>
+    <CSSTransition
+      timeout={2000}
+      in={active}
+      nodeRef={nodeRef}
+      mountOnEnter
+      unmountOnExit
+      classNames={{
+        enter: styles.loginEnter,
+        enterActive: styles.loginEnterActive,
+        exit: styles.loginExit,
+        exitActive: styles.loginExitActive,
+      }}
+    >
+      <div className={styles.login} ref={nodeRef}>
+        <div className={styles.gradient} style={{ background: getColor(color) }}></div>
+        <Image className={styles.imgLogin} src={image} alt='' fill />
+        <FormikProvider value={formik}>
+          <Form className={styles.form}>
+            <TextField
+              name='login'
+              label='ID'
+              brdrColor={getBorderColor()} />
+            <TextField
+              className={styles.key}
+              name='password'
+              type={'password'}
+              label='ключ'
+              brdrColor={getBorderColor()} />
+            <div className={styles.btns}>
+              <Button onClick={handleCancel} color={'red'} fluid>
+                отмена
+              </Button>
+              <Button type='submit' color={color} fluid>
+                подключить
+              </Button>
+            </div>
+          </Form>
+        </FormikProvider>
+      </div>
+    </CSSTransition>
   )
 }
