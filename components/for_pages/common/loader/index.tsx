@@ -7,12 +7,13 @@ import classNames from 'classnames'
 
 interface Props {
   icon?: string
-  color: 'blue' | 'green' | 'purple' | 'yellow'
+  color?: 'blue' | 'green' | 'purple' | 'yellow'
   isActive: boolean
-  text: string
+  text?: string
+  initial?: boolean
 }
 
-export default function Loader({ icon, color, isActive, text }: Props) {
+export default function Loader({ icon, color, isActive, text, initial }: Props) {
 
 
   const getColor = (color: 'blue' | 'green' | 'purple' | 'yellow') => {
@@ -44,9 +45,10 @@ export default function Loader({ icon, color, isActive, text }: Props) {
         exitActive: styles.itemExitActive,
       }}
     >
-      <div className={styles.root} ref={nodeRef}>
-        <div className={styles.container} style={{ background: getColor(color) }}>
+      <div className={classNames(styles.root, {[styles.initial]: initial})} ref={nodeRef}>
+        <div className={styles.container} style={{ background: color ? getColor(color) : '' }}>
           {icon ? <Image className={classNames(styles.img, {[styles.large]: (color === 'purple' || color ==='yellow')})} src={icon} alt='' fill /> : null}
+          {initial ? <Image className={classNames(styles.initialImg, styles.img)} src='/img/logo.svg' fill alt='' /> : null}
           <div className={styles.wait}>
             {text}
           </div>

@@ -9,7 +9,7 @@ import { BgMusicState } from 'data/enum/BgMusicState'
 import { Platform } from 'data/enum/Platorm'
 import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
-import Image from 'next/image'
+import { useEffect } from 'react'
 import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
@@ -92,9 +92,16 @@ export default function IndexPage() {
     setIsActiveZoom(false)
   }
 
-  /*useEffect(() => {
-    document.documentElement.requestFullscreen()
-  }, [])*/
+  useEffect(() => {
+    document.documentElement.requestFullscreen().catch((error) => {
+      let errorMessage = error.toString()
+      // extract the error message from the error object
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message
+      }
+      appContext.showSnackbar(errorMessage, SnackbarType.error)
+    })
+  }, [])
 
   return (
     <Layout loading={appContext.initialLoading}>
@@ -109,8 +116,9 @@ export default function IndexPage() {
           color={isActiveZoom ? 'blue' : isActiveConf ? 'green' : 'purple'}
           icon={isActiveConf ? '/img/logos/trueconf.svg' : isActiveZoom ? '/img/logos/zoom.png' : ''}
         />
+        <Loader isActive={appContext.initialLoading} initial />
         <Demonstration wifi={data} isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
-        <CSSTransition
+        {/*<CSSTransition
           timeout={500}
           in={appContext.initialLoading}
           nodeRef={logoRef}
@@ -124,7 +132,7 @@ export default function IndexPage() {
           }}
         >
           <Image ref={logoRef} className={styles.img} src='/img/logo.svg' fill alt='' />
-        </CSSTransition>
+        </CSSTransition>*/}
         <Square
           onClick={handleActiveZoom}
           className={styles.zoom}

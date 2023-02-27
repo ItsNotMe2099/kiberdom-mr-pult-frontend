@@ -12,7 +12,11 @@
   background: rgba(0, 0, 0, 0.95);
 }
 
-.container{
+.initial {
+  background-color: transparent;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,7 +40,13 @@
   position: relative !important;
 }
 
-.large{
+.initialImg {
+  width: 10% !important;
+  height: 100% !important;
+  z-index: 13;
+}
+
+.large {
   height: 90px !important;
 }
 
@@ -49,7 +59,7 @@
   transition: opacity 1000ms;
 }
 
-.itemExit{
+.itemExit {
   opacity: 1;
 }
 
