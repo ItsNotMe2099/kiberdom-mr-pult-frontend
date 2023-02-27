@@ -287,6 +287,7 @@ export function AppWrapper(props: Props) {
     isStreamsCamera,
     micState,
     camState,
+    bgMusicState,
     isRecording,
     isRecControls,
     isRecPaused,
