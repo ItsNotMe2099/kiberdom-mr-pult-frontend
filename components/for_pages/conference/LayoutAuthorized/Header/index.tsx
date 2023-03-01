@@ -57,13 +57,13 @@ export default function Header({ platform, users }: Props) {
       <Image className={styles.img} src={getIcon() as string} alt='' fill />
       <div className={styles.bottom}>
         <div className={styles.id}>
-          ID 303-334-43-45
+          ID {appContext.coreStatus?.conference.info?.meeting_id}
         </div>
         <div className={styles.separator}>
           •
         </div>
         <div className={styles.time}>
-          КОД 1234543210aaaaa
+          КОД {appContext.coreStatus?.conference.info?.meeting_pass}
         </div>
       </div>
     </div>
