@@ -28,6 +28,12 @@ export default function Right({ loading }: Props) {
 
   return (
     <div className={classNames(styles.root, getRootClass())}>
+      <div className={classNames(styles.wrapper, styles.fake, {[styles.none]: !loading})}>
+        <Volume />
+        <Light />
+        <Climate />
+        <Help />
+      </div>
       <CSSTransition
         timeout={2000}
         in={!loading}

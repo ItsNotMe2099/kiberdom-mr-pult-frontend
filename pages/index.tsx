@@ -116,23 +116,8 @@ export default function IndexPage() {
           color={isActiveZoom ? 'blue' : isActiveConf ? 'green' : 'purple'}
           icon={isActiveConf ? '/img/logos/trueconf.svg' : isActiveZoom ? '/img/logos/zoom.png' : ''}
         />
-        <Loader isActive={appContext.initialLoading} initial />
+        <Loader className={styles.init} isActive={appContext.initialLoading} initial />
         <Demonstration wifi={data} isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
-        {/*<CSSTransition
-          timeout={500}
-          in={appContext.initialLoading}
-          nodeRef={logoRef}
-          mountOnEnter
-          unmountOnExit
-          classNames={{
-            enter: styles.itemEnter,
-            enterActive: styles.itemEnterActive,
-            exit: styles.itemExit,
-            exitActive: styles.itemExitActive,
-          }}
-        >
-          <Image ref={logoRef} className={styles.img} src='/img/logo.svg' fill alt='' />
-        </CSSTransition>*/}
         <Square
           onClick={handleActiveZoom}
           className={styles.zoom}
@@ -153,7 +138,7 @@ export default function IndexPage() {
             }}
           >
             <div className={styles.label} ref={zoomLabelRef}>
-              старт zoom
+              старт<br /> zoom
             </div></CSSTransition>
           <LoginForm
             image='/img/logos/zoom.png'
@@ -181,7 +166,7 @@ export default function IndexPage() {
             }}
           >
             <div className={styles.label} ref={trueLabelRef}>
-              cтарт trueconf
+              cтарт<br /> trueconf
             </div></CSSTransition>
           <LoginForm
             timeOut={() => setIsActiveConf(false)}

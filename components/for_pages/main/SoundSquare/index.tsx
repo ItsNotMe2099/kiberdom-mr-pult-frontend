@@ -50,7 +50,7 @@ export default function SoundSquare({ className, onClick, isOn, loading }: Props
         }}
       >
         <div className={styles.label} >
-          фоновая
+          фоновая<br />
           музыка
         </div>
       </CSSTransition>

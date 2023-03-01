@@ -7,6 +7,7 @@ import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
 import ScreenControls from './ScreenControls'
+import classNames from 'classnames'
 
 interface Props {
   isZoom: boolean
@@ -31,6 +32,15 @@ export default function Left({ isZoom, isTrueConf, loading }: Props) {
 
   return (
     <div className={styles.root}>
+      <div className={classNames(styles.fake, {[styles.none]: !loading})}>
+        <div className={styles.title}>
+          ЭКРАНЫ
+        </div>
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'0'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'1'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'2'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'3'} />
+      </div>
       <CSSTransition
         timeout={2000}
         in={!loading}

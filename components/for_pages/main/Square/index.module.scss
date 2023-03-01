@@ -9,7 +9,7 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)
 }
 
-.cursor{
+.cursor {
   cursor: default;
 }
 
@@ -31,7 +31,7 @@
   width: 197px !important;
 }
 
-.sound{
+.sound {
   width: 230px !important;
 }
 
@@ -44,11 +44,19 @@
   transition: opacity 500ms;
 }
 
-.itemExit{
+.itemExit {
   opacity: 1;
 }
 
 .itemExitActive {
   opacity: 0;
   transition: opacity 500ms;
+}
+
+.fake {
+  visibility: hidden;
+}
+
+.none {
+  display: none;
 }

@@ -11,9 +11,10 @@ interface Props {
   isActive: boolean
   text?: string
   initial?: boolean
+  className?: string
 }
 
-export default function Loader({ icon, color, isActive, text, initial }: Props) {
+export default function Loader({ icon, color, isActive, text, initial, className }: Props) {
 
 
   const getColor = (color: 'blue' | 'green' | 'purple' | 'yellow') => {
@@ -45,7 +46,7 @@ export default function Loader({ icon, color, isActive, text, initial }: Props) 
         exitActive: styles.itemExitActive,
       }}
     >
-      <div className={classNames(styles.root, {[styles.initial]: initial})} ref={nodeRef}>
+      <div className={classNames(styles.root, {[styles.initial]: initial}, className)} ref={nodeRef}>
         <div className={styles.container} style={{ background: color ? getColor(color) : '' }}>
           {icon ? <Image className={classNames(styles.img, {[styles.large]: (color === 'purple' || color ==='yellow')})} src={icon} alt='' fill /> : null}
           {initial ? <Image className={classNames(styles.initialImg, styles.img)} src='/img/logo.svg' fill alt='' /> : null}

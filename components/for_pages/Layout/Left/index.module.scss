@@ -6,7 +6,6 @@
   min-height: 100%;
   margin-right: 10px;
   padding: 10px 20px;
-  min-width: 280px;
 }
 
 .title {
@@ -27,4 +26,12 @@
 .menuEnterActive {
   opacity: 1;
   transition: opacity 2000ms;
+}
+
+.fake{
+  visibility: hidden;
+}
+
+.none{
+  display: none;
 }

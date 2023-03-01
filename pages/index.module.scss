@@ -26,9 +26,10 @@
   z-index: 12;
 }
 
-.zoom{
+.zoom {
   position: relative;
-  .label{
+
+  .label {
     bottom: 20px;
     right: 20px;
     max-width: 44%;
@@ -36,8 +37,8 @@
   }
 }
 
-.trueconf{
-  .label{
+.trueconf {
+  .label {
     bottom: 20px;
     left: 20px;
     max-width: 44%;
@@ -45,16 +46,16 @@
   }
 }
 
-.screen{
-  .label{
+.screen {
+  .label {
     top: 20px;
     right: 20px;
     text-align: right;
   }
 }
 
-.sound{
-  .label{
+.sound {
+  .label {
     top: 20px;
     left: 20px;
     max-width: 60%;
@@ -71,7 +72,7 @@
   transition: opacity 500ms;
 }
 
-.itemExit{
+.itemExit {
   opacity: 1;
 }
 
@@ -125,4 +126,8 @@
   z-index: 12;
   inset: -15% 0 0 0 !important;
   position: relative !important;
+}
+
+.init {
+  top: -5%;
 }

@@ -39,8 +39,12 @@ export default function Square({ color, active, img, imgWidth, children, classNa
   const nodeRef = useRef(null)
 
   return (
-    <div onClick={onClick} className={classNames(styles.root, className, {[styles.cursor]: !active})}>
+    <div onClick={onClick} className={classNames(styles.root, className, { [styles.cursor]: !active })}>
       <div className={styles.gradient} style={{ background: getColor(color) }}>
+      </div>
+      <div className={classNames(styles.fake, { [styles.none]: active })}>
+        <Image className=
+          {classNames(styles.img, getImgWidth())} src={img} alt='' fill />
       </div>
       <>{children}</>
       <CSSTransition
