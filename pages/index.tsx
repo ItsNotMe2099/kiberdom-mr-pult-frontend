@@ -67,17 +67,6 @@ export default function IndexPage() {
     setLoading(false)
   }
 
-  const getColor = (color: 'blue' | 'green') => {
-    switch (color) {
-      case 'blue':
-        return `linear-gradient(136.27deg, rgba(11, 91, 253, 0) 41.98%, rgba(11, 91, 253, 0.3) 69.36%, ${colors.zoom} 100.25%)`
-      case 'green':
-        return `linear-gradient(223.73deg, rgba(1, 151, 167, 0) 42.72%, rgba(1, 151, 167, 0.3) 69.64%, ${colors.trueconf} 100%)`
-    }
-  }
-
-  const logoRef = useRef(null)
-
   const zoomLabelRef = useRef(null)
   const trueLabelRef = useRef(null)
   const demLabelRef = useRef(null)

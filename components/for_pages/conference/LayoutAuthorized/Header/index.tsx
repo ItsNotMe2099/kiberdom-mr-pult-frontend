@@ -63,7 +63,7 @@ export default function Header({ platform, users }: Props) {
           •
         </div>
         <div className={styles.time}>
-          00:45
+          КОД 1234543210aaaaa
         </div>
       </div>
     </div>
