@@ -17,6 +17,9 @@ const nextConfig = {
     PROD: process.env.NODE_ENV !== 'development',
     ROBOTS_FILE: process.env.ROBOTS_FILE,
   },
+  images: {
+    unoptimized: true
+  }
 }
 
 module.exports = nextConfig
