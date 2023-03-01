@@ -9,7 +9,7 @@ import { BgMusicState } from 'data/enum/BgMusicState'
 import { Platform } from 'data/enum/Platorm'
 import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
-import { useEffect } from 'react'
+//import { useEffect } from 'react'
 import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
@@ -92,7 +92,7 @@ export default function IndexPage() {
     setIsActiveZoom(false)
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     document.documentElement.requestFullscreen().catch((error) => {
       let errorMessage = error.toString()
       // extract the error message from the error object
@@ -101,7 +101,7 @@ export default function IndexPage() {
       }
       appContext.showSnackbar(errorMessage, SnackbarType.error)
     })
-  }, [])
+  }, [])*/
 
   return (
     <Layout loading={appContext.initialLoading}>
@@ -123,6 +123,7 @@ export default function IndexPage() {
           className={styles.zoom}
           color='blue'
           active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
+          activeFake={!appContext.initialLoading}
           img='/img/logos/zoom.png'>
           <CSSTransition
             timeout={500}
@@ -151,6 +152,7 @@ export default function IndexPage() {
         <Square onClick={handleActiveConf}
           className={styles.trueconf} color='green'
           active={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
+          activeFake={!appContext.initialLoading}
           img='/img/logos/trueconf.svg'>
           <CSSTransition
             timeout={500}
@@ -179,6 +181,7 @@ export default function IndexPage() {
           onClick={() => !appContext.initialLoading ? handleScreenDemo() : null}
           className={styles.screen} color='purple-left'
           active={!appContext.initialLoading}
+          activeFake={!appContext.initialLoading}
           img='/img/logos/screen.svg'>
           <CSSTransition
             timeout={500}

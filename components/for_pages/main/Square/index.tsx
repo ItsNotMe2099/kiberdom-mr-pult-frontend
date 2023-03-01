@@ -8,6 +8,7 @@ import { colors } from 'styles/variables'
 interface Props {
   color: 'blue' | 'green' | 'purple-left' | 'purple-right'
   active?: boolean
+  activeFake?: boolean
   img: string
   children?: React.ReactNode
   className?: string
@@ -15,7 +16,7 @@ interface Props {
   imgWidth?: 'controls'
 }
 
-export default function Square({ color, active, img, imgWidth, children, className, onClick }: Props) {
+export default function Square({ color, active, activeFake, img, imgWidth, children, className, onClick }: Props) {
 
   const getColor = (color: 'blue' | 'green' | 'purple-left' | 'purple-right') => {
     switch (color) {
@@ -42,7 +43,7 @@ export default function Square({ color, active, img, imgWidth, children, classNa
     <div onClick={onClick} className={classNames(styles.root, className, { [styles.cursor]: !active })}>
       <div className={styles.gradient} style={{ background: getColor(color) }}>
       </div>
-      <div className={classNames(styles.fake, { [styles.none]: active })}>
+      <div className={classNames(styles.fake, { [styles.none]: activeFake })}>
         <Image className=
           {classNames(styles.img, getImgWidth())} src={img} alt='' fill />
       </div>
