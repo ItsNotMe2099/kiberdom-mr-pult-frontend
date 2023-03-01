@@ -12,7 +12,6 @@ import ConferenceRepository from 'data/repositories/ConferenceRepository'
 //import { useEffect } from 'react'
 import { useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
 import styles from './index.module.scss'
 
