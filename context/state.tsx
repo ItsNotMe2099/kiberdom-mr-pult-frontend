@@ -194,6 +194,7 @@ export function AppWrapper(props: Props) {
       setCoreStatus(coreStatus)
       setMicState(coreStatus.conference.microphone ?? MicrophoneState.Off)
       setCamState(coreStatus.conference.camera ?? CameraState.Off)
+      setBgMusicState(coreStatus.audio_processor.bg_music ?? BgMusicState.Off)
       setVolumeLevel(coreStatus.conference.volume ?? 0)
       setClimateLevel(climateLevel.state ?? 20)
       setLightLevelUp(lightLevelUp.state ?? 1)
