@@ -64,7 +64,7 @@ export default class CoreRepository {
   static async setVolume(level: string): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: '/api/v1/core/volume/set',
+      url: '/api/v1/core/audioprocessor/volume/set',
       data: { level },
     })
     return res

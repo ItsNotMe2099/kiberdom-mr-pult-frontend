@@ -194,7 +194,7 @@ export function AppWrapper(props: Props) {
       setMicState(coreStatus.conference.microphone ?? OnOffState.Off)
       setCamState(coreStatus.conference.camera ?? OnOffState.Off)
       setBgMusicState(coreStatus.audio_processor.bg_music ?? OnOffState.Off)
-      setVolumeLevel(coreStatus.conference.volume ?? 0)
+      setVolumeLevel(coreStatus.audio_processor.level ?? 0)
       setClimateLevel(climateLevel.state ?? 20)
       setLightLevelUp(lightLevelUp.state ?? 1)
       setLightLevelDown(lightLevelDown.state ?? 1)
@@ -236,7 +236,7 @@ export function AppWrapper(props: Props) {
     },
     updateVolumeLevel: async (level) => {
       await CoreRepository.setVolume(level.toString())
-      setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, volume: level } } as ICoreStatus)
+      setCoreStatus({ ...coreStatus, audio_processor: { ...coreStatus?.audio_processor, level: level } } as ICoreStatus)
       setVolumeLevel(level)
     },
     updateClimateLevel: async (level) => {
