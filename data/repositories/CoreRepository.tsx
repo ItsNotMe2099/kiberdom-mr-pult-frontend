@@ -2,9 +2,7 @@ import request from 'utils/request'
 import { ICoreStatus } from 'data/interfaces/ICoreStatus'
 import { Platform } from 'data/enum/Platorm'
 import { IStatusResponse } from 'data/interfaces/IStatusResponse'
-import { CameraState } from 'data/enum/CameraState'
-import { MicrophoneState } from 'data/enum/MicrophoneState'
-import { BgMusicState } from 'data/enum/BgMusicState'
+import { OnOffState } from 'data/enum/OnOffState'
 
 export default class CoreRepository {
   static async fetchStatus(): Promise<ICoreStatus> {
@@ -37,7 +35,7 @@ export default class CoreRepository {
     return res
   }
 
-  static async setMicrophoneState(state: MicrophoneState): Promise<IStatusResponse> {
+  static async setMicrophoneState(state: OnOffState): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: `/api/v1/core/microphone/${state}`,
@@ -45,7 +43,7 @@ export default class CoreRepository {
     })
     return res
   }
-  static async setCameraState(state: CameraState): Promise<IStatusResponse> {
+  static async setCameraState(state: OnOffState): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: `/api/v1/core/camera/${state}`,
@@ -54,7 +52,7 @@ export default class CoreRepository {
     return res
   }
 
-  static async setBgMusicState(state: BgMusicState): Promise<IStatusResponse> {
+  static async setBgMusicState(state: OnOffState): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
       url: `/api/v1/core/audioprocessor/bgmusic/${state}`,

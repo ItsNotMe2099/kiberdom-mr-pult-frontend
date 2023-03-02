@@ -1,14 +1,13 @@
 import {IConferenceInfo} from 'data/interfaces/IConferenceInfo'
-import {MicrophoneState} from 'data/enum/MicrophoneState'
-import {CameraState} from 'data/enum/CameraState'
+import { OnOffState } from 'data/enum/OnOffState';
 
 export interface IConferenceStatus{
     /** Запущена ли конференция */
     started?: boolean;
     /** Включен ли микрофон */
-    microphone?: MicrophoneState;
+    microphone?: OnOffState;
     /** Включена ли камера */
-    camera?: CameraState;
+    camera?: OnOffState;
     /**
      * Уровень громкости
      * @min 0

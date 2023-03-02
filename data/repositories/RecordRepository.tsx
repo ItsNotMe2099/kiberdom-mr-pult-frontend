@@ -1,5 +1,6 @@
 import request from 'utils/request'
 import {IStatusResponse} from 'data/interfaces/IStatusResponse'
+import { OnOffState } from 'data/enum/OnOffState'
 
 export default class RecordRepository {
   static async start(): Promise<IStatusResponse> {
@@ -23,10 +24,10 @@ export default class RecordRepository {
   }
 
 
-  static async pause(): Promise<IStatusResponse> {
+  static async pause(state: OnOffState): Promise<IStatusResponse> {
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: '/api/v1/core/record/pause',
+      url: `/api/v1/core/record/pause/${state}`,
       data: {
       },
     })

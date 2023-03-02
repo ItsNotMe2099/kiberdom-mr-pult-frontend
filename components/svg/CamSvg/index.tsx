@@ -1,5 +1,5 @@
 import { useAppContext } from 'context/state'
-import { CameraState } from 'data/enum/CameraState'
+import { OnOffState } from 'data/enum/OnOffState'
 import { Platform } from 'data/enum/Platorm'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
@@ -21,7 +21,7 @@ export default function CamSvg({  }: Props) {
     <>
       <CSSTransition
         timeout={500}
-        in={appContext.camState === CameraState.On}
+        in={appContext.camState === OnOffState.On}
         nodeRef={onRef}
         mountOnEnter
         unmountOnExit
@@ -39,7 +39,7 @@ export default function CamSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={appContext.camState === CameraState.Off}
+        in={appContext.camState === OnOffState.Off}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

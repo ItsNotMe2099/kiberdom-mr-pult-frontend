@@ -1,5 +1,5 @@
 import { useAppContext } from 'context/state'
-import { MicrophoneState } from 'data/enum/MicrophoneState'
+import { OnOffState } from 'data/enum/OnOffState'
 import { Platform } from 'data/enum/Platorm'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
@@ -22,7 +22,7 @@ export default function MicSvg({  }: Props) {
     <>
       <CSSTransition
         timeout={500}
-        in={appContext.micState === MicrophoneState.On}
+        in={appContext.micState === OnOffState.On}
         nodeRef={onRef}
         mountOnEnter
         unmountOnExit
@@ -39,7 +39,7 @@ export default function MicSvg({  }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={appContext.micState === MicrophoneState.Off}
+        in={appContext.micState === OnOffState.Off}
         nodeRef={offRef}
         mountOnEnter
         unmountOnExit

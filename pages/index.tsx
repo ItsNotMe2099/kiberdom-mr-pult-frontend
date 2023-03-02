@@ -5,7 +5,7 @@ import SoundSquare from 'components/for_pages/main/SoundSquare'
 import Square from 'components/for_pages/main/Square'
 import LoginForm from 'components/for_pages/main/Square/Login/Form'
 import { useAppContext } from 'context/state'
-import { BgMusicState } from 'data/enum/BgMusicState'
+import { OnOffState } from 'data/enum/OnOffState'
 import { Platform } from 'data/enum/Platorm'
 import { IWiFi } from 'data/interfaces/IWiFi'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
@@ -190,7 +190,7 @@ export default function IndexPage() {
         <SoundSquare
           loading={appContext.initialLoading}
           onClick={appContext.handleBgMusic}
-          isOn={appContext.bgMusicState === BgMusicState.On ? true : false} />
+          isOn={appContext.bgMusicState === OnOffState.On ? true : false} />
       </div>
     </Layout>
   )

@@ -2,7 +2,7 @@ import {IConferenceStatus} from 'data/interfaces/IConferenceStatus'
 import {ILedStatus} from 'data/interfaces/ILedStatus'
 import {ILightStatus} from 'data/interfaces/ILightStatus'
 import {Platform} from 'data/enum/Platorm'
-import { BgMusicState } from 'data/enum/BgMusicState';
+import { OnOffState } from 'data/enum/OnOffState'
 
 export interface ICoreStatus{
   /** Признак инициализации конференции */
@@ -25,6 +25,9 @@ export interface ICoreStatus{
   audio_processor: {
     level: number
     mute: null
-    bg_music: BgMusicState
+    bg_music: OnOffState
+  }
+  recorder: {
+    status: string | null
   }
 }

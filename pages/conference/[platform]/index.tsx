@@ -13,12 +13,11 @@ import EmailForm from 'components/for_pages/conference/EmailForm'
 import MicSvg from 'components/svg/MicSvg'
 import CamSvg from 'components/svg/CamSvg'
 import { Platform } from 'data/enum/Platorm'
-import { MicrophoneState } from 'data/enum/MicrophoneState'
-import { CameraState } from 'data/enum/CameraState'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import { IParticipant } from 'data/interfaces/IParticipant'
+import { OnOffState } from 'data/enum/OnOffState'
 
 export default function ConferencePage() {
 
@@ -73,7 +72,7 @@ export default function ConferencePage() {
                   {appContext.coreStatus?.platform === Platform.Zoom ? `linear-gradient(43.73deg, rgba(11, 91, 252, 0) 44.44%, rgba(11, 91, 252, 0.3) 70.44%, ${colors.zoom} 99.75%)` :
                     `linear-gradient(43.73deg, rgba(1, 151, 167, 0) 44.44%, rgba(1, 151, 167, 0.3) 70.44%, ${colors.trueconf} 99.75%)`
                   }
-                  isActive={appContext.micState === MicrophoneState.On} onClick={appContext.handleMicrophone}
+                  isActive={appContext.micState === OnOffState.On} onClick={appContext.handleMicrophone}
                   img={<MicSvg />} title='микрофон' />
                 <CameraControls isActive={appContext.isActiveCameraMenu} />
                 <BottomControl
@@ -81,7 +80,7 @@ export default function ConferencePage() {
                   {appContext.coreStatus?.platform === Platform.Zoom ? `linear-gradient(316.27deg, rgba(11, 91, 252, 0) 39.75%, rgba(11, 91, 252, 0.3) 67.43%, ${colors.zoom} 100%)` :
                     `linear-gradient(316.27deg, rgba(1, 151, 167, 0) 39.75%, rgba(1, 151, 167, 0.3) 67.43%, ${colors.trueconf} 100%)`
                   }
-                  isActive={appContext.camState === CameraState.On} onClick={appContext.handleCamera}
+                  isActive={appContext.camState === OnOffState.On} onClick={appContext.handleCamera}
                   img={<CamSvg />} title='камера' />
               </div>
             </div>

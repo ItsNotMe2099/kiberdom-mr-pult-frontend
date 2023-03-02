@@ -1,4 +1,4 @@
-export enum BgMusicState {
+export enum OnOffState {
   On = 'on',
   Off = 'off',
 }

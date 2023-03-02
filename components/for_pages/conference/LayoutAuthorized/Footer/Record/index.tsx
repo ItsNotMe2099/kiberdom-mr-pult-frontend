@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import { OnOffState } from 'data/enum/OnOffState'
 
 interface Props {
   icon: React.ReactNode
@@ -33,7 +34,7 @@ export default function Record({ icon, onClick, title }: Props) {
   }, [appContext.isRecording])
 
   return (
-    <div className={classNames(styles.root, {[styles.recording]: appContext.isRecording})} onClick={handleClick}>
+    <div className={classNames(styles.root, { [styles.recording]: appContext.isRecording })} onClick={handleClick}>
       {icon}
       <CSSTransition
         timeout={500}
@@ -84,7 +85,7 @@ export default function Record({ icon, onClick, title }: Props) {
         <div className={styles.recControls} ref={recControlsRef}>
           <CSSTransition
             timeout={500}
-            in={!appContext.isRecPaused}
+            in={appContext.isRecPaused === OnOffState.Off ? true : false}
             nodeRef={pauseRef}
             mountOnEnter
             unmountOnExit
@@ -101,7 +102,7 @@ export default function Record({ icon, onClick, title }: Props) {
           </CSSTransition>
           <CSSTransition
             timeout={500}
-            in={appContext.isRecPaused}
+            in={appContext.isRecPaused === OnOffState.On ? true : false}
             nodeRef={resumeRef}
             mountOnEnter
             unmountOnExit
@@ -117,7 +118,7 @@ export default function Record({ icon, onClick, title }: Props) {
             </div>
           </CSSTransition>
           <div className={styles.stop} onClick={appContext.handleStopRec} ref={pauseRef}>
-            остановить<br/> запись
+            остановить<br /> запись
           </div>
         </div>
       </CSSTransition>

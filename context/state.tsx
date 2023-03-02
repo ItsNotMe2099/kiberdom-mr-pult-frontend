@@ -5,12 +5,10 @@ import { RequestError } from 'types/types'
 import { useRouter } from 'next/router'
 import { SnackbarData } from 'data/interfaces/ISnackBarData'
 import { SnackbarType } from 'types/enums'
-import { MicrophoneState } from 'data/enum/MicrophoneState'
-import { CameraState } from 'data/enum/CameraState'
 import RecordRepository from 'data/repositories/RecordRepository'
 import IotRepository from 'data/repositories/IotRepository'
 import { ILedStatus } from 'data/interfaces/ILedStatus'
-import { BgMusicState } from 'data/enum/BgMusicState'
+import { OnOffState } from 'data/enum/OnOffState'
 
 interface IState {
   volumeLevel: number
@@ -41,9 +39,9 @@ interface IState {
   isManualCamera: boolean
   isAutoCamera: boolean
   isStreamsCamera: boolean
-  micState: MicrophoneState
-  camState: CameraState
-  bgMusicState: BgMusicState
+  micState: OnOffState
+  camState: OnOffState
+  bgMusicState: OnOffState
   handleActiveUsersListMenu: () => void
   handleCameraMenu: () => void
   handleInvite: () => void
@@ -59,7 +57,7 @@ interface IState {
   isRecording: boolean
   handleVisibleRecControls: () => void
   isRecControls: boolean
-  isRecPaused: boolean
+  isRecPaused: OnOffState
   handleRecIsPaused: () => void
   isStopRec: boolean
   handleStopRec: () => void
@@ -98,9 +96,9 @@ const defaultValue: IState = {
   isManualCamera: false,
   isAutoCamera: false,
   isStreamsCamera: false,
-  micState: MicrophoneState.Off,
-  camState: CameraState.Off,
-  bgMusicState: BgMusicState.Off,
+  micState: OnOffState.Off,
+  camState: OnOffState.Off,
+  bgMusicState: OnOffState.Off,
   handleActiveUsersListMenu: () => null,
   handleCameraMenu: () => null,
   handleInvite: () => null,
@@ -116,7 +114,7 @@ const defaultValue: IState = {
   isRecording: false,
   handleVisibleRecControls: () => null,
   isRecControls: false,
-  isRecPaused: false,
+  isRecPaused: OnOffState.Off,
   handleRecIsPaused: () => null,
   isStopRec: false,
   handleStopRec: () => null,
@@ -159,15 +157,16 @@ export function AppWrapper(props: Props) {
   const [isStreamsCamera, setIsStreamsCamera] = useState<boolean>(false)
 
   //ON/OFF states
-  const [micState, setMicState] = useState<MicrophoneState>(MicrophoneState.Off)
-  const [camState, setCamState] = useState<CameraState>(CameraState.Off)
-  const [bgMusicState, setBgMusicState] = useState<BgMusicState>(BgMusicState.Off)
+  const [micState, setMicState] = useState<OnOffState>(OnOffState.Off)
+  const [camState, setCamState] = useState<OnOffState>(OnOffState.Off)
+  const [bgMusicState, setBgMusicState] = useState<OnOffState>(OnOffState.Off)
+  const [isRecPaused, setIsRecPaused] = useState<OnOffState>(OnOffState.Off)
+  ////
 
   const [isEmailFormActive, setIsEmailFormActive] = useState<boolean>(false)
   const [isRecording, setIsRecording] = useState<boolean>(false)
 
   const [isRecControls, setIsRecControls] = useState<boolean>(false)
-  const [isRecPaused, setIsRecPaused] = useState<boolean>(false)
   const [isStopRec, setIsStopRec] = useState<boolean>(false)
   const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
 
@@ -192,9 +191,9 @@ export function AppWrapper(props: Props) {
       const lightLevelUp = await IotRepository.getState('LAMP-Z-1')
       const lightLevelDown = await IotRepository.getState('LAMP-Z-2')
       setCoreStatus(coreStatus)
-      setMicState(coreStatus.conference.microphone ?? MicrophoneState.Off)
-      setCamState(coreStatus.conference.camera ?? CameraState.Off)
-      setBgMusicState(coreStatus.audio_processor.bg_music ?? BgMusicState.Off)
+      setMicState(coreStatus.conference.microphone ?? OnOffState.Off)
+      setCamState(coreStatus.conference.camera ?? OnOffState.Off)
+      setBgMusicState(coreStatus.audio_processor.bg_music ?? OnOffState.Off)
       setVolumeLevel(coreStatus.conference.volume ?? 0)
       setClimateLevel(climateLevel.state ?? 20)
       setLightLevelUp(lightLevelUp.state ?? 1)
@@ -300,8 +299,10 @@ export function AppWrapper(props: Props) {
       setIsEmailFormActive(newStatus)
     },
     handleRecIsPaused: async () => {
-      const newState = isRecPaused ? false : true
-      await RecordRepository.pause()
+      const newState = isRecPaused === OnOffState.On ? OnOffState.Off : OnOffState.On
+      const newRecState = newState === OnOffState.On ? 'paused' : 'record'
+      await RecordRepository.pause(newState)
+      setCoreStatus({ ...coreStatus, recorder: { ...coreStatus?.recorder, status: newRecState } } as ICoreStatus)
       setIsRecPaused(newState)
     },
     handleVisibleRecControls: () => {
@@ -313,19 +314,19 @@ export function AppWrapper(props: Props) {
       setIsRecording(newState)
     },
     handleMicrophone: async () => {
-      const newMicState = micState === MicrophoneState.On ? MicrophoneState.Off : MicrophoneState.On
+      const newMicState = micState === OnOffState.On ? OnOffState.Off : OnOffState.On
       await CoreRepository.setMicrophoneState(newMicState)
       setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, microphone: newMicState } } as ICoreStatus)
       setMicState(newMicState)
     },
     handleCamera: async () => {
-      const newState = camState === CameraState.On ? CameraState.Off : CameraState.On
+      const newState = camState === OnOffState.On ? OnOffState.Off : OnOffState.On
       await CoreRepository.setCameraState(newState)
       setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, camera: newState } } as ICoreStatus)
       setCamState(newState)
     },
     handleBgMusic: async () => {
-      const newState = bgMusicState === BgMusicState.On ? BgMusicState.Off : BgMusicState.On
+      const newState = bgMusicState === OnOffState.On ? OnOffState.Off : OnOffState.On
       await CoreRepository.setBgMusicState(newState)
       setCoreStatus({ ...coreStatus, conference: { ...coreStatus?.conference, bgMusic: newState } } as ICoreStatus)
       setBgMusicState(newState)
