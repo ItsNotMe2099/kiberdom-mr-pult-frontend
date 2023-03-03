@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {
     HOST: process.env.HOST,
+    WS_HOST: process.env.WS_HOST,
     HOST_INNER: process.env.HOST,
     NODE_ENV: process.env.NODE_ENV || 'development',
     DEV: process.env.NODE_ENV === 'development',

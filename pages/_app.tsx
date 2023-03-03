@@ -4,6 +4,7 @@ import type { AppProps as NextAppProps } from 'next/app'
 import { AppWrapper } from 'context/state'
 import Snackbar from 'components/for_pages/Layout/Snackbar'
 import Head from 'next/head'
+import {ChatSocketWrapper} from 'context/socket_state'
 //import { useEffect } from 'react'
 
 export interface AppProps extends NextAppProps {
@@ -28,8 +29,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
       </Head>
       <AppWrapper>
+        <ChatSocketWrapper>
         <Component {...pageProps} />
         <Snackbar />
+        </ChatSocketWrapper>
       </AppWrapper>
     </>
   )

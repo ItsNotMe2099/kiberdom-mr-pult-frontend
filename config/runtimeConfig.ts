@@ -2,6 +2,7 @@ import getConfig from 'next/config'
 
 interface IRuntimeConfig {
   HOST: string
+  WS_HOST: string
   ROBOTS_FILE: string
   NODE_ENV: 'development' | 'production'
   DEV: boolean
