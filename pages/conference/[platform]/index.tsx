@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react'
 import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import { IParticipant } from 'data/interfaces/IParticipant'
 import { OnOffState } from 'data/enum/OnOffState'
+import useInterval from 'use-interval'
 
 export default function ConferencePage() {
 
@@ -44,6 +45,12 @@ export default function ConferencePage() {
   const handleFetchAgain = async () => {
     await fetchUsers()
   }
+
+  useInterval(() => {
+    fetchUsers()
+  }, 5000)
+
+
 
   return (
     <Layout loading={false}>

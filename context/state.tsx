@@ -207,7 +207,7 @@ export function AppWrapper(props: Props) {
       try {
         console.log('lastMessage', JSON.parse(lastMessage.data))
         const coreStatus = JSON.parse(lastMessage.data)
-        stats(coreStatus)
+        setStats(coreStatus)
 
       }
       catch (e) {
@@ -220,7 +220,7 @@ export function AppWrapper(props: Props) {
     init()
   }, [])
 
-  const stats = (coreStatus: ICoreStatus) => {
+  const setStats = (coreStatus: ICoreStatus) => {
     setCoreStatus(coreStatus)
     setMicState(coreStatus.conference.microphone ?? OnOffState.Off)
     setCamState(coreStatus.conference.camera ?? OnOffState.Off)
@@ -238,7 +238,7 @@ export function AppWrapper(props: Props) {
     setInitialLoading(true)
     try {
       const coreStatus = await CoreRepository.fetchStatus()
-      stats(coreStatus)
+      setStats(coreStatus)
     } catch (e) {
       if (e instanceof RequestError) {
         //Show error
