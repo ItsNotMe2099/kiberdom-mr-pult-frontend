@@ -17,7 +17,7 @@ import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 
 interface Props {
   user: IParticipant
-  style?: 'new' | 'old' | 'header'
+  style?: 'new' | 'old'
   onClick?: () => void
   onAdmit?: () => void
   onExpel?: () => void
@@ -31,7 +31,6 @@ export default function User({ user, style, onClick, onExpel, onMute, onAdmit }:
       {
         [styles.new]: style === 'new',
         [styles.old]: style === 'old',
-        [styles.header]: style === 'header'
       }
     )
   }

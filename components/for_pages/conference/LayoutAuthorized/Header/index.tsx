@@ -48,7 +48,7 @@ export default function Header({ platform, users }: Props) {
     <div className={styles.root} style={{ background: getColor() }}>
       {newUsers.length === 1 && !appContext.isActiveUsersList ? <User onClick={appContext.handleActiveUsersListMenu}
         user={newUsers[0]}
-        style='header' /> : null}
+        style='new' /> : null}
       {newUsers.length > 1 && !appContext.isActiveUsersList ?
         <div className={styles.allow} onClick={appContext.handleActiveUsersListMenu}
           style={{ backgroundColor: getAllowColor() }}>
