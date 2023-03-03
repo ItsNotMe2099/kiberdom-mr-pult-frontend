@@ -175,7 +175,7 @@ export function AppWrapper(props: Props) {
   const init = async () => {
     const coreStatus = await fetch()
     if (coreStatus?.conference?.started && router.asPath === '/') {
-      //router.push('/conference')
+      router.push(`/conference/${coreStatus?.platform}`)
     }
   }
 
