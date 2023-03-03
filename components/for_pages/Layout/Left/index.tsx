@@ -58,10 +58,10 @@ export default function Left({ isZoom, isTrueConf, started, loading }: Props) {
           <div className={styles.title}>
             ЭКРАНЫ
           </div>
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'0'} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'1'} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'2'} />
-          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'3'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'0'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'1'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'2'} />
+          <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'3'} />
         </div>
       </CSSTransition>
     </div>
