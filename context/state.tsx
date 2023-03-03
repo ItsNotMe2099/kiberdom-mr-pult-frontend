@@ -9,6 +9,7 @@ import RecordRepository from 'data/repositories/RecordRepository'
 import IotRepository from 'data/repositories/IotRepository'
 import { ILedStatus } from 'data/interfaces/ILedStatus'
 import { OnOffState } from 'data/enum/OnOffState'
+import { ILightStatus } from 'data/interfaces/ILightStatus'
 
 interface IState {
   volumeLevel: number
@@ -139,6 +140,8 @@ export function AppWrapper(props: Props) {
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
   const [lightLevelDown, setLightLevelDown] = useState<number>(1)
 
+  const [light, setLight] = useState<{ [key: string]: ILightStatus } | null>(null)
+
   const [initialLoading, setInitialLoading] = useState<boolean>(true)
 
   const [isVolumeActive, setIsVolumeActive] = useState<boolean>(false)
@@ -187,17 +190,18 @@ export function AppWrapper(props: Props) {
     setInitialLoading(true)
     try {
       const coreStatus = await CoreRepository.fetchStatus()
-      const climateLevel = await IotRepository.getState('CLIMAT')
-      const lightLevelUp = await IotRepository.getState('LAMP-Z-1')
-      const lightLevelDown = await IotRepository.getState('LAMP-Z-2')
+      //const climateLevel = await IotRepository.getState('CLIMAT')
+      //const lightLevelUp = await IotRepository.getState('LAMP-Z-1')
+      //const lightLevelDown = await IotRepository.getState('LAMP-Z-2')
       setCoreStatus(coreStatus)
       setMicState(coreStatus.conference.microphone ?? OnOffState.Off)
       setCamState(coreStatus.conference.camera ?? OnOffState.Off)
       setBgMusicState(coreStatus.audio_processor.bg_music ?? OnOffState.Off)
       setVolumeLevel(coreStatus.audio_processor.level ?? 0)
-      setClimateLevel(climateLevel.state ?? 20)
-      setLightLevelUp(lightLevelUp.state ?? 1)
-      setLightLevelDown(lightLevelDown.state ?? 1)
+      setClimateLevel(coreStatus.climate.temperature ?? 20)
+      setLight(coreStatus.light ?? null)
+      setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1'].level ?? 1)
+      setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2'].level ?? 1)
       setLed(coreStatus.led)
       setInitialLoading(false)
       return coreStatus
@@ -211,6 +215,8 @@ export function AppWrapper(props: Props) {
   }
 
   console.log(coreStatus)
+
+  console.log(light)
 
   const value: IState = {
     ...defaultValue,
