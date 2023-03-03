@@ -1,0 +1,133 @@
+@import "styles/index";
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  min-height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.img {
+  width: 10% !important;
+  left: 45% !important;
+  z-index: 13;
+}
+
+.label {
+  color: #fff;
+  font-weight: 600;
+  font-size: 44px;
+  text-align: right;
+  display: flex;
+  position: absolute;
+  display: flex;
+  z-index: 12;
+}
+
+.zoom {
+  position: relative;
+
+  .label {
+    bottom: 20px;
+    right: 20px;
+    max-width: 44%;
+    text-align: right;
+  }
+}
+
+.trueconf {
+  .label {
+    bottom: 20px;
+    left: 20px;
+    max-width: 44%;
+    text-align: left;
+  }
+}
+
+.screen {
+  .label {
+    top: 20px;
+    right: 20px;
+    text-align: right;
+  }
+}
+
+.sound {
+  .label {
+    top: 20px;
+    left: 20px;
+    max-width: 60%;
+    text-align: left;
+  }
+}
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.itemExit {
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.loginEnter {
+  opacity: 0;
+}
+
+.loginEnterActive {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+
+.loginExit {
+  opacity: 1;
+}
+
+.loginExitActive {
+  opacity: 0;
+  transition: opacity 2000ms;
+}
+
+.login {
+  position: absolute;
+  z-index: 12;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px;
+  justify-content: flex-end;
+  cursor: auto;
+}
+
+.gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+}
+
+.imgLogin {
+  width: 180px !important;
+  height: 40px !important;
+  z-index: 12;
+  inset: -15% 0 0 0 !important;
+  position: relative !important;
+}
+
+.init {
+  top: -5%;
+}

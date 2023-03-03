@@ -6,8 +6,7 @@ import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
@@ -27,14 +26,10 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
 
   const appContext = useAppContext()
 
-  const [isActive, setIsActive] = useState<boolean>(active)
-
   const initialValues = {
     login: '',
     password: ''
   }
-
-  const router = useRouter()
 
   const handleSubmit = async (data: { login: string, password: string }) => {
     appContext.handleLoginLoading(true)
@@ -47,7 +42,6 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
       else {
         await ConferenceRepository.create()
       }
-      router.push(`/conference/${platform}`)
       appContext.fetch()
     }
     catch (error: any) {

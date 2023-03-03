@@ -13,7 +13,6 @@ import EmailForm from 'components/for_pages/conference/EmailForm'
 import MicSvg from 'components/svg/MicSvg'
 import CamSvg from 'components/svg/CamSvg'
 import { Platform } from 'data/enum/Platorm'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import { IParticipant } from 'data/interfaces/IParticipant'
@@ -23,8 +22,6 @@ import useInterval from 'use-interval'
 export default function ConferencePage() {
 
   const appContext = useAppContext()
-
-  const router = useRouter()
 
   const [users, setUsers] = useState<IParticipant[]>([])
 
@@ -59,8 +56,8 @@ export default function ConferencePage() {
         <Loader
           text='запускаю, подождите...'
           isActive={appContext.initialLoading}
-          color={router.asPath === `/conference/${Platform.TrueConf}` ? 'green' : 'blue'}
-          icon={router.asPath === `/conference/${Platform.TrueConf}` ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
+          color={appContext.coreStatus?.platform === Platform.TrueConf ? 'green' : 'blue'}
+          icon={appContext.coreStatus?.platform === Platform.TrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
         <LayoutAuthorized users={users}>
           <div className={styles.wrapper}>
             <UsersList

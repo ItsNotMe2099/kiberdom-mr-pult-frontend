@@ -7,7 +7,6 @@ import styles from './index.module.scss'
 import Item from './Item'
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
 import { CSSTransition } from 'react-transition-group'
 import Record from './Record'
 import Exit from './Exit'
@@ -42,17 +41,14 @@ export default function Footer({ users }: Props) {
     }
   }, [isExit])
 
-  const router = useRouter()
 
   const handleExit = () => {
     ConferenceRepository.exit()
-    router.push('/')
     appContext.fetch()
   }
 
   const handleLeave = () => {
     ConferenceRepository.leave()
-    router.push('/')
     appContext.fetch()
   }
 

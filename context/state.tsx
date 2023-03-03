@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { ICoreStatus } from 'data/interfaces/ICoreStatus'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { RequestError } from 'types/types'
-import { useRouter } from 'next/router'
 import { SnackbarData } from 'data/interfaces/ISnackBarData'
 import { SnackbarType } from 'types/enums'
 import RecordRepository from 'data/repositories/RecordRepository'
@@ -134,7 +133,6 @@ interface Props {
 }
 
 export function AppWrapper(props: Props) {
-  const router = useRouter()
   const [coreStatus, setCoreStatus] = useState<ICoreStatus | null>(null)
   const [led, setLed] = useState<{ [key: string]: ILedStatus } | null>(null)
   const [volumeLevel, setVolumeLevel] = useState<number>(0)
@@ -178,10 +176,7 @@ export function AppWrapper(props: Props) {
   const [loginLoading, setLoginLoading] = useState(false)
 
   const init = async () => {
-    const coreStatus = await fetch()
-    if (coreStatus?.conference?.started && router.asPath === '/') {
-      router.push(`/conference/${coreStatus?.platform}`)
-    }
+    await fetch()
   }
 
   const didUnmount = useRef(false)
@@ -208,7 +203,6 @@ export function AppWrapper(props: Props) {
         console.log('lastMessage', JSON.parse(lastMessage.data))
         const coreStatus = JSON.parse(lastMessage.data)
         setStats(coreStatus)
-
       }
       catch (e) {
 
@@ -231,7 +225,6 @@ export function AppWrapper(props: Props) {
     setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1'].level ?? 1)
     setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2'].level ?? 1)
     setLed(coreStatus.led)
-    return coreStatus
   }
 
   const fetch = async (): Promise<ICoreStatus | null> => {
@@ -239,12 +232,15 @@ export function AppWrapper(props: Props) {
     try {
       const coreStatus = await CoreRepository.fetchStatus()
       setStats(coreStatus)
+      return coreStatus
     } catch (e) {
       if (e instanceof RequestError) {
         //Show error
       }
     }
-    setInitialLoading(false)
+    finally {
+      setInitialLoading(false)
+    }
     return null
   }
 

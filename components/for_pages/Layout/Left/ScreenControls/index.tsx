@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import ScreenDemonstrateSvg from 'components/svg/ScreenDemonstrateSvg'
 import NoScreenDemonstrateSvg from 'components/svg/NoScreenDemonstrateSvg'
 import { ReactElement, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import LedRepository from 'data/repositories/LedRepository'
 import { LedState } from 'data/enum/LedState'
 import { useAppContext } from 'context/state'
@@ -84,12 +83,10 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
 
   const appContext = useAppContext()
 
-  const router = useRouter()
-
   const [option, setOption] = useState<LedState | null>(null)
 
   useEffect(() => {
-    if (appContext.led?.[indexScreen]?.power === LedState.On && router.asPath !== '/' && !isActive) {
+    if (appContext.led?.[indexScreen]?.power === LedState.On && !appContext.coreStatus?.conference.started && !isActive) {
       SetIsActive(true)
     }
     if (appContext.led?.[indexScreen]?.mode) {
@@ -133,7 +130,7 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
       <div className={styles.bottom} style={isActive ? { background: getColor(color, false, false, true) } : {}}>
         {options?.map((i, indexOption) =>
           <div
-            onClick={() => router.asPath !== '/' ? handleClickOption(indexOption) : null}
+            onClick={() => !appContext.coreStatus?.conference.started ? handleClickOption(indexOption) : null}
             className={classNames(styles.option, { [styles.active]: isActive && indexOption !== options.length - 1 })}
             style={isActive && i.value === option ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
             {i.img}
