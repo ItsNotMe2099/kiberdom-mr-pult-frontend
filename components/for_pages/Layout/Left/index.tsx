@@ -12,13 +12,14 @@ import classNames from 'classnames'
 interface Props {
   isZoom: boolean
   isTrueConf: boolean
+  started: boolean
   loading: boolean
 }
 
-export default function Left({ isZoom, isTrueConf, loading }: Props) {
+export default function Left({ isZoom, isTrueConf, started, loading }: Props) {
 
   const getOptions = (isZoom: boolean, isTrueConf: boolean) => {
-    if (isZoom || isTrueConf) {
+    if (started && (isZoom || isTrueConf)) {
       return [{ img: <MembersSvg />, label: 'участники', value: LedState.Gallery },
       { img: <SpeakerSvg />, label: 'спикер', value: LedState.Content },
       { img: <DemonstrateSvg />, label: 'демонстрация' }]
@@ -30,16 +31,18 @@ export default function Left({ isZoom, isTrueConf, loading }: Props) {
 
   const nodeRef = useRef(null)
 
+  console.log(started)
+
   return (
     <div className={styles.root}>
-      <div className={classNames(styles.fake, {[styles.none]: !loading})}>
+      <div className={classNames(styles.fake, { [styles.none]: !loading })}>
         <div className={styles.title}>
           ЭКРАНЫ
         </div>
-        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'0'} />
-        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'1'} />
-        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'2'} />
-        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom ? 'blue' : isTrueConf ? 'green' : 'gray'} indexScreen={'3'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'0'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'1'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'2'} />
+        <ScreenControls options={getOptions(isZoom, isTrueConf)} color={isZoom && started ? 'blue' : isTrueConf && started ? 'green' : 'gray'} indexScreen={'3'} />
       </div>
       <CSSTransition
         timeout={2000}

@@ -15,7 +15,7 @@ export default function Layout({ children, loading }: Props) {
 
   return (
     <div className={styles.root}>
-      <Left loading={loading} isZoom={appContext.coreStatus?.platform === Platform.Zoom}
+      <Left started={appContext.coreStatus?.conference.started ?? false} loading={loading} isZoom={appContext.coreStatus?.platform === Platform.Zoom}
         isTrueConf={appContext.coreStatus?.platform === Platform.TrueConf} />
       {children}
       <Right loading={loading} />
