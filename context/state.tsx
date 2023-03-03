@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { ICoreStatus } from 'data/interfaces/ICoreStatus'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { RequestError } from 'types/types'
@@ -10,6 +10,8 @@ import IotRepository from 'data/repositories/IotRepository'
 import { ILedStatus } from 'data/interfaces/ILedStatus'
 import { OnOffState } from 'data/enum/OnOffState'
 import { ILightStatus } from 'data/interfaces/ILightStatus'
+import useWebSocket from 'react-use-websocket'
+import { runtimeConfig } from 'config/runtimeConfig'
 
 interface IState {
   volumeLevel: number
@@ -182,29 +184,61 @@ export function AppWrapper(props: Props) {
     }
   }
 
+  const didUnmount = useRef(false)
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket(
+    `${runtimeConfig.WS_HOST}/api/v1/core/ws`,
+    {
+      shouldReconnect: (closeEvent) => {
+        /*
+        useWebSocket will handle unmounting for you, but this is an example of a
+        case in which you would not want it to automatically reconnect
+      */
+        return didUnmount.current === false
+      },
+      reconnectAttempts: 10000,
+      reconnectInterval: 3000,
+    }
+  )
+  useEffect(() => {
+    if (lastMessage !== null) {
+
+      // Обновляем state
+      try {
+        console.log('lastMessage', JSON.parse(lastMessage.data))
+        const coreStatus = JSON.parse(lastMessage.data)
+        stats(coreStatus)
+
+      }
+      catch (e) {
+
+      }
+    }
+  }, [lastMessage, setCoreStatus])
+
   useEffect(() => {
     init()
   }, [])
+
+  const stats = (coreStatus: ICoreStatus) => {
+    setCoreStatus(coreStatus)
+    setMicState(coreStatus.conference.microphone ?? OnOffState.Off)
+    setCamState(coreStatus.conference.camera ?? OnOffState.Off)
+    setBgMusicState(coreStatus.audio_processor.bg_music ?? OnOffState.Off)
+    setVolumeLevel(coreStatus.audio_processor.level ?? 0)
+    setClimateLevel(coreStatus.climate.temperature ?? 20)
+    setLight(coreStatus.light ?? null)
+    setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1'].level ?? 1)
+    setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2'].level ?? 1)
+    setLed(coreStatus.led)
+    return coreStatus
+  }
 
   const fetch = async (): Promise<ICoreStatus | null> => {
     setInitialLoading(true)
     try {
       const coreStatus = await CoreRepository.fetchStatus()
-      //const climateLevel = await IotRepository.getState('CLIMAT')
-      //const lightLevelUp = await IotRepository.getState('LAMP-Z-1')
-      //const lightLevelDown = await IotRepository.getState('LAMP-Z-2')
-      setCoreStatus(coreStatus)
-      setMicState(coreStatus.conference.microphone ?? OnOffState.Off)
-      setCamState(coreStatus.conference.camera ?? OnOffState.Off)
-      setBgMusicState(coreStatus.audio_processor.bg_music ?? OnOffState.Off)
-      setVolumeLevel(coreStatus.audio_processor.level ?? 0)
-      setClimateLevel(coreStatus.climate.temperature ?? 20)
-      setLight(coreStatus.light ?? null)
-      setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1'].level ?? 1)
-      setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2'].level ?? 1)
-      setLed(coreStatus.led)
-      setInitialLoading(false)
-      return coreStatus
+      stats(coreStatus)
     } catch (e) {
       if (e instanceof RequestError) {
         //Show error
