@@ -6,7 +6,7 @@ import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { useFormik, Form, FormikProvider } from 'formik'
 import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
@@ -25,6 +25,8 @@ interface Props {
 export default function LoginForm({ onSubmit, color, onCancel, platform, active, image, timeOut }: Props) {
 
   const appContext = useAppContext()
+
+  const [focus, setFocus] = useState<boolean>(false)
 
   const initialValues = {
     login: '',
@@ -86,16 +88,17 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
   }
 
   useEffect(() => {
+    const ms = focus ? 120000 : 5000
     if (active) {
       const timer = setTimeout(() => {
         appContext.loginLoading ? null : timeOut()
-      }, 5000)
+      }, ms)
 
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [active, formik.values, appContext.loginLoading])
+  }, [active, formik.values, appContext.loginLoading, focus])
 
   return (
     <CSSTransition
@@ -119,12 +122,15 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
             <TextField
               name='login'
               label='ID'
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
               brdrColor={getBorderColor()} />
             <TextField
               className={styles.key}
               name='password'
-              type={'password'}
               label='ключ'
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
               brdrColor={getBorderColor()} />
             <div className={styles.btns}>
               <Button onClick={handleCancel} color={'red'} fluid>

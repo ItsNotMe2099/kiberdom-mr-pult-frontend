@@ -10,6 +10,8 @@ interface Props extends IField<string> {
   onChange?: (val: string) => void
   label: string
   brdrColor?: string
+  onFocus?: () => void
+  onBlur?: () => void
 }
 
 export default function TextField(props: Props) {
@@ -21,7 +23,13 @@ export default function TextField(props: Props) {
   const handleLabel = () => {
     if(!field.value){
       setFocus(false)
+      props.onBlur ? props.onBlur() : null
     }
+  }
+
+  const handleFocus = () => {
+    setFocus(true)
+    props.onFocus ? props.onFocus() : null
   }
 
   return (
@@ -39,9 +47,7 @@ export default function TextField(props: Props) {
               props.onChange(e.currentTarget.value)
             }
           }}
-          onFocus={(e) => {
-            setFocus(true)
-          }}
+          onFocus={handleFocus}
           onBlur={(e) => {
             handleLabel()
             field.onBlur(e)

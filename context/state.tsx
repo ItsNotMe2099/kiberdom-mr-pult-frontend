@@ -171,7 +171,7 @@ export function AppWrapper(props: Props) {
   const [isStopRec, setIsStopRec] = useState<boolean>(false)
   const [isEmailFormInvite, setIsEmailFormInvite] = useState<boolean>(false)
 
-  const [loginLoading, setLoginLoading] = useState(false)
+  const [loginLoading, setLoginLoading] = useState<boolean>(false)
 
   const init = async () => {
     await fetch()
