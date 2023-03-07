@@ -108,21 +108,23 @@ export default function Light({ }: Props) {
       </div> : null}
       <div className={styles.light} onClick={() => !appContext.isLightActive ? appContext.handleLightActive() : null}>
         <div className={styles.items}>
-          {itemsUp.map((i, index) =>
-            <ItemUp index={index} key={index} level={index + 1} />)}
+          {itemsUp.slice(appContext.isLightActive ? 0 : 1).map((i, index) =>
+            <ItemUp index={index} key={index} level={index + (appContext.isLightActive ? 1 : 2)} />)}
         </div>
         {!appContext.isLightActive ?
-        <div className={styles.decorative}>
-          <div className={classNames(styles.item, styles.active, {[styles.minimized]: isOthersControlsActive() === true})}></div>
-          <div className={classNames(styles.item, styles.itemDown, styles.active, {[styles.minimized]: isOthersControlsActive() === true})}></div>
-        </div> :
-        <div className={styles.zones}>
-          две зоны
-        </div>
+          <div className={styles.decorative}>
+            {itemsUp.slice(0, 1).map((i, index) =>
+              <ItemUp index={index} key={index} level={index + 1} />)}
+            {itemsDown.slice(0, 1).map((i, index) =>
+              <ItemDown index={index} key={index} level={index + 1} />)}
+          </div> :
+          <div className={styles.zones}>
+            две зоны
+          </div>
         }
         <div className={styles.itemsDown}>
-          {itemsDown.map((i, index) =>
-            <ItemDown index={index} key={index} level={index + 1} />)}
+          {itemsDown.slice(appContext.isLightActive ? 0 : 1).map((i, index) =>
+            <ItemDown index={index} key={index} level={index + (appContext.isLightActive ? 1 : 2)} />)}
         </div>
         {!appContext.isLightActive ? <Image src='/img/right-menu/light.svg' fill alt='' /> : null}
       </div>

@@ -48,18 +48,12 @@
   display: flex;
   flex-direction: column-reverse;
   min-height: 33%;
-  .item:last-child{
-    display: none;
-  }
 }
 
 .itemsDown {
   display: flex;
   flex-direction: column;
   min-height: 33%;
-  .itemDown:last-child{
-    display: none;
-  }
   .active {
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(93, 78, 0, 1) 35%, rgba(132, 111, 0, 1) 100%);
   }
