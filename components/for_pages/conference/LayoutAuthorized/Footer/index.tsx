@@ -1,7 +1,6 @@
 import CameraSvg from 'components/svg/CameraSvg'
 import ExitSvg from 'components/svg/ExitSvg'
 import InviteSvg from 'components/svg/InviteSvg'
-import Members2Svg from 'components/svg/Members2Svg'
 import { useAppContext } from 'context/state'
 import styles from './index.module.scss'
 import Item from './Item'
@@ -13,6 +12,7 @@ import Exit from './Exit'
 import ConferenceRepository from 'data/repositories/ConferenceRepository'
 import { Platform } from 'data/enum/Platorm'
 import { IParticipant } from 'data/interfaces/IParticipant'
+import Members2Svg from 'components/svg/Members2Svg'
 
 interface Props {
   users: IParticipant[]
@@ -57,10 +57,12 @@ export default function Footer({ users }: Props) {
 
   return (
     <div className={styles.root}>
-      <Item style='members' title='участники' numberOfUsers={users.length}
+      <Item style='members' title={appContext.isActiveUsersList ? 'скрыть участников' : 'участники'} numberOfUsers={users.length}
         platform={appContext.coreStatus?.platform as Platform}
         active={appContext.isActiveUsersList}
-        onClick={appContext.handleActiveUsersListMenu} icon={<Members2Svg className={getSvgColor(appContext.isActiveUsersList)} />} />
+        onClick={appContext.handleActiveUsersListMenu} 
+        icon={<div className={styles.icon}>
+          <Members2Svg isOn={appContext.isActiveUsersList} className={getSvgColor(appContext.isActiveUsersList)} /></div>} />
       <Item title='пригласить' platform={appContext.coreStatus?.platform as Platform} active={appContext.isActiveInvite}
         onClick={appContext.handleInvite} icon={<InviteSvg className={getSvgColor(appContext.isActiveInvite)} />} />
       <Item title='упр. камерой' platform={appContext.coreStatus?.platform as Platform} active={appContext.isActiveCameraMenu}

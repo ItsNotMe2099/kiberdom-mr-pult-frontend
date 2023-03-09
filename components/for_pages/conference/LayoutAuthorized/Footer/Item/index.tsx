@@ -1,4 +1,5 @@
 import Gradient from 'components/for_pages/common/gradient'
+import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
@@ -29,6 +30,8 @@ export default function Item({ style, icon, active, onClick, platform, title, nu
     onClick ? onClick() : null
   }
 
+  const appContext = useAppContext()
+
   return (
     <div className={styles.root} onClick={handleClick}>
       <Gradient
@@ -41,7 +44,7 @@ export default function Item({ style, icon, active, onClick, platform, title, nu
         style={getColor() as string} />
       {icon}
       <div className={styles.title}>{title}</div>
-      {style === 'members' && numberOfUsers as number > 0 ? <div className={styles.number}>{numberOfUsers}</div> : null}
+      {style === 'members' && numberOfUsers as number > 0  && !appContext.isActiveUsersList ? <div className={styles.number}>{numberOfUsers}</div> : null}
     </div >
   )
 }
