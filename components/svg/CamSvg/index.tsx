@@ -7,10 +7,10 @@ import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
-  
+
 }
 
-export default function CamSvg({  }: Props) {
+export default function CamSvg({ }: Props) {
 
   const onRef = useRef(null)
   const offRef = useRef(null)
@@ -32,9 +32,14 @@ export default function CamSvg({  }: Props) {
           exitActive: styles.itemExitActive,
         }}
       >
-        <svg ref={onRef} width="165" height="123" viewBox="0 0 165 123" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M110.229 75.3501V69.718L147.711 83.5699V40.4959L110.229 60.8662V17.6591H16.8V105.8H110.229V75.3501ZM126.7 122.6V122.6H0V17.6V16.2V0.859131H127.029V32.615L164.511 12.2446V107.689L127.029 93.2V122.6H126.7Z" fill={appContext.coreStatus?.platform === Platform.Zoom ? colors.zoom : appContext.coreStatus?.platform === Platform.TrueConf ? colors.trueconf : ''} />
+        <svg width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M93.7352 85.2501V81.2272L120.508 91.1213V60.3542L93.7352 74.9044V44.0422H27V107H93.7352V85.2501ZM105.5 119V119H15V44V43V32.0422H105.735V54.725L132.508 40.1747V108.349L105.735 98V119H105.5Z"
+            fill={appContext.coreStatus?.platform === Platform.Zoom ? colors.zoom : appContext.coreStatus?.platform === Platform.TrueConf ? colors.trueconf : ''} />
         </svg>
+
 
       </CSSTransition>
       <CSSTransition
@@ -50,12 +55,10 @@ export default function CamSvg({  }: Props) {
           exitActive: styles.itemExitActive,
         }}
       >
-        <svg ref={offRef} width="167" height="166" viewBox="0 0 167 166" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M110.23 97.3502V91.7182L147.711 105.57V62.496L110.23 82.8664V39.6593H52.5389L110.23 97.3502ZM129.706 116.826L166.94 154.06L155.061 165.94L1.06055 11.9397L12.9399 0.0603027L35.7389 22.8593H127.03V54.6151L164.511 34.2448V129.689L129.706 116.826Z" fill="#707070" />
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 38.2H16.8V127.8H105V144.6H0V38.2Z" fill="#707070" />
+        <svg width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M93.7359 85.2501V81.2272L120.508 91.1214V60.3542L93.7359 74.9045V44.0423H52.5281L93.7359 85.2501ZM107.647 99.1617L134.243 125.757L125.758 134.243L15.7578 24.2426L24.2431 15.7573L40.5281 32.0423H105.736V54.7251L132.508 40.1748V108.349L107.647 99.1617Z" fill="#707070" />
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M15 43H27V107H90V119H15V43Z" fill="#707070" />
         </svg>
-
-
       </CSSTransition>
     </>
   )

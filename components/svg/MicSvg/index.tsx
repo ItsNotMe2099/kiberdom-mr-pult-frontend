@@ -7,10 +7,10 @@ import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 
 interface Props {
-  
+
 }
 
-export default function MicSvg({  }: Props) {
+export default function MicSvg({ }: Props) {
 
   const onRef = useRef(null)
   const offRef = useRef(null)
@@ -33,9 +33,14 @@ export default function MicSvg({  }: Props) {
           exitActive: styles.itemExitActive,
         }}
       >
-        <svg ref={onRef} width="115" height="134" viewBox="0 0 115 134" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M31.7002 0.600098H84.2002V86.0001H31.7002V0.600098ZM48.5002 17.4001V69.2001H67.4002V17.4001H48.5002ZM17.0002 100.7V60.1001H0.200195V117.5H50.6002V133.6H67.4002V117.5H115V60.1001H98.2002V100.7H17.0002Z" fill={appContext.coreStatus?.platform === Platform.Zoom ? colors.zoom : appContext.coreStatus?.platform === Platform.TrueConf ? colors.trueconf : ''} />
+        <svg ref={onRef} width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M55.5 34H93V95H55.5V34ZM67.5 46V83H81V46H67.5ZM45 105.5V76.5H33V117.5H69V129H81V117.5H115V76.5H103V105.5H45Z"
+            fill={appContext.coreStatus?.platform === Platform.Zoom ? colors.zoom : appContext.coreStatus?.platform === Platform.TrueConf ? colors.trueconf : ''} />
         </svg>
+
       </CSSTransition>
       <CSSTransition
         timeout={500}
@@ -50,14 +55,11 @@ export default function MicSvg({  }: Props) {
           exitActive: styles.itemExitActive,
         }}
       >
-        <svg ref={offRef} width="127" height="162" viewBox="0 0 127 162" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M16.1214 0.642334L2.5668 10.5677L112.943 161.303L126.498 151.377L115 135.675V79.1001H98.2002V112.733L84.2002 93.6137V19.6001H31.7002V21.9175L16.1214 0.642334ZM48.5002 44.8602L67.4002 70.6709V36.4001H48.5002V44.8602Z" fill="#707070" />
-          <path d="M31.7002 105V69.4726L57.7155 105H31.7002Z" fill="#707070" />
-          <path d="M17.0002 119.7H68.4796L80.7815 136.5H67.4002V152.6H50.6002V136.5H0.200195V79.1001H17.0002V119.7Z" fill="#707070" />
+        <svg ref={offRef} width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M44.3723 20.4587L34.6904 27.5483L113.531 135.216L123.213 128.127L115 116.911V76.5H103V100.523L93 86.8668V34H55.5V35.6553L44.3723 20.4587ZM67.5 52.043L81 70.4791V46H67.5V52.043Z" fill="#707070" />
+          <path d="M55.5 95V69.6232L74.0823 95H55.5Z" fill="#707070" />
+          <path d="M45 105.5H81.771L90.5581 117.5H81V129H69V117.5H33V76.5H45V105.5Z" fill="#707070" />
         </svg>
-
-
-
       </CSSTransition>
     </>
   )

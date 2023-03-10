@@ -45,7 +45,7 @@ export default function Exit({ icon, onClick, title, exit, onExit, onLeave }: Pr
         </div>
       </CSSTransition>
       {icon}
-      <div className={styles.title}>{title}</div>
+      {exit ? null : <div className={styles.title}>{title}</div>}
     </div >
   )
 }

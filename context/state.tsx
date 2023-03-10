@@ -327,6 +327,8 @@ export function AppWrapper(props: Props) {
       const newStatus = true
       await RecordRepository.stop()
       setIsStopRec(newStatus)
+      setIsRecording(false)
+      setIsRecControls(false)
       setIsEmailFormActive(newStatus)
     },
     handleRecIsPaused: async () => {

@@ -53,7 +53,7 @@ export default function Record({ icon, onClick, title }: Props) {
       </CSSTransition>
       <CSSTransition
         timeout={500}
-        in={appContext.isRecording}
+        in={appContext.isRecording && !appContext.isRecControls}
         nodeRef={recRef}
         mountOnEnter
         unmountOnExit
