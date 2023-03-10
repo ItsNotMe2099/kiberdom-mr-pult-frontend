@@ -69,4 +69,12 @@ export default class CoreRepository {
     })
     return res
   }
+
+  static async callCareService(): Promise<IStatusResponse> {
+    const res = await request<IStatusResponse>({
+      method: 'post',
+      url: '/api/v1/core/care_service/call',
+    })
+    return res
+  }
 }

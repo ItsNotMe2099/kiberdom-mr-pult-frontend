@@ -32,7 +32,7 @@ export default function CamSvg({ }: Props) {
           exitActive: styles.itemExitActive,
         }}
       >
-        <svg width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg ref={onRef} width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -55,7 +55,7 @@ export default function CamSvg({ }: Props) {
           exitActive: styles.itemExitActive,
         }}
       >
-        <svg width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg ref={offRef} width="210" height="210" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M93.7359 85.2501V81.2272L120.508 91.1214V60.3542L93.7359 74.9045V44.0423H52.5281L93.7359 85.2501ZM107.647 99.1617L134.243 125.757L125.758 134.243L15.7578 24.2426L24.2431 15.7573L40.5281 32.0423H105.736V54.7251L132.508 40.1748V108.349L107.647 99.1617Z" fill="#707070" />
           <path fill-rule="evenodd" clip-rule="evenodd" d="M15 43H27V107H90V119H15V43Z" fill="#707070" />
         </svg>

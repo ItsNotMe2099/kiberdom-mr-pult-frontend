@@ -3,6 +3,7 @@ import styles from './index.module.scss'
 import classNames from 'classnames'
 import { useAppContext } from 'context/state'
 import { useEffect, useState } from 'react'
+import CoreRepository from 'data/repositories/CoreRepository'
 
 interface Props {
 
@@ -33,6 +34,11 @@ export default function Help({ }: Props) {
     setTimer(newTimer)
   }
 
+  const handleCallAdmin = async () => {
+    handleItemClick()
+    await CoreRepository.callCareService()
+  }
+
   const isOthersControlsActive = () => {
     if (appContext.isVolumeActive || appContext.isLightActive || appContext.isVolumeActive) {
       return true
@@ -60,7 +66,7 @@ export default function Help({ }: Props) {
               в<br /> меню
               бара</div>
           </div>
-          <div className={styles.call} onClick={handleItemClick}>
+          <div className={styles.call} onClick={handleCallAdmin}>
             <div className={styles.gradient}></div>
             <div className={styles.text}>
               позвать<br /> админи-<br />стратора
