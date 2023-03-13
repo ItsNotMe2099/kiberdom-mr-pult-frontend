@@ -6,7 +6,7 @@ export default function IndexPage() {
 
   const appContext = useAppContext()
 
-  if (!appContext.coreStatus?.conference.started) {
+  if (appContext.coreStatus?.conference.started) {
     return <ConferencePage />
   }
   else {
