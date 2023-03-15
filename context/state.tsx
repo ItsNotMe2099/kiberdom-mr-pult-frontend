@@ -65,6 +65,8 @@ interface IState {
   handleStopRec: () => void
   isEmailFormInvite: boolean
   handleLoginLoading: (state: boolean) => void
+  adminCalled: boolean
+  handleAdminCalled: () => void
   loginLoading: boolean
   led: { [key: string]: ILedStatus } | null
 }
@@ -123,6 +125,8 @@ const defaultValue: IState = {
   isEmailFormInvite: false,
   loginLoading: false,
   handleLoginLoading: (state) => null,
+  adminCalled: false,
+  handleAdminCalled: () => null,
   led: null
 }
 
@@ -139,6 +143,8 @@ export function AppWrapper(props: Props) {
   const [climateLevel, setClimateLevel] = useState<number>(20)
   const [lightLevelUp, setLightLevelUp] = useState<number>(1)
   const [lightLevelDown, setLightLevelDown] = useState<number>(1)
+
+  const [adminCalled, setAdminCalled] = useState<boolean>(false)
 
   const [initialLoading, setInitialLoading] = useState<boolean>(true)
 
@@ -256,6 +262,10 @@ export function AppWrapper(props: Props) {
     snackbar,
     loginLoading,
     led,
+    adminCalled,
+    handleAdminCalled: () => {
+      setAdminCalled(adminCalled ? false : true)
+    },
     handleLoginLoading: (state: boolean) => {
       setLoginLoading(state)
     },

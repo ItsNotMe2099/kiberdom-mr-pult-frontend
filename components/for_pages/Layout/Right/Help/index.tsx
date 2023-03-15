@@ -15,6 +15,8 @@ export default function Help({ }: Props) {
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
+  const [adminCalledTimer, setAdminCalledTimer] = useState<NodeJS.Timeout | null>(null)
+
   useEffect(() => {
     if (appContext.isHelpActive) {
       const newTimer = setTimeout(() => {
@@ -23,6 +25,15 @@ export default function Help({ }: Props) {
       setTimer(newTimer)
     }
   }, [appContext.isHelpActive])
+
+  useEffect(() => {
+    if (appContext.adminCalled) {
+      const newTimer = setTimeout(() => {
+        appContext.handleAdminCalled()
+      }, 3000)
+      setAdminCalledTimer(newTimer)
+    }
+  }, [appContext.adminCalled])
 
   const handleItemClick = () => {
     if (timer) {
@@ -37,6 +48,7 @@ export default function Help({ }: Props) {
   const handleCallAdmin = async () => {
     handleItemClick()
     await CoreRepository.callCareService()
+    appContext.handleAdminCalled()
   }
 
   const isOthersControlsActive = () => {

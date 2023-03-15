@@ -1,5 +1,6 @@
 import { useAppContext } from 'context/state'
 import { Platform } from 'data/enum/Platorm'
+import AdminCalledBar from '../common/AdminCalledBar'
 import styles from './index.module.scss'
 import Left from './Left'
 import Right from './Right'
@@ -19,6 +20,7 @@ export default function Layout({ children, loading }: Props) {
         isTrueConf={appContext.coreStatus?.platform === Platform.TrueConf} />
       {children}
       <Right loading={loading} />
+      <AdminCalledBar isActive={appContext.adminCalled} />
     </div>
   )
 }
