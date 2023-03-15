@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { useAppContext } from 'context/state'
 import { useEffect, useState } from 'react'
 import CoreRepository from 'data/repositories/CoreRepository'
+import { SnackbarType } from 'types/enums'
 
 interface Props {
 
@@ -47,8 +48,18 @@ export default function Help({ }: Props) {
 
   const handleCallAdmin = async () => {
     handleItemClick()
-    await CoreRepository.callCareService()
-    appContext.handleAdminCalled()
+    try {
+      await CoreRepository.callCareService()
+      appContext.handleAdminCalled()
+    }
+    catch (error: any) {
+      let errorMessage = error.toString()
+      // extract the error message from the error object
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message
+      }
+      appContext.showSnackbar(errorMessage, SnackbarType.error)
+    }
   }
 
   const isOthersControlsActive = () => {
