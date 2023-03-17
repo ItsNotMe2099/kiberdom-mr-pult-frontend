@@ -77,7 +77,7 @@ async function request<T = any>(options: string | Options): Promise<T> {
 
   console.log('Error URL: ', correctUrl)
 
-  throw new RequestError(jsonData?.errors || res.statusText || 'Ошибка', res.status ?? 500)
+  throw new RequestError(jsonData?.error || res.statusText || 'Ошибка', res.status ?? 500)
 }
 
 function queryParams(params: {[key: string]: any}) {
