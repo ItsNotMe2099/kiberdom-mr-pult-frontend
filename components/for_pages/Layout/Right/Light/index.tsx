@@ -2,7 +2,7 @@ import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { /*useEffect,*/ useState } from 'react'
 
 interface Props {
 
