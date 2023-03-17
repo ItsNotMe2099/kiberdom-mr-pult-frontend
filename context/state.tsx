@@ -186,7 +186,7 @@ export function AppWrapper(props: Props) {
   const didUnmount = useRef(false)
 
   const { sendMessage, lastMessage, readyState } = useWebSocket(
-    `${runtimeConfig.WS_HOST}/api/v1/core/ws`,
+    `${runtimeConfig.WS_HOST || (typeof window !== 'undefined' ? `ws://${window.location.host}` : '')}/api/v1/core/ws`,
     {
       shouldReconnect: (closeEvent) => {
         /*
