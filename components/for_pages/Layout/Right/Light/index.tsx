@@ -19,14 +19,14 @@ export default function Light({ }: Props) {
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (appContext.isLightActive) {
       const newTimer = setTimeout(() => {
         appContext.handleLightActive()
       }, 5000)
       setTimer(newTimer)
     }
-  }, [appContext.isLightActive])
+  }, [appContext.isLightActive])*/
 
 
   const handleItemUpZoneClick = (index?: number) => {
@@ -35,13 +35,13 @@ export default function Light({ }: Props) {
       if (index === 0 && appContext.lightLevelUp === 1) {
         appContext.updateLightLevelUpZone(0)
       }
-      if (timer) {
+      /*if (timer) {
         clearTimeout(timer)
       }
       const newTimer = setTimeout(() => {
         appContext.handleLightActive()
       }, 5000)
-      setTimer(newTimer)
+      setTimer(newTimer)*/
     }
   }
 
@@ -52,13 +52,13 @@ export default function Light({ }: Props) {
         appContext.updateLightLevelDownZone(0)
       }
     }
-    if (timer) {
+    /*if (timer) {
       clearTimeout(timer)
     }
     const newTimer = setTimeout(() => {
       appContext.handleLightActive()
     }, 5000)
-    setTimer(newTimer)
+    setTimer(newTimer)*/
   }
 
   const isOthersControlsActive = () => {
