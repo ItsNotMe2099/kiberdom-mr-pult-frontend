@@ -27,7 +27,7 @@ export default class ConferenceRepository {
       method: 'post',
       url: '/api/v1/core/conference/join',
       data: {
-        data
+        ...data
       },
     })
     return res
