@@ -293,24 +293,36 @@ export function AppWrapper(props: Props) {
       setLightLevelDown(level)
     },
     handleVolumeActive: () => {
+      if(!isVolumeActive){
+        return
+      }
       setIsVolumeActive(isVolumeActive ? false : true)
       setIsHelpActive(false)
       setIsClimateActive(false)
       setIsLightActive(false)
     },
     handleHelpActive: () => {
+      if(!isHelpActive){
+        return
+      }
       setIsHelpActive(isHelpActive ? false : true)
       setIsVolumeActive(false)
       setIsClimateActive(false)
       setIsLightActive(false)
     },
     handleClimateActive: () => {
+      if(!isClimateActive){
+        return
+      }
       setIsClimateActive(isClimateActive ? false : true)
       setIsHelpActive(false)
       setIsVolumeActive(false)
       setIsLightActive(false)
     },
     handleLightActive: () => {
+      if(!isLightActive){
+        return
+      }
       setIsLightActive(isLightActive ? false : true)
       setIsHelpActive(false)
       setIsClimateActive(false)

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 import { useAppContext } from 'context/state'
-import { useEffect, useState } from 'react'
+import {useEffect, useRef, useState} from 'react'
 import CoreRepository from 'data/repositories/CoreRepository'
 import { SnackbarType } from 'types/enums'
 
@@ -13,17 +13,19 @@ interface Props {
 export default function Help({ }: Props) {
 
   const appContext = useAppContext()
+  const timerRef  = useRef<NodeJS.Timeout | null>(null)
 
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   const [adminCalledTimer, setAdminCalledTimer] = useState<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     if (appContext.isHelpActive) {
-      const newTimer = setTimeout(() => {
+      if(timerRef.current){
+        clearTimeout(  timerRef.current)
+      }
+      timerRef.current = setTimeout(() => {
         appContext.handleHelpActive()
       }, 5000)
-      setTimer(newTimer)
     }
   }, [appContext.isHelpActive])
 
@@ -37,13 +39,12 @@ export default function Help({ }: Props) {
   }, [appContext.adminCalled])
 
   const handleItemClick = () => {
-    if (timer) {
-      clearTimeout(timer)
+    if(timerRef.current){
+      clearTimeout(  timerRef.current)
     }
-    const newTimer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       appContext.handleHelpActive()
     }, 5000)
-    setTimer(newTimer)
   }
 
   const handleCallAdmin = async () => {

@@ -2,7 +2,7 @@ import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import {useEffect, useRef} from 'react'
 
 interface Props {
 
@@ -17,30 +17,30 @@ export default function Volume({ }: Props) {
 
   const appContext = useAppContext()
 
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const timerRef  = useRef<NodeJS.Timeout | null>(null)
+
 
   useEffect(() => {
     if (appContext.isVolumeActive) {
-      const newTimer = setTimeout(() => {
+      if(  timerRef.current){
+        clearTimeout(  timerRef.current)
+      }
+      timerRef.current = setTimeout(() => {
         appContext.handleVolumeActive()
       }, 5000)
-      setTimer(newTimer)
     }
   }, [appContext.isVolumeActive])
 
   const handleItemClick = (index?: number) => {
     if (index !== undefined) {
       appContext.updateVolumeLevel((index + 1) * 10)
-      /*if (index === 0 && appContext.volumeLevel === 10) {
-        appContext.updateVolumeLevel(0)
-      }*/
-      if (timer) {
-        clearTimeout(timer)
+
+      if(  timerRef.current){
+        clearTimeout(  timerRef.current)
       }
-      const newTimer = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         appContext.handleVolumeActive()
       }, 5000)
-      setTimer(newTimer)
     }
   }
 

@@ -2,7 +2,7 @@ import { useAppContext } from 'context/state'
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { /*useEffect,*/ useState } from 'react'
+import {useEffect, useRef} from 'react'
 
 interface Props {
 
@@ -17,16 +17,19 @@ export default function Light({ }: Props) {
 
   const appContext = useAppContext()
 
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const timerRef  = useRef<NodeJS.Timeout | null>(null)
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (appContext.isLightActive) {
-      const newTimer = setTimeout(() => {
+      if(  timerRef.current){
+        clearTimeout(  timerRef.current)
+      }
+      timerRef.current = setTimeout(() => {
         appContext.handleLightActive()
       }, 5000)
-      setTimer(newTimer)
+
     }
-  }, [appContext.isLightActive])*/
+  }, [appContext.isLightActive])
 
 
   const handleItemUpZoneClick = (index?: number) => {
@@ -35,13 +38,12 @@ export default function Light({ }: Props) {
       if (index === 0 && appContext.lightLevelUp === 1) {
         appContext.updateLightLevelUpZone(0)
       }
-      /*if (timer) {
-        clearTimeout(timer)
+      if(  timerRef.current){
+        clearTimeout(  timerRef.current)
       }
-      const newTimer = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         appContext.handleLightActive()
       }, 5000)
-      setTimer(newTimer)*/
     }
   }
 
@@ -74,7 +76,7 @@ export default function Light({ }: Props) {
         className={classNames(styles.item, {
           [styles.active]: level && level <= appContext.lightLevelUp,
           [styles.opened]: appContext.isLightActive,
-          [styles.minimized]: isOthersControlsActive() === true
+          [styles.minimized]: isOthersControlsActive()
         })}>
         {appContext.isLightActive ? level : null}
       </div>
