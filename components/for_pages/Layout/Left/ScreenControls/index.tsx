@@ -96,13 +96,13 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
 
   const handleClickOption = async (index: number) => {
     if (options && index !== options?.length - 1) {
-      setOption(index === 0 ? LedState.Content : LedState.Gallery)
+      setOption(index === 0 ? LedState.Gallery : LedState.Content)
     }
     if (index === 0) {
-      await LedRepository.setLedState(LedState.Content, +indexScreen)
+      await LedRepository.setLedState(LedState.Gallery, +indexScreen)
     }
     if (index === 1) {
-      await LedRepository.setLedState(LedState.Gallery, +indexScreen)
+      await LedRepository.setLedState(LedState.Content, +indexScreen)
     }
   }
 
