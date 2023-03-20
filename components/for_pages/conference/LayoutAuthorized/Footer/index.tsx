@@ -42,13 +42,13 @@ export default function Footer({ users }: Props) {
   }, [isExit])
 
 
-  const handleExit = () => {
-    ConferenceRepository.exit()
+  const handleExit = async () => {
+    await ConferenceRepository.exit()
     appContext.fetch()
   }
 
-  const handleLeave = () => {
-    ConferenceRepository.leave()
+  const handleLeave = async () => {
+    await ConferenceRepository.leave()
     appContext.fetch()
   }
 
@@ -60,7 +60,7 @@ export default function Footer({ users }: Props) {
       <Item style='members' title={appContext.isActiveUsersList ? 'скрыть участников' : 'участники'} numberOfUsers={users.length}
         platform={appContext.coreStatus?.platform as Platform}
         active={appContext.isActiveUsersList}
-        onClick={appContext.handleActiveUsersListMenu} 
+        onClick={appContext.handleActiveUsersListMenu}
         icon={<div className={styles.icon}>
           <Members2Svg isOn={appContext.isActiveUsersList} className={getSvgColor(appContext.isActiveUsersList)} /></div>} />
       <Item title='пригласить' platform={appContext.coreStatus?.platform as Platform} active={appContext.isActiveInvite}

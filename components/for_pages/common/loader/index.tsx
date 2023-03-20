@@ -50,9 +50,9 @@ export default function Loader({ icon, color, isActive, text, initial, className
         <div className={styles.container} style={{ background: color ? getColor(color) : '' }}>
           {icon ? <Image className={classNames(styles.img, {[styles.large]: (color === 'purple' || color ==='yellow')})} src={icon} alt='' fill /> : null}
           {initial ? <Image className={classNames(styles.initialImg, styles.img)} src='/img/logo.svg' fill alt='' /> : null}
-          <div className={styles.wait}>
+          {text && <div className={styles.wait}>
             {text}
-          </div>
+          </div>}
         </div>
       </div>
     </CSSTransition >
