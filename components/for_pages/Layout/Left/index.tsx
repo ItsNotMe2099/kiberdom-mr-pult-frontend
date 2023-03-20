@@ -20,8 +20,8 @@ export default function Left({ isZoom, isTrueConf, started, loading }: Props) {
 
   const getOptions = (isZoom: boolean, isTrueConf: boolean) => {
     if (started && (isZoom || isTrueConf)) {
-      return [{ img: <MembersSvg />, label: 'участники', value: LedState.Gallery },
-      { img: <SpeakerSvg />, label: 'спикер', value: LedState.Content },
+      return [{ img: <MembersSvg />, label: 'участники', value: LedState.Content },
+      { img: <SpeakerSvg />, label: 'спикер', value: LedState.Gallery },
       { img: <DemonstrateSvg />, label: 'демонстрация' }]
     }
     else {

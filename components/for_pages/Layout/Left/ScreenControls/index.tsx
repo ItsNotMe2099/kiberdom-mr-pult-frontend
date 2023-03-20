@@ -86,7 +86,7 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
   const [option, setOption] = useState<LedState | null>(null)
 
   useEffect(() => {
-    if (appContext.led?.[indexScreen]?.power === LedState.On && !appContext.coreStatus?.conference.started && !isActive) {
+    if (appContext.led?.[indexScreen]?.power === LedState.On && appContext.coreStatus?.conference.started && !isActive) {
       SetIsActive(true)
     }
     if (appContext.led?.[indexScreen]?.mode) {
@@ -130,7 +130,7 @@ export default function ScreenControls({ color, options, indexScreen }: Props) {
       <div className={styles.bottom} style={isActive ? { background: getColor(color, false, false, true) } : {}}>
         {options?.map((i, indexOption) =>
           <div
-            onClick={() => !appContext.coreStatus?.conference.started ? handleClickOption(indexOption) : null}
+            onClick={() => appContext.coreStatus?.conference.started ? handleClickOption(indexOption) : null}
             className={classNames(styles.option, { [styles.active]: isActive && indexOption !== options.length - 1 })}
             style={isActive && i.value === option ? { background: getColor(color, false, false, false, true) } : {}} key={i.label}>
             {i.img}
