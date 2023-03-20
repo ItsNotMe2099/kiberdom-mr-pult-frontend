@@ -11,6 +11,7 @@ import { OnOffState } from 'data/enum/OnOffState'
 import { ILightStatus } from 'data/interfaces/ILightStatus'
 import useWebSocket from 'react-use-websocket'
 import { runtimeConfig } from 'config/runtimeConfig'
+import {RightSideControl} from 'data/enum/RightSideControl'
 
 interface IState {
   volumeLevel: number
@@ -21,14 +22,6 @@ interface IState {
   updateClimateLevel: (level: number) => void
   updateLightLevelUpZone: (level: number) => void
   updateLightLevelDownZone: (level: number) => void
-  isVolumeActive: boolean
-  isClimateActive: boolean
-  isHelpActive: boolean
-  isLightActive: boolean
-  handleVolumeActive: () => void
-  handleClimateActive: () => void
-  handleHelpActive: () => void
-  handleLightActive: () => void
   fetch: () => void
   coreStatus: ICoreStatus | null
   initialLoading: boolean
@@ -69,6 +62,9 @@ interface IState {
   handleAdminCalled: () => void
   loginLoading: boolean
   led: { [key: string]: ILedStatus } | null
+  rightMode: RightSideControl | null,
+  setRightMode: (mode: RightSideControl) => void
+  hideRightMode: (mode: RightSideControl) => void
 }
 
 const defaultValue: IState = {
@@ -80,14 +76,6 @@ const defaultValue: IState = {
   updateClimateLevel: (level) => null,
   updateLightLevelUpZone: (level) => null,
   updateLightLevelDownZone: (level) => null,
-  isVolumeActive: false,
-  isClimateActive: false,
-  isHelpActive: false,
-  isLightActive: false,
-  handleVolumeActive: () => null,
-  handleClimateActive: () => null,
-  handleHelpActive: () => null,
-  handleLightActive: () => null,
   fetch: () => null,
   coreStatus: null,
   initialLoading: false,
@@ -127,7 +115,10 @@ const defaultValue: IState = {
   handleLoginLoading: (state) => null,
   adminCalled: false,
   handleAdminCalled: () => null,
-  led: null
+  led: null,
+  rightMode: null,
+  setRightMode: (mode: RightSideControl) => null,
+  hideRightMode: (mode: RightSideControl) => null
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -148,10 +139,8 @@ export function AppWrapper(props: Props) {
 
   const [initialLoading, setInitialLoading] = useState<boolean>(true)
 
-  const [isVolumeActive, setIsVolumeActive] = useState<boolean>(false)
-  const [isClimateActive, setIsClimateActive] = useState<boolean>(false)
-  const [isHelpActive, setIsHelpActive] = useState<boolean>(false)
-  const [isLightActive, setIsLightActive] = useState<boolean>(false)
+  const [rightMode, setRightMode] = useState<RightSideControl | null>(null)
+  const rightModeRef = useRef<RightSideControl | null>(null)
   const [snackbar, setSnackbar] = useState<SnackbarData | null>(null)
 
   const [isActiveCameraMenu, setIsActiveCameraMenu] = useState<boolean>(false)
@@ -179,6 +168,9 @@ export function AppWrapper(props: Props) {
 
   const [loginLoading, setLoginLoading] = useState<boolean>(false)
 
+  useEffect(() => {
+    rightModeRef.current = rightMode
+  }, [rightMode])
   const init = async () => {
     await fetch()
   }
@@ -255,10 +247,7 @@ export function AppWrapper(props: Props) {
     climateLevel,
     lightLevelUp,
     lightLevelDown,
-    isVolumeActive,
-    isClimateActive,
-    isHelpActive,
-    isLightActive,
+    rightMode,
     snackbar,
     loginLoading,
     led,
@@ -292,41 +281,14 @@ export function AppWrapper(props: Props) {
       await IotRepository.setState('LAMP-Z-2', level.toString())
       setLightLevelDown(level)
     },
-    handleVolumeActive: () => {
-      if(!isVolumeActive){
-        return
-      }
-      setIsVolumeActive(isVolumeActive ? false : true)
-      setIsHelpActive(false)
-      setIsClimateActive(false)
-      setIsLightActive(false)
+    setRightMode: (mode: RightSideControl) => {
+      setRightMode(mode)
     },
-    handleHelpActive: () => {
-      if(!isHelpActive){
-        return
+    hideRightMode: (mode: RightSideControl) => {
+      console.log('hideRightMode', mode)
+      if(mode === rightModeRef.current){
+        setRightMode(null)
       }
-      setIsHelpActive(isHelpActive ? false : true)
-      setIsVolumeActive(false)
-      setIsClimateActive(false)
-      setIsLightActive(false)
-    },
-    handleClimateActive: () => {
-      if(!isClimateActive){
-        return
-      }
-      setIsClimateActive(isClimateActive ? false : true)
-      setIsHelpActive(false)
-      setIsVolumeActive(false)
-      setIsLightActive(false)
-    },
-    handleLightActive: () => {
-      if(!isLightActive){
-        return
-      }
-      setIsLightActive(isLightActive ? false : true)
-      setIsHelpActive(false)
-      setIsClimateActive(false)
-      setIsVolumeActive(false)
     },
     fetch,
     coreStatus,

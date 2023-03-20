@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { useAppContext } from 'context/state'
+import {useAppContext} from 'context/state'
 import {useEffect, useRef, useState} from 'react'
 import CoreRepository from 'data/repositories/CoreRepository'
-import { SnackbarType } from 'types/enums'
+import {SnackbarType} from 'types/enums'
+import {RightSideControl} from 'data/enum/RightSideControl'
 
 interface Props {
 
@@ -15,19 +16,19 @@ export default function Help({ }: Props) {
   const appContext = useAppContext()
   const timerRef  = useRef<NodeJS.Timeout | null>(null)
 
-
+  const isActive = appContext.rightMode === RightSideControl.Help
   const [adminCalledTimer, setAdminCalledTimer] = useState<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    if (appContext.isHelpActive) {
+    if (appContext.rightMode === RightSideControl.Help) {
       if(timerRef.current){
         clearTimeout(  timerRef.current)
       }
       timerRef.current = setTimeout(() => {
-        appContext.handleHelpActive()
+        appContext.hideRightMode(RightSideControl.Help)
       }, 5000)
     }
-  }, [appContext.isHelpActive])
+  }, [appContext.rightMode])
 
   useEffect(() => {
     if (appContext.adminCalled) {
@@ -43,7 +44,7 @@ export default function Help({ }: Props) {
       clearTimeout(  timerRef.current)
     }
     timerRef.current = setTimeout(() => {
-      appContext.handleHelpActive()
+      appContext.hideRightMode(RightSideControl.Help)
     }, 5000)
   }
 
@@ -63,24 +64,18 @@ export default function Help({ }: Props) {
     }
   }
 
-  const isOthersControlsActive = () => {
-    if (appContext.isVolumeActive || appContext.isLightActive || appContext.isVolumeActive) {
-      return true
-    }
-    return false
-  }
 
   return (
-    <div className={classNames(styles.root, { [styles.rootActive]: appContext.isHelpActive })}>
-      {!appContext.isHelpActive ? <><div className={styles.title}>
+    <div className={classNames(styles.root, { [styles.rootActive]: isActive })}>
+      {!isActive ? <><div className={styles.title}>
         забота
       </div>
         <div className=
           {classNames(styles.help, {
-            [styles.minimized]: isOthersControlsActive() === true,
-            [styles.minimizedAlt]: appContext.isClimateActive
+            [styles.minimized]: appContext.rightMode != null && appContext.rightMode !== RightSideControl.Help,
+            [styles.minimizedAlt]: appContext.rightMode === RightSideControl.Climate
           })}>
-          <div className={styles.gradient} onClick={() => !appContext.isHelpActive ? appContext.handleHelpActive() : null}></div>
+          <div className={styles.gradient} onClick={() => appContext.setRightMode(RightSideControl.Help)}></div>
           <Image src='/img/right-menu/help.svg' fill alt='' />
         </div></> :
         <>

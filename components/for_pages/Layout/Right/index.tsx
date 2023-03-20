@@ -1,12 +1,13 @@
-import { useAppContext } from 'context/state'
+import {useAppContext} from 'context/state'
 import Climate from './Climate'
 import Help from './Help'
 import styles from './index.module.scss'
 import Light from './Light'
 import Volume from './Volume'
 import classNames from 'classnames'
-import { useRef } from 'react'
-import { CSSTransition } from 'react-transition-group'
+import {useRef} from 'react'
+import {CSSTransition} from 'react-transition-group'
+import {RightSideControl} from 'data/enum/RightSideControl'
 
 interface Props {
   loading: boolean
@@ -19,7 +20,7 @@ export default function Right({ loading }: Props) {
   const getRootClass = () => {
     return classNames(
       {
-        [styles.start]: appContext.isVolumeActive || appContext.isClimateActive
+        [styles.start]: appContext.rightMode === RightSideControl.Volume || appContext.rightMode === RightSideControl.Climate
       }
     )
   }

@@ -1,8 +1,9 @@
-import { useAppContext } from 'context/state'
+import {useAppContext} from 'context/state'
 import Image from 'next/image'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import {useEffect, useRef} from 'react'
+import {useRef} from 'react'
+import {RightSideControl} from 'data/enum/RightSideControl'
 
 interface Props {
 
@@ -13,85 +14,90 @@ interface ItemProps {
   index?: number
 }
 
-export default function Light({ }: Props) {
+export default function Light({}: Props) {
 
   const appContext = useAppContext()
 
-  const timerRef  = useRef<NodeJS.Timeout | null>(null)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const isActive = appContext.rightMode === RightSideControl.Light
 
-  useEffect(() => {
-    if (appContext.isLightActive) {
-      if(  timerRef.current){
-        clearTimeout(  timerRef.current)
-      }
-      timerRef.current = setTimeout(() => {
-        appContext.handleLightActive()
-      }, 5000)
-
+  const handleOpen = () => {
+    if (appContext.rightMode === RightSideControl.Light) {
+      appContext.hideRightMode(RightSideControl.Light)
+      return
     }
-  }, [appContext.isLightActive])
+    appContext.setRightMode(RightSideControl.Light)
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+    timerRef.current = setTimeout(() => {
+      console.log('Hide1')
+      appContext.hideRightMode(RightSideControl.Light)
+    }, 5000)
+  }
 
 
-  const handleItemUpZoneClick = (index?: number) => {
+  const handleItemUpZoneClick = (e: any, index?: number) => {
+    e.preventDefault()
+    e.stopPropagation()
     if (index !== undefined) {
       appContext.updateLightLevelUpZone(index + 1)
       if (index === 0 && appContext.lightLevelUp === 1) {
         appContext.updateLightLevelUpZone(0)
       }
-      if(  timerRef.current){
-        clearTimeout(  timerRef.current)
-      }
-      timerRef.current = setTimeout(() => {
-        appContext.handleLightActive()
-      }, 5000)
+
     }
+    if (timerRef.current) {
+      console.log('ClearTimout')
+      clearTimeout(timerRef.current)
+    }
+    timerRef.current = setTimeout(() => {
+      appContext.hideRightMode(RightSideControl.Light)
+    }, 5000)
   }
 
-  const handleItemDownZoneClick = (index?: number) => {
+  const handleItemDownZoneClick = (e: any, index?: number) => {
+    e.preventDefault()
+    e.stopPropagation()
     if (index !== undefined) {
       appContext.updateLightLevelDownZone(index + 1)
       if (index === 0 && appContext.lightLevelDown === 1) {
         appContext.updateLightLevelDownZone(0)
       }
     }
-    /*if (timer) {
-      clearTimeout(timer)
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
     }
-    const newTimer = setTimeout(() => {
-      appContext.handleLightActive()
+    timerRef.current = setTimeout(() => {
+      console.log('Hide3')
+      appContext.hideRightMode(RightSideControl.Light)
     }, 5000)
-    setTimer(newTimer)*/
+
   }
 
-  const isOthersControlsActive = () => {
-    if (appContext.isVolumeActive || appContext.isHelpActive || appContext.isClimateActive) {
-      return true
-    }
-    return false
-  }
 
-  const ItemUp = ({ level, index }: ItemProps) => {
+  const ItemUp = ({level, index}: ItemProps) => {
     return (
-      <div onClick={() => appContext.isLightActive ? handleItemUpZoneClick(index) : null}
-        className={classNames(styles.item, {
-          [styles.active]: level && level <= appContext.lightLevelUp,
-          [styles.opened]: appContext.isLightActive,
-          [styles.minimized]: isOthersControlsActive()
-        })}>
-        {appContext.isLightActive ? level : null}
+      <div onClick={(e ) => isActive ? handleItemUpZoneClick(e, index) : null}
+           className={classNames(styles.item, {
+             [styles.active]: level && level <= appContext.lightLevelUp,
+             [styles.opened]: isActive,
+             [styles.minimized]: appContext.rightMode != null && !isActive
+           })}>
+        {isActive ? level : null}
       </div>
     )
   }
 
-  const ItemDown = ({ level, index }: ItemProps) => {
+  const ItemDown = ({level, index}: ItemProps) => {
     return (
-      <div onClick={() => appContext.isLightActive ? handleItemDownZoneClick(index) : null}
-        className={classNames(styles.item, styles.itemDown, {
-          [styles.active]: level && level <= appContext.lightLevelDown,
-          [styles.opened]: appContext.isLightActive,
-          [styles.minimized]: isOthersControlsActive() === true
-        })}>
-        {appContext.isLightActive ? level : null}
+      <div onClick={(e) => isActive ? handleItemDownZoneClick(e, index) : null}
+           className={classNames(styles.item, styles.itemDown, {
+             [styles.active]: level && level <= appContext.lightLevelDown,
+             [styles.opened]: isActive,
+             [styles.minimized]: appContext.rightMode != null && !isActive
+           })}>
+        {isActive ? level : null}
       </div>
     )
   }
@@ -99,36 +105,39 @@ export default function Light({ }: Props) {
   const array = Array(4)
   const arrayDown = Array(4)
 
-  const itemsUp = array.fill(<ItemUp />)
-  const itemsDown = arrayDown.fill(<ItemDown />)
+  const itemsUp = array.fill(<ItemUp/>)
+  const itemsDown = arrayDown.fill(<ItemDown/>)
 
   return (
     <div className=
-      {classNames(styles.root, { [styles.rootActive]: appContext.isLightActive, [styles.mini]: isOthersControlsActive() === true })}>
-      {!appContext.isLightActive ? <div className={styles.title}>
+           {classNames(styles.root, {
+             [styles.rootActive]: isActive,
+             [styles.mini]: appContext.rightMode != null && !isActive
+           })}>
+      {!isActive ? <div className={styles.title}>
         свет
       </div> : null}
-      <div className={styles.light} onClick={() => !appContext.isLightActive ? appContext.handleLightActive() : null}>
+      <div className={styles.light} onClick={handleOpen}>
         <div className={styles.items}>
-          {itemsUp.slice(appContext.isLightActive ? 0 : 1).map((i, index) =>
-            <ItemUp index={index} key={index} level={index + (appContext.isLightActive ? 1 : 2)} />)}
+          {itemsUp.slice(isActive ? 0 : 1).map((i, index) =>
+            <ItemUp index={index} key={index} level={index + (isActive ? 1 : 2)}/>)}
         </div>
-        {!appContext.isLightActive ?
+        {!isActive ?
           <div className={styles.decorative}>
             {itemsUp.slice(0, 1).map((i, index) =>
-              <ItemUp index={index} key={index} level={index + 1} />)}
+              <ItemUp index={index} key={index} level={index + 1}/>)}
             {itemsDown.slice(0, 1).map((i, index) =>
-              <ItemDown index={index} key={index} level={index + 1} />)}
+              <ItemDown index={index} key={index} level={index + 1}/>)}
           </div> :
           <div className={styles.zones}>
             две зоны
           </div>
         }
         <div className={styles.itemsDown}>
-          {itemsDown.slice(appContext.isLightActive ? 0 : 1).map((i, index) =>
-            <ItemDown index={index} key={index} level={index + (appContext.isLightActive ? 1 : 2)} />)}
+          {itemsDown.slice(isActive ? 0 : 1).map((i, index) =>
+            <ItemDown index={index} key={index} level={index + (isActive ? 1 : 2)}/>)}
         </div>
-        {!appContext.isLightActive ? <Image src='/img/right-menu/light.svg' fill alt='' /> : null}
+        {!isActive ? <Image src='/img/right-menu/light.svg' fill alt=''/> : null}
       </div>
     </div>
   )

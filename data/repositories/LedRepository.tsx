@@ -12,6 +12,14 @@ export default class LedRepository {
     })
     return res
   }
+  static async setContentState(state: LedState, index: number): Promise<IStatusResponse> {
+    const res = await request<IStatusResponse>({
+      method: 'post',
+      url: `/api/v1/core/content/${state}`,
+      data: [index],
+    })
+    return res
+  }
 
 
 }
