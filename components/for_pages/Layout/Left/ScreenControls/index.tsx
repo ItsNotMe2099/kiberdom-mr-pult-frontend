@@ -64,7 +64,7 @@ export default function ScreenControls({color, options, indexScreen}: Props) {
     }
   }
 
-  console.log('DebugLed', appContext.led?.[indexScreen]?.power, appContext.led)
+  console.log('DebugLed', appContext, appContext.led)
 
   const isActive = appContext.led?.[indexScreen]?.power === LedState.On
   const handleClick = async (state: LedState) => {
