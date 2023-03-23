@@ -223,7 +223,7 @@ export function AppWrapper(props: Props) {
   }
 
   const fetch = async (): Promise<ICoreStatus | null> => {
-    setInitialLoading(true)
+    loginLoading ? setInitialLoading(true) : null
     try {
       const coreStatus = await CoreRepository.fetchStatus()
       setStats(coreStatus)
