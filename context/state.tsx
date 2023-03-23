@@ -217,8 +217,8 @@ export function AppWrapper(props: Props) {
     setBgMusicState(coreStatus.audio_processor.bg_music ?? OnOffState.Off)
     setVolumeLevel(coreStatus.audio_processor.level ?? 0)
     setClimateLevel(coreStatus.climate.temperature ?? 20)
-    setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1'].level ?? 1)
-    setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2'].level ?? 1)
+    setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1']?.level ?? 1)
+    setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2']?.level ?? 1)
     setLed(coreStatus.led)
   }
 
@@ -229,6 +229,7 @@ export function AppWrapper(props: Props) {
       setStats(coreStatus)
       return coreStatus
     } catch (e) {
+      console.error('Eeeee', e)
       if (e instanceof RequestError) {
         //Show error
       }
