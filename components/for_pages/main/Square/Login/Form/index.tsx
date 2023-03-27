@@ -52,12 +52,16 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
       if (error.response && error.response.data && error.response.data.message) {
         errorMessage = error.response.data.message
       }
-      appContext.showSnackbar(errorMessage, SnackbarType.error)
+
+      console.log('errorMessage', errorMessage)
+      const splitted = errorMessage.split(':')
+      appContext.showSnackbar(splitted[1], SnackbarType.error)
     }
     appContext.handleLoginLoading(false)
   }
 
   const handleCancel = () => {
+    formik.resetForm()
     onCancel()
   }
 
