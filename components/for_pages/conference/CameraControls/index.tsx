@@ -1,4 +1,5 @@
 import { useAppContext } from 'context/state'
+import { CamState } from 'data/enum/CamState'
 import { Platform } from 'data/enum/Platorm'
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
@@ -31,16 +32,16 @@ export default function CameraControls({ isActive }: Props) {
     >
       <div className={styles.root} ref={nodeRef}>
         <Item
-          active={appContext.isManualCamera}
-          onClick={appContext.handleManualCamera}
+          active={appContext.camOption === CamState.Faces}
+          onClick={() => appContext.handleCamOption(CamState.Faces)}
           platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/manual.svg' title='вручную' />
         <Item
-          active={appContext.isAutoCamera}
-          onClick={appContext.handleAutoCamera}
+          active={appContext.camOption === CamState.Cam1}
+          onClick={() => appContext.handleCamOption(CamState.Cam1)}
           platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
         <Item
-          active={appContext.isStreamsCamera}
-          onClick={appContext.handleStreamsCamera}
+          active={appContext.camOption === CamState.Cam2}
+          onClick={() => appContext.handleCamOption(CamState.Cam2)}
           platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
       </div>
     </CSSTransition>

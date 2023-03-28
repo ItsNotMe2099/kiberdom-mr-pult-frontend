@@ -1,10 +1,11 @@
-import {IConferenceStatus} from 'data/interfaces/IConferenceStatus'
-import {ILedStatus} from 'data/interfaces/ILedStatus'
-import {ILightStatus} from 'data/interfaces/ILightStatus'
-import {Platform} from 'data/enum/Platorm'
+import { IConferenceStatus } from 'data/interfaces/IConferenceStatus'
+import { ILedStatus } from 'data/interfaces/ILedStatus'
+import { ILightStatus } from 'data/interfaces/ILightStatus'
+import { Platform } from 'data/enum/Platorm'
 import { OnOffState } from 'data/enum/OnOffState'
+import { CamState } from 'data/enum/CamState'
 
-export interface ICoreStatus{
+export interface ICoreStatus {
   /** Признак инициализации конференции */
   initialized: boolean;
   /** Признак запуска демо */
@@ -12,11 +13,11 @@ export interface ICoreStatus{
   /** Название запущенной платформы */
   platform: Platform;
   /** Состояние конференции */
-  conference:IConferenceStatus
+  conference: IConferenceStatus
   /** Лед экраны */
-  led: {[key: string]: ILedStatus}
+  led: { [key: string]: ILedStatus }
   /** Освещение */
-  light: {[key: string]: ILightStatus}
+  light: { [key: string]: ILightStatus }
   /** Климат */
   climate: {
     temperature?: number;
@@ -29,5 +30,8 @@ export interface ICoreStatus{
   }
   recorder: {
     status: string | null
+  }
+  touch_designer: {
+    camera: CamState
   }
 }

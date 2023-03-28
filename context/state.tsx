@@ -11,7 +11,9 @@ import { OnOffState } from 'data/enum/OnOffState'
 import { ILightStatus } from 'data/interfaces/ILightStatus'
 import useWebSocket from 'react-use-websocket'
 import { runtimeConfig } from 'config/runtimeConfig'
-import {RightSideControl} from 'data/enum/RightSideControl'
+import { RightSideControl } from 'data/enum/RightSideControl'
+import { CamState } from 'data/enum/CamState'
+import CamRepository from 'data/repositories/CamRepository'
 
 interface IState {
   volumeLevel: number
@@ -24,8 +26,9 @@ interface IState {
   updateLightLevelDownZone: (level: number) => void
   fetch: () => void
   coreStatus: ICoreStatus | null
+  camOption: CamState
   initialLoading: boolean
-  snackbar: SnackbarData | null,
+  snackbar: SnackbarData | null
   showSnackbar: (text: string, type: SnackbarType) => void
   isActiveCameraMenu: boolean
   isActiveUsersList: boolean
@@ -40,9 +43,10 @@ interface IState {
   handleActiveUsersListMenu: () => void
   handleCameraMenu: () => void
   handleInvite: () => void
-  handleManualCamera: () => void
-  handleAutoCamera: () => void
-  handleStreamsCamera: () => void
+  //handleManualCamera: () => void
+  //handleAutoCamera: () => void
+  //handleStreamsCamera: () => void
+  handleCamOption: (option: CamState) => void
   handleMicrophone: () => void
   handleCamera: () => void
   handleBgMusic: () => void
@@ -88,15 +92,17 @@ const defaultValue: IState = {
   isManualCamera: false,
   isAutoCamera: false,
   isStreamsCamera: false,
+  camOption: CamState.Faces,
   micState: OnOffState.Off,
   camState: OnOffState.Off,
   bgMusicState: OnOffState.Off,
   handleActiveUsersListMenu: () => null,
   handleCameraMenu: () => null,
   handleInvite: () => null,
-  handleManualCamera: () => null,
-  handleAutoCamera: () => null,
-  handleStreamsCamera: () => null,
+  //handleManualCamera: () => null,
+  //handleAutoCamera: () => null,
+  //handleStreamsCamera: () => null,
+  handleCamOption: () => null,
   handleMicrophone: () => null,
   handleCamera: () => null,
   handleBgMusic: () => null,
@@ -168,6 +174,9 @@ export function AppWrapper(props: Props) {
 
   const [loginLoading, setLoginLoading] = useState<boolean>(false)
 
+  const [camOption, setCamOption] = useState<CamState>(CamState.Faces)
+
+
   useEffect(() => {
     rightModeRef.current = rightMode
   }, [rightMode])
@@ -220,6 +229,7 @@ export function AppWrapper(props: Props) {
     setLightLevelUp((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-1']?.level ?? 1)
     setLightLevelDown((coreStatus.light as { [key: string]: ILightStatus })['LAMP-Z-2']?.level ?? 1)
     setLed(coreStatus.led)
+    setCamOption(coreStatus.touch_designer.camera)
   }
 
   const fetch = async (): Promise<ICoreStatus | null> => {
@@ -287,7 +297,7 @@ export function AppWrapper(props: Props) {
     },
     hideRightMode: (mode: RightSideControl) => {
       console.log('hideRightMode', mode)
-      if(mode === rightModeRef.current){
+      if (mode === rightModeRef.current) {
         setRightMode(null)
       }
     },
@@ -308,6 +318,7 @@ export function AppWrapper(props: Props) {
     isRecControls,
     isRecPaused,
     isEmailFormInvite,
+    camOption,
     handleStopRec: async () => {
       const newStatus = true
       await RecordRepository.stop()
@@ -366,8 +377,9 @@ export function AppWrapper(props: Props) {
       setIsEmailFormActive(true)
       setIsEmailFormInvite(true)
     },
-    handleManualCamera: () => {
+    /*handleManualCamera: () => {
       setIsManualCamera(isManualCamera ? false : true)
+      setCamOption()
       setIsAutoCamera(false)
       setIsStreamsCamera(false)
     },
@@ -380,6 +392,12 @@ export function AppWrapper(props: Props) {
       setIsStreamsCamera(isStreamsCamera ? false : true)
       setIsManualCamera(false)
       setIsAutoCamera(false)
+    },*/
+    handleCamOption: async (option) => {
+      const newState = option
+      await CamRepository.setCameraState(newState)
+      setCoreStatus({ ...coreStatus, touch_designer: { ...coreStatus?.touch_designer, camera: newState } } as ICoreStatus)
+      setCamOption(newState)
     },
     isEmailFormActive,
     handleCancelEmailForm: () => {
