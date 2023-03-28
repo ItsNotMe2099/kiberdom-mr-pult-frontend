@@ -1,3 +1,6 @@
+import Cam1Svg from 'components/svg/CamOptions/Cam1Svg'
+import Cam2Svg from 'components/svg/CamOptions/Cam2Svg'
+import FacesSvg from 'components/svg/CamOptions/FacesSvg'
 import { useAppContext } from 'context/state'
 import { CamState } from 'data/enum/CamState'
 import { Platform } from 'data/enum/Platorm'
@@ -34,15 +37,15 @@ export default function CameraControls({ isActive }: Props) {
         <Item
           active={appContext.camOption === CamState.Faces}
           onClick={() => appContext.handleCamOption(CamState.Faces)}
-          platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/manual.svg' title='вручную' />
+          platform={appContext.coreStatus?.platform as Platform} icon={<FacesSvg className={styles.icon} color='#FFF' />} title='вручную' />
         <Item
           active={appContext.camOption === CamState.Cam1}
           onClick={() => appContext.handleCamOption(CamState.Cam1)}
-          platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/auto.svg' title='автокадрирование' />
+          platform={appContext.coreStatus?.platform as Platform} icon={<Cam1Svg className={styles.icon} color='#FFF' />} title='автокадрирование' />
         <Item
           active={appContext.camOption === CamState.Cam2}
           onClick={() => appContext.handleCamOption(CamState.Cam2)}
-          platform={appContext.coreStatus?.platform as Platform} icon='/img/camera-controls/streams.svg' title='несколько потоков' />
+          platform={appContext.coreStatus?.platform as Platform} icon={<Cam2Svg className={styles.icon} color='#FFF' />} title='несколько потоков' />
       </div>
     </CSSTransition>
   )

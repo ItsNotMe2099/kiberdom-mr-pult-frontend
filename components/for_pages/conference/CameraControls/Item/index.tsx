@@ -1,11 +1,10 @@
-import Image from 'next/image'
 import styles from './index.module.scss'
 import { colors } from 'styles/variables'
 import Gradient from 'components/for_pages/common/gradient'
 import { Platform } from 'data/enum/Platorm'
 
 interface Props {
-  icon: string
+  icon: React.ReactNode
   title: string
   active: boolean
   platform: Platform
@@ -37,7 +36,7 @@ export default function Item({ icon, title, active, platform, onClick }: Props) 
         exitClass={styles.itemExit}
         exitActiveClass={styles.itemExitActive}
         style={getColor() as string} />
-      <Image className={styles.img} src={icon} alt='' fill />
+      {icon}
       <div className={styles.title}>
         {title}
       </div>
