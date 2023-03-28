@@ -70,6 +70,8 @@ interface IState {
   rightMode: RightSideControl | null,
   setRightMode: (mode: RightSideControl) => void
   hideRightMode: (mode: RightSideControl) => void
+  showIframe: () => void
+  isIframeShown: boolean
 }
 
 const defaultValue: IState = {
@@ -125,7 +127,9 @@ const defaultValue: IState = {
   led: null,
   rightMode: null,
   setRightMode: (mode: RightSideControl) => null,
-  hideRightMode: (mode: RightSideControl) => null
+  hideRightMode: (mode: RightSideControl) => null,
+  showIframe: () => null,
+  isIframeShown: false
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -176,6 +180,8 @@ export function AppWrapper(props: Props) {
   const [loginLoading, setLoginLoading] = useState<boolean>(false)
 
   const [camOption, setCamOption] = useState<CamState>(CamState.Faces)
+
+  const [isIframeShown, setShowIframe] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -264,6 +270,10 @@ export function AppWrapper(props: Props) {
     loginLoading,
     led,
     adminCalled,
+    isIframeShown,
+    showIframe: () => {
+      setShowIframe(!isIframeShown)
+    },
     handleAdminCalled: () => {
       setAdminCalled(adminCalled ? false : true)
     },

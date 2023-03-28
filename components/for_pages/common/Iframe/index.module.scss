@@ -1,0 +1,52 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  background: #000000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 22;
+  margin: auto;
+  padding: 10px;
+}
+
+.frame {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(62, 62, 62, 0.8) 100%), #000000;
+  border: 0;
+}
+
+.title {
+  background: radial-gradient(107.68% 121.56% at 50% 100%, #FD2B2B 0%, rgba(255, 255, 255, 0) 46.14%);
+  padding-top: 26px;
+  padding-bottom: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 24px;
+  color: #fff;
+  margin-top: 70px;
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  width: 50%;
+  align-self: center;
+}
+
+.itemEnter {
+  opacity: 0;
+}
+
+.itemEnterActive {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+
+.itemExit {
+  opacity: 1;
+}
+
+.itemExitActive {
+  opacity: 0;
+  transition: opacity 2000ms;
+}

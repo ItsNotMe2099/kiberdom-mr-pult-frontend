@@ -1,3 +1,4 @@
+import Iframe from 'components/for_pages/common/Iframe'
 import Loader from 'components/for_pages/common/loader'
 import Layout from 'components/for_pages/Layout'
 import Demonstration from 'components/for_pages/main/Demonstration'
@@ -91,6 +92,8 @@ export default function MainPage() {
     })
   }, [])*/
 
+  console.log('appContext.isIframeShown', appContext.isIframeShown)
+
   return (
     <Layout loading={appContext.initialLoading}>
       <div className={styles.root}>
@@ -106,6 +109,7 @@ export default function MainPage() {
         />
         <Loader className={styles.init} isActive={appContext.initialLoading} initial />
         <Demonstration wifi={data} isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
+        <Iframe />
         <Square
           onClick={handleActiveZoom}
           className={styles.zoom}

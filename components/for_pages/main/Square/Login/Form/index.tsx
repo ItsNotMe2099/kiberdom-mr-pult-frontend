@@ -38,7 +38,11 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
 
   const handleSubmit = async (data: { login: string, password: string }) => {
     appContext.handleLoginLoading(true)
-    setTimeout(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+    timerRef.current = setTimeout(() => {
+      console.log('Hide1')
       formik.resetForm()
     }, Timers.resetLoginForm)
     //onSubmit ? onSubmit() : null

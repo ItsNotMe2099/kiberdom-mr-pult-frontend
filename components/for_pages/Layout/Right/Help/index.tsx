@@ -64,6 +64,11 @@ export default function Help({ }: Props) {
     }
   }
 
+  const handleMenu = () => {
+    handleItemClick()
+    appContext.showIframe()
+  }
+
 
   return (
     <div className={classNames(styles.root, { [styles.rootActive]: isActive })}>
@@ -79,7 +84,7 @@ export default function Help({ }: Props) {
           <Image src='/img/right-menu/help.svg' fill alt='' />
         </div></> :
         <>
-          <div className={styles.call} onClick={handleItemClick}>
+          <div className={styles.call} onClick={handleMenu}>
             <div className={styles.gradient}></div>
             <div className={styles.text}>перейти
               в<br /> меню

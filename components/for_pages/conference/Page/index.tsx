@@ -18,6 +18,7 @@ import ParticipantRepository from 'data/repositories/ParticipantsRepository'
 import { IParticipant } from 'data/interfaces/IParticipant'
 import { OnOffState } from 'data/enum/OnOffState'
 import useInterval from 'use-interval'
+import Iframe from 'components/for_pages/common/Iframe'
 
 export default function ConferencePage() {
 
@@ -58,6 +59,7 @@ export default function ConferencePage() {
           isActive={appContext.initialLoading}
           color={appContext.coreStatus?.platform === Platform.TrueConf ? 'green' : 'blue'}
           icon={appContext.coreStatus?.platform === Platform.TrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
+          <Iframe />
         <LayoutAuthorized users={users}>
           <div className={styles.wrapper}>
             <UsersList
