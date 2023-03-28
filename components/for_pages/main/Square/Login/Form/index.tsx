@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { colors } from 'styles/variables'
+import { Timers } from 'types/constants'
 import { SnackbarType } from 'types/enums'
 import styles from './index.module.scss'
 
@@ -33,8 +34,13 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
     password: ''
   }
 
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
   const handleSubmit = async (data: { login: string, password: string }) => {
     appContext.handleLoginLoading(true)
+    setTimeout(() => {
+      formik.resetForm()
+    }, Timers.resetLoginForm)
     //onSubmit ? onSubmit() : null
     try {
       await CoreRepository.selectPlatform(platform)
@@ -70,6 +76,8 @@ export default function LoginForm({ onSubmit, color, onCancel, platform, active,
     initialValues,
     onSubmit: handleSubmit
   })
+
+  console.log('VALLLLLLSSS', formik.values)
 
   const getBorderColor = () => {
     switch (platform) {

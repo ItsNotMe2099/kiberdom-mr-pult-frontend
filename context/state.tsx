@@ -14,6 +14,7 @@ import { runtimeConfig } from 'config/runtimeConfig'
 import { RightSideControl } from 'data/enum/RightSideControl'
 import { CamState } from 'data/enum/CamState'
 import CamRepository from 'data/repositories/CamRepository'
+import { Timers } from 'types/constants'
 
 interface IState {
   volumeLevel: number
@@ -273,7 +274,7 @@ export function AppWrapper(props: Props) {
       setSnackbar({ text, type })
       setTimeout(() => {
         setSnackbar(null)
-      }, 2000)
+      }, Timers.showErrorBanner)
     },
     updateVolumeLevel: async (level) => {
       await CoreRepository.setVolume(level.toString())
