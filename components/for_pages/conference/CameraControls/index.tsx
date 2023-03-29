@@ -37,15 +37,15 @@ export default function CameraControls({ isActive }: Props) {
         <Item
           active={appContext.camOption === CamState.Faces}
           onClick={() => appContext.handleCamOption(CamState.Faces)}
-          platform={appContext.coreStatus?.platform as Platform} icon={<FacesSvg className={styles.icon} color='#FFF' />} title='вручную' />
+          platform={appContext.coreStatus?.platform as Platform} icon={<FacesSvg className={styles.icon} color='#FFF' />} title='участники' />
         <Item
           active={appContext.camOption === CamState.Cam1}
           onClick={() => appContext.handleCamOption(CamState.Cam1)}
-          platform={appContext.coreStatus?.platform as Platform} icon={<Cam1Svg className={styles.icon} color='#FFF' />} title='автокадрирование' />
+          platform={appContext.coreStatus?.platform as Platform} icon={<Cam1Svg className={styles.icon} color='#FFF' />} title='камера 1' />
         <Item
           active={appContext.camOption === CamState.Cam2}
           onClick={() => appContext.handleCamOption(CamState.Cam2)}
-          platform={appContext.coreStatus?.platform as Platform} icon={<Cam2Svg className={styles.icon} color='#FFF' />} title='несколько потоков' />
+          platform={appContext.coreStatus?.platform as Platform} icon={<Cam2Svg className={styles.icon} color='#FFF' />} title='камера 2' />
       </div>
     </CSSTransition>
   )
