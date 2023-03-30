@@ -72,6 +72,10 @@ interface IState {
   hideRightMode: (mode: RightSideControl) => void
   showIframe: () => void
   isIframeShown: boolean
+  isActiveZoom: boolean
+  isActiveConf: boolean
+  setIsActiveZoom: (state: boolean) => void
+  setIsActiveConf: (state:boolean) => void
 }
 
 const defaultValue: IState = {
@@ -129,7 +133,11 @@ const defaultValue: IState = {
   setRightMode: (mode: RightSideControl) => null,
   hideRightMode: (mode: RightSideControl) => null,
   showIframe: () => null,
-  isIframeShown: false
+  isIframeShown: false,
+  isActiveZoom: false,
+  isActiveConf: false,
+  setIsActiveZoom: (state) => null,
+  setIsActiveConf: (state) => null
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -182,6 +190,9 @@ export function AppWrapper(props: Props) {
   const [camOption, setCamOption] = useState<CamState>(CamState.Faces)
 
   const [isIframeShown, setShowIframe] = useState<boolean>(false)
+
+  const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)
+  const [isActiveConf, setIsActiveConf] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -271,6 +282,14 @@ export function AppWrapper(props: Props) {
     led,
     adminCalled,
     isIframeShown,
+    isActiveConf,
+    isActiveZoom,
+    setIsActiveZoom: (state) => {
+      setIsActiveZoom(state)
+    },
+    setIsActiveConf: (state) => {
+      setIsActiveConf(state)
+    },
     showIframe: () => {
       setShowIframe(!isIframeShown)
     },

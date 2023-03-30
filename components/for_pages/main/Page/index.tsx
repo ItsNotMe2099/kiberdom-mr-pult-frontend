@@ -20,9 +20,6 @@ export default function MainPage() {
 
   const appContext = useAppContext()
 
-  const [isActiveZoom, setIsActiveZoom] = useState<boolean>(false)
-  const [isActiveConf, setIsActiveConf] = useState<boolean>(false)
-
   const [isDemonstration, setIsDemonstration] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<IWiFi | null>(null)
@@ -32,11 +29,11 @@ export default function MainPage() {
     try {
       await ConferenceRepository.setScreenDemonstrationState('start').then(i => setData(i.wifi ?? null))
       setIsDemonstration(true)
-      if (isActiveConf) {
-        setIsActiveConf(false)
+      if (appContext.isActiveConf) {
+        appContext.setIsActiveConf(false)
       }
-      else if (isActiveZoom) {
-        setIsActiveZoom(false)
+      else if (appContext.isActiveZoom) {
+        appContext.setIsActiveZoom(false)
       }
     }
     catch (error: any) {
@@ -72,13 +69,13 @@ export default function MainPage() {
   const demLabelRef = useRef(null)
 
   const handleActiveZoom = () => {
-    !isActiveZoom ? setIsActiveZoom(true) : null
-    setIsActiveConf(false)
+    !appContext.isActiveZoom ? appContext.setIsActiveZoom(true) : null
+    appContext.setIsActiveConf(false)
   }
 
   const handleActiveConf = () => {
-    !isActiveConf ? setIsActiveConf(true) : null
-    setIsActiveZoom(false)
+    !appContext.isActiveConf ? appContext.setIsActiveConf(true) : null
+    appContext.setIsActiveZoom(false)
   }
 
   /*useEffect(() => {
@@ -101,12 +98,12 @@ export default function MainPage() {
           text='подождите...'
           isActive={loading}
           color={'purple'} />
-        <Loader
+        {/*<Loader
           text='запускаю, подождите...'
           isActive={appContext.loginLoading}
           color={isActiveZoom ? 'blue' : isActiveConf ? 'green' : 'purple'}
           icon={isActiveConf ? '/img/logos/trueconf.svg' : isActiveZoom ? '/img/logos/zoom.png' : ''}
-        />
+  />*/}
         <Loader className={styles.init} isActive={appContext.initialLoading} initial />
         <Demonstration wifi={data} isActive={isDemonstration && !loading} onCancel={handleScreenDemoCancel} />
         <Iframe />
@@ -114,12 +111,12 @@ export default function MainPage() {
           onClick={handleActiveZoom}
           className={styles.zoom}
           color='blue'
-          active={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
+          active={!appContext.initialLoading ? !appContext.isActiveZoom : !appContext.initialLoading}
           activeFake={!appContext.initialLoading}
           img='/img/logos/zoom.png'>
           <CSSTransition
             timeout={500}
-            in={!appContext.initialLoading ? !isActiveZoom : !appContext.initialLoading}
+            in={!appContext.initialLoading ? !appContext.isActiveZoom : !appContext.initialLoading}
             nodeRef={zoomLabelRef}
             mountOnEnter
             unmountOnExit
@@ -135,20 +132,20 @@ export default function MainPage() {
             </div></CSSTransition>
           <LoginForm
             image='/img/logos/zoom.png'
-            timeOut={() => setIsActiveZoom(false)}
-            active={!appContext.initialLoading ? isActiveZoom : !appContext.initialLoading}
+            timeOut={() => appContext.setIsActiveZoom(false)}
+            active={!appContext.initialLoading ? appContext.isActiveZoom : !appContext.initialLoading}
             platform={Platform.Zoom}
-            onCancel={() => setIsActiveZoom(false)}
+            onCancel={() => appContext.setIsActiveZoom(false)}
             color={'blue'} />
         </Square>
         <Square onClick={handleActiveConf}
           className={styles.trueconf} color='green'
-          active={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
+          active={!appContext.initialLoading ? !appContext.isActiveConf : !appContext.initialLoading}
           activeFake={!appContext.initialLoading}
           img='/img/logos/trueconf.svg'>
           <CSSTransition
             timeout={500}
-            in={!appContext.initialLoading ? !isActiveConf : !appContext.initialLoading}
+            in={!appContext.initialLoading ? !appContext.isActiveConf : !appContext.initialLoading}
             nodeRef={trueLabelRef}
             mountOnEnter
             unmountOnExit
@@ -163,11 +160,11 @@ export default function MainPage() {
               cтарт<br /> trueconf
             </div></CSSTransition>
           <LoginForm
-            timeOut={() => setIsActiveConf(false)}
+            timeOut={() => appContext.setIsActiveConf(false)}
             image='/img/logos/trueconf.svg'
-            active={!appContext.initialLoading ? isActiveConf : !appContext.initialLoading}
+            active={!appContext.initialLoading ? appContext.isActiveConf : !appContext.initialLoading}
             platform={Platform.TrueConf}
-            onCancel={() => setIsActiveConf(false)} color={'green'} />
+            onCancel={() => appContext.setIsActiveConf(false)} color={'green'} />
         </Square>
         <Square
           onClick={() => !appContext.initialLoading ? handleScreenDemo() : null}

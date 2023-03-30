@@ -1,6 +1,6 @@
 import Layout from 'components/for_pages/Layout'
 import LayoutAuthorized from 'components/for_pages/conference/LayoutAuthorized'
-import Loader from 'components/for_pages/common/loader'
+//import Loader from 'components/for_pages/common/loader'
 import { useAppContext } from 'context/state'
 import styles from './index.module.scss'
 import classNames from 'classnames'
@@ -54,12 +54,12 @@ export default function ConferencePage() {
     <Layout loading={false}>
       <div className={classNames(styles.root, { [styles.loaded]: !appContext.initialLoading })}>
         <EmailForm style={appContext.isEmailFormInvite ? 'invite' : 'send'} isActive={appContext.isEmailFormActive} />
-        <Loader
+        {/*<Loader
           text='запускаю, подождите...'
           isActive={appContext.initialLoading}
           color={appContext.coreStatus?.platform === Platform.TrueConf ? 'green' : 'blue'}
-          icon={appContext.coreStatus?.platform === Platform.TrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />
-          <Iframe />
+  icon={appContext.coreStatus?.platform === Platform.TrueConf ? '/img/logos/trueconf.svg' : '/img/logos/zoom.png'} />*/}
+        <Iframe />
         <LayoutAuthorized users={users}>
           <div className={styles.wrapper}>
             <UsersList
