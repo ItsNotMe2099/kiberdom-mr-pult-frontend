@@ -16,5 +16,7 @@ export interface IConferenceStatus{
     volume?: number;
     /** Информация о конференции */
     info?: IConferenceInfo
-
+    short_link: {
+        qr: string
+    }
 }

@@ -1,0 +1,23 @@
+@import "styles/index";
+
+.qr {
+    display: flex;
+    gap: 16px;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    align-items: center;
+    .text {
+        color: $gray;
+        font-weight: 400;
+        font-size: 24px;
+        text-align: right;
+        line-height: 100%;
+    }
+
+    .qrImage {
+        width: 60px !important;
+        height: 60px !important;
+        position: relative !important;
+    }
+}

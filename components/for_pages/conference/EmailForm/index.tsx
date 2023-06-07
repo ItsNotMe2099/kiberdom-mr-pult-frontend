@@ -12,6 +12,7 @@ import { colors } from 'styles/variables'
 import { SnackbarType } from 'types/enums'
 import Validator from 'utils/validator'
 import styles from './index.module.scss'
+import Qr from 'components/for_pages/common/Qr'
 
 interface Props {
   onSubmit?: () => void
@@ -98,6 +99,7 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
         <div className={styles.root}>
           <FormikProvider value={formik}>
             <Form className={styles.form} ref={nodeRef}>
+              {style === 'invite' && <Qr className={styles.qr} />}
               <div className={styles.title}>{style === 'invite' ? 'кого' : 'куда'}</div>
               <TextField name='email' label='эл. почта' brdrColor={colors.zoom} />
               <div className={styles.btns}>

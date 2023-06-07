@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { colors } from 'styles/variables'
 import User from '../../UsersList/User'
 import styles from './index.module.scss'
+import Qr from 'components/for_pages/common/Qr'
 
 interface Props {
   platform: Platform
@@ -54,6 +55,7 @@ export default function Header({ platform, users }: Props) {
           style={{ backgroundColor: getAllowColor() }}>
           {`впустить новых участников (+${newUsers.length})`}
         </div> : null}
+      <Qr />
       <Image className={styles.img} src={getIcon() as string} alt='' fill />
       <div className={styles.bottom}>
         <div className={styles.id}>
