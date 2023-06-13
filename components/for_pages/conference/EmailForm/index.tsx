@@ -97,9 +97,9 @@ export default function EmailForm({ onSubmit, style, isActive }: Props) {
         }}
       >
         <div className={styles.root}>
+          {style === 'invite' && <Qr textClass={styles.qrText} className={styles.qr} imgClass={styles.qrImg} />}
           <FormikProvider value={formik}>
             <Form className={styles.form} ref={nodeRef}>
-              {style === 'invite' && <Qr className={styles.qr} />}
               <div className={styles.title}>{style === 'invite' ? 'кого' : 'куда'}</div>
               <TextField name='email' label='эл. почта' brdrColor={colors.zoom} />
               <div className={styles.btns}>

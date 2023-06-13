@@ -80,6 +80,19 @@
 }
 
 .qr {
-    position: static;
+    //position: static;
     justify-content: center;
+    top: 80px !important;
+    right: inherit !important;
+    flex-direction: column;
+    text-align: center;
+}
+
+.qrImg {
+    width: 256px !important;
+    height: 256px !important;
+}
+
+.qrText {
+    text-align: center !important;
 }

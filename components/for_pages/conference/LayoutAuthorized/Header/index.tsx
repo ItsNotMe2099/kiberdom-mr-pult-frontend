@@ -55,7 +55,7 @@ export default function Header({ platform, users }: Props) {
           style={{ backgroundColor: getAllowColor() }}>
           {`впустить новых участников (+${newUsers.length})`}
         </div> : null}
-      <Qr />
+      <Qr imgClass={styles.qrImg} />
       <Image className={styles.img} src={getIcon() as string} alt='' fill />
       <div className={styles.bottom}>
         <div className={styles.id}>
