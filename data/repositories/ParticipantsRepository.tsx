@@ -14,9 +14,10 @@ export default class ParticipantRepository {
 
 
   static async acceptParticipant(id: number | string): Promise<IStatusResponse> {
+    const encodedId = encodeURI(`${id}`)
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: `/api/v1/core/participant/${id}/admit`,
+      url: `/api/v1/core/participant/${encodedId}/admit`,
       data: {},
     })
     return res
@@ -24,9 +25,10 @@ export default class ParticipantRepository {
 
 
   static async deleteParticipant(id: number | string): Promise<IStatusResponse> {
+    const encodedId = encodeURI(`${id}`)
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: `/api/v1/core/participant/${id}/expel`,
+      url: `/api/v1/core/participant/${encodedId}/expel`,
       data: {},
     })
     return res
@@ -34,9 +36,10 @@ export default class ParticipantRepository {
 
 
   static async muteAudioParticipant(id: number | string): Promise<IStatusResponse> {
+    const encodedId = encodeURI(`${id}`)
     const res = await request<IStatusResponse>({
       method: 'post',
-      url: `/api/v1/core/participant/${id}/muteaudio`,
+      url: `/api/v1/core/participant/${encodedId}/muteaudio`,
       data: {},
     })
     return res
