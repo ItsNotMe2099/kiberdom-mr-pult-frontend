@@ -48,3 +48,5 @@ services:
           ADMIN_HOST: http://kiberdom-mr-pult-admin
           VIRTUAL_HOST: kiberdomfront.dev.glob-com.ru
           VIRTUAL_PORT: 80
+          LETSENCRYPT_HOST: kiberdomfront.dev.glob-com.ru
+          LETSENCRYPT_EMAIL: sites.globcom@yandex.ru
